@@ -2,7 +2,7 @@
 // Tiny static file server for the vitallens-scan.html page.
 //
 // Why this exists: Chromium treats every `file://` URL as a unique null origin,
-// so the ESM module load chain (vitallens-shim.js → vitallens.browser.js) is
+// so the ESM module load chain (vitallens-scan.html → vitallens.browser.js) is
 // blocked by CORS. Serving over `http://localhost` gives the page a real origin
 // where ESM imports work normally.
 //

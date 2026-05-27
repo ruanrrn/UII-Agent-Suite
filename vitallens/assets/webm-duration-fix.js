@@ -19,25 +19,25 @@
 //   EBML spec   https://github.com/Matroska-Org/ebml-specification
 //   WebM spec   https://www.webmproject.org/docs/container/
 
-(function (global) {
-  'use strict';
+// @ts-check
+'use strict';
 
-  // EBML element IDs (encoded as numbers, leading-bit-marker bits intact).
-  const ID_SEGMENT          = 0x18538067;
-  const ID_INFO             = 0x1549A966;
-  const ID_DURATION         = 0x4489;
-  const ID_TRACKS           = 0x1654AE6B;
-  const ID_TRACK_ENTRY      = 0xAE;
-  const ID_TRACK_TYPE       = 0x83;
-  const ID_DEFAULT_DURATION = 0x23E383;
+// EBML element IDs (encoded as numbers, leading-bit-marker bits intact).
+const ID_SEGMENT          = 0x18538067;
+const ID_INFO             = 0x1549A966;
+const ID_DURATION         = 0x4489;
+const ID_TRACKS           = 0x1654AE6B;
+const ID_TRACK_ENTRY      = 0xAE;
+const ID_TRACK_TYPE       = 0x83;
+const ID_DEFAULT_DURATION = 0x23E383;
 
-  // --- VINT helpers ---
+// --- VINT helpers ---
 
-  // Read a variable-length integer at buf[offset].
-  // Returns { value, length } where length is bytes consumed.
-  // Note: for an EBML *Element ID* you keep the marker bits as part of the ID,
-  // so use readVintRaw() instead. This function strips them and is for sizes.
-  function readVint(buf, offset) {
+// Read a variable-length integer at buf[offset].
+// Returns { value, length } where length is bytes consumed.
+// Note: for an EBML *Element ID* you keep the marker bits as part of the ID,
+// so use readVintRaw() instead. This function strips them and is for sizes.
+function readVint(buf, offset) {
     const first = buf[offset];
     if (first === 0) throw new Error('Invalid VINT: zero leading byte at ' + offset);
     let length = 1;
@@ -46,11 +46,11 @@
     let value = first & (0xFF >>> length);
     for (let i = 1; i < length; i++) value = value * 256 + buf[offset + i];
     return { value, length };
-  }
+}
 
-  // Read an Element ID at buf[offset], preserving marker bits.
-  // Returns { id, length }.
-  function readVintRaw(buf, offset) {
+// Read an Element ID at buf[offset], preserving marker bits.
+// Returns { id, length }.
+function readVintRaw(buf, offset) {
     const first = buf[offset];
     if (first === 0) throw new Error('Invalid Element ID: zero leading byte at ' + offset);
     let length = 1;
@@ -59,11 +59,11 @@
     let id = 0;
     for (let i = 0; i < length; i++) id = id * 256 + buf[offset + i];
     return { id, length };
-  }
+}
 
-  // Encode a non-negative integer as a minimal-length VINT.
-  // Returns Uint8Array.
-  function writeVint(value) {
+// Encode a non-negative integer as a minimal-length VINT.
+// Returns Uint8Array.
+function writeVint(value) {
     if (value < 0) throw new Error('VINT cannot encode negative: ' + value);
     // Pick the smallest length such that value < (1<<(7*length)) - 1
     // (the all-1s value is reserved as "unknown size" sentinel).
@@ -83,10 +83,10 @@
       }
     }
     return out;
-  }
+}
 
-  // Check whether the VINT at buf[offset] is the all-1s "unknown size" sentinel.
-  function isUnknownSize(buf, offset) {
+// Check whether the VINT at buf[offset] is the all-1s "unknown size" sentinel.
+function isUnknownSize(buf, offset) {
     const first = buf[offset];
     if (first === 0) return false;
     let length = 1;
@@ -95,13 +95,13 @@
     if (dataBits !== (0xFF >>> length)) return false;
     for (let i = 1; i < length; i++) if (buf[offset + i] !== 0xFF) return false;
     return true;
-  }
+}
 
-  // --- Element walker ---
+// --- Element walker ---
 
-  // Read a full element header at buf[offset].
-  // Returns: { id, idLength, size (null if unknown), sizeLength, dataOffset, dataEnd (-1 if unknown) }.
-  function readElement(buf, offset) {
+// Read a full element header at buf[offset].
+// Returns: { id, idLength, size (null if unknown), sizeLength, dataOffset, dataEnd (-1 if unknown) }.
+function readElement(buf, offset) {
     const idV = readVintRaw(buf, offset);
     const sizeOffset = offset + idV.length;
     const unknown = isUnknownSize(buf, sizeOffset);
@@ -114,11 +114,11 @@
       dataOffset: sizeOffset + sizeV.length,
       dataEnd: unknown ? -1 : sizeOffset + sizeV.length + sizeV.value,
     };
-  }
+}
 
-  // Find the first direct child element with the given ID, scanning from `start` to `end`.
-  // Returns the element descriptor or null.
-  function findChild(buf, start, end, targetId) {
+// Find the first direct child element with the given ID, scanning from `start` to `end`.
+// Returns the element descriptor or null.
+function findChild(buf, start, end, targetId) {
     let p = start;
     while (p < end && p < buf.length) {
       const elem = readElement(buf, p);
@@ -127,25 +127,25 @@
       p = elem.dataEnd;
     }
     return null;
-  }
+}
 
-  // --- Float64 encoding ---
+// --- Float64 encoding ---
 
-  function encodeFloat64BE(value) {
+function encodeFloat64BE(value) {
     const buf = new ArrayBuffer(8);
     new DataView(buf).setFloat64(0, value, false);  // false = big-endian
     return new Uint8Array(buf);
-  }
+}
 
-  // --- Main API ---
+// --- Main API ---
 
-  /**
+/**
    * Patches a WebM blob to include or correct its Duration metadata.
    * @param {Blob} blob - WebM blob (e.g. from MediaRecorder)
    * @param {number} durationMs - Duration in milliseconds (TimecodeScale is 1ms by default)
    * @returns {Promise<Blob>} a new blob; the original is untouched
    */
-  async function patchWebmDuration(blob, durationMs) {
+async function patchWebmDuration(blob, durationMs) {
     const ab = await blob.arrayBuffer();
     const buf = new Uint8Array(ab);
 
@@ -234,10 +234,10 @@
     for (const part of parts) { out.set(part, pos); pos += part.length; }
 
     return new Blob([out], { type: blob.type });
-  }
+}
 
-  // Quick self-check on VINT encoding/decoding (only when ?debug=1)
-  if (typeof URLSearchParams === 'function' &&
+// Quick self-check on VINT encoding/decoding (only when ?debug=1)
+if (typeof URLSearchParams === 'function' &&
       typeof location !== 'undefined' &&
       new URLSearchParams(location.search).get('debug') === '1') {
     const cases = [0, 1, 8, 126, 127, 1000, 16382, 16383, 100000];
@@ -249,10 +249,10 @@
       }
     }
     console.log('[webm-duration-fix] VINT self-check OK');
-  }
+}
 
-  // Encode a non-negative integer as a minimal big-endian uint (1, 2, 3, or 4 bytes).
-  function encodeUintBE(value) {
+// Encode a non-negative integer as a minimal big-endian uint (1, 2, 3, or 4 bytes).
+function encodeUintBE(value) {
     if (value < 0) throw new Error('Cannot encode negative uint: ' + value);
     if (value < 256) {
       return new Uint8Array([value]);
@@ -266,9 +266,9 @@
       new DataView(out.buffer).setUint32(0, value, false);
       return out;
     }
-  }
+}
 
-  /**
+/**
    * Patches a WebM blob to include a DefaultDuration element on the first Video
    * TrackEntry. ffmpeg uses this to compute fps; without it, ffmpeg's stream
    * line lacks "NN fps", and downstream regex matchers (e.g. vitallens.js's
@@ -278,7 +278,7 @@
    * @param {number} fpsValue - fps to encode as (1e9 / fpsValue) ns per frame
    * @returns {Promise<Blob>}
    */
-  async function patchWebmDefaultDuration(blob, fpsValue) {
+async function patchWebmDefaultDuration(blob, fpsValue) {
     if (!fpsValue || fpsValue <= 0) throw new Error('fpsValue must be > 0');
     const ab = await blob.arrayBuffer();
     const buf = new Uint8Array(ab);
@@ -408,8 +408,6 @@
     let pos = 0;
     for (const part of parts) { out.set(part, pos); pos += part.length; }
     return new Blob([out], { type: blob.type });
-  }
+}
 
-  global.patchWebmDuration = patchWebmDuration;
-  global.patchWebmDefaultDuration = patchWebmDefaultDuration;
-})(typeof window !== 'undefined' ? window : globalThis);
+export { patchWebmDuration, patchWebmDefaultDuration };
