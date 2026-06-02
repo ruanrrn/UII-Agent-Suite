@@ -43,11 +43,84 @@ function checkNode() {
   return true;
 }
 
+function readWindowsEnvVar(scope, name) {
+  try {
+    const value = execSync(
+      `powershell -NoProfile -Command "[Environment]::GetEnvironmentVariable('${name}', '${scope}')"`,
+      { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] },
+    ).trim();
+    return value || '';
+  } catch {
+    return '';
+  }
+}
+
+function resolveApiKey() {
+  if (process.env.VITALLENS_API_KEY && process.env.VITALLENS_API_KEY.length >= 10) {
+    return process.env.VITALLENS_API_KEY;
+  }
+
+  if (os.platform() !== 'win32') {
+    return '';
+  }
+
+  const machineValue = readWindowsEnvVar('Machine', 'VITALLENS_API_KEY');
+  if (machineValue.length >= 10) {
+    process.env.VITALLENS_API_KEY = machineValue;
+    return machineValue;
+  }
+
+  const userValue = readWindowsEnvVar('User', 'VITALLENS_API_KEY');
+  if (userValue.length >= 10) {
+    process.env.VITALLENS_API_KEY = userValue;
+    return userValue;
+  }
+
+  return '';
+}
+
+function summarizeErrorMessage(message) {
+  const lines = String(message || '')
+    .split(/\r?\n/)
+    .map(line => line.trim())
+    .filter(Boolean);
+
+  if (!lines.length) return 'no diagnostics captured';
+  if (lines.length === 1) return lines[0];
+
+  const head = lines[0];
+  const tail = lines[lines.length - 1];
+  return head === tail ? head : `${head} | ${tail}`;
+}
+
+function hasMeasuredVitals(result) {
+  const hr = result?.vitals?.heart_rate;
+  const rr = result?.vitals?.respiratory_rate;
+  return Boolean(hr && typeof hr.value === 'number' && rr && typeof rr.value === 'number');
+}
+
+function buildMissingVitalsMessage(result) {
+  const meta = result?.capture_meta;
+  const parts = ['Result missing heart_rate/respiratory_rate'];
+
+  if (meta) {
+    parts.push(
+      `frames=${meta.frames ?? '?'}`,
+      `target_frames=${meta.target_frames ?? '?'}`,
+      `elapsed_ms=${meta.elapsed_ms ?? '?'}`,
+      `mime=${meta.mime ?? '?'}`,
+    );
+  }
+
+  return parts.join(' | ');
+}
+
 function checkApiKey() {
-  if (!process.env.VITALLENS_API_KEY || process.env.VITALLENS_API_KEY.length < 10) {
+  if (!resolveApiKey()) {
     err('VITALLENS_API_KEY environment variable not set or too short.');
     err('Get a free key at https://www.rouast.com/api then set it:');
     if (os.platform() === 'win32') {
+      err('  [Environment]::SetEnvironmentVariable("VITALLENS_API_KEY", "<key>", "Machine")');
       err('  [Environment]::SetEnvironmentVariable("VITALLENS_API_KEY", "<key>", "User")');
     } else {
       err('  export VITALLENS_API_KEY="<key>"  (add to ~/.bashrc or ~/.zshrc)');
@@ -304,8 +377,19 @@ async function main() {
 
     if (outcome === 'result') {
       // Success
-      server.close();
       const json = JSON.parse(fs.readFileSync(RESULT_PATH, 'utf8'));
+      if (!hasMeasuredVitals(json)) {
+        lastErrMsg = buildMissingVitalsMessage(json);
+        const canRetry = attempt < MAX_LAUNCHER_RETRIES;
+        if (canRetry) {
+          log(`⚠ Incomplete result (attempt ${attempt}/${MAX_LAUNCHER_RETRIES}), will retry…`);
+          log(`  ${lastErrMsg}`);
+          continue;
+        }
+        break;
+      }
+
+      server.close();
       const hr = json.vitals?.heart_rate;
       const rr = json.vitals?.respiratory_rate;
 
@@ -323,6 +407,7 @@ async function main() {
       const isRetryable = /mismatch|buffer length/i.test(lastErrMsg);
       if (isRetryable && attempt < MAX_LAUNCHER_RETRIES) {
         log(`⚠ Encoding error (attempt ${attempt}/${MAX_LAUNCHER_RETRIES}), will retry…`);
+        log(`  ${summarizeErrorMessage(lastErrMsg)}`);
         continue;
       }
     }
