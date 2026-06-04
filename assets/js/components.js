@@ -28,5 +28,32 @@
     try { await navigator.clipboard.writeText(text); return true; }
     catch { const ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); return true; }
   }
-  window.Components = { esc, tx, badge, card, grid, copyText };
+  function connectBlock(cap, lang) {
+    const md = window.capabilityToMarkdown(cap, lang);
+    const rows = [
+      ['MCP endpoint', cap.connect.mcpEndpoint],
+      ['API Key', cap.connect.apiKeyHint],
+      ['llms.txt', cap.connect.llmsTxt]
+    ].map(([k,v]) => `<div class="mc-row"><span class="mc-k">${k}</span><code>${esc(v)}</code></div>`).join('');
+    return `<div class="machine-block">
+      <div class="mc-title">${esc(window.t('detail.connect', lang))}</div>
+      ${rows}
+      <button class="mc-copy" data-md="${esc(md)}">${esc(window.t('detail.copyMd', lang))}</button>
+    </div>`;
+  }
+  function detail(cap, lang) {
+    const badges = (cap.badges||[]).map(b=>badge(b,lang)).join('');
+    const fda = cap.fda ? `<div class="fda-line"><b>${esc(window.t('badge.fda',lang))}</b> · ${esc(cap.fda.kNumber)} · ${esc(cap.fda.decisionDate)} · ${esc(cap.fda.productCode)}<br><span class="fda-applicant">${esc(cap.fda.applicant)}</span></div>` : `<div class="fda-line">${esc(window.t('badge.demo',lang))}</div>`;
+    return `<div class="detail-head"><span class="cap-icon big">${cap.icon}</span>
+        <div><h1>${tx(cap,'title',lang)}</h1><div class="detail-tag">${tx(cap,'tagline',lang)}</div><div class="cap-badges">${badges}</div></div></div>
+      <div class="detail-dual">
+        <div class="dual-human"><div class="dual-label">${esc(window.t('detail.human',lang))}</div>
+          <p>${tx(cap,'description',lang)}</p>
+          <div class="dual-sub">${esc(window.t('detail.clinical',lang))}</div><p>${tx(cap,'clinicalUse',lang)}</p>
+          ${fda}</div>
+        <div class="dual-agent"><div class="dual-label dark">${esc(window.t('detail.agent',lang))}</div>
+          ${connectBlock(cap, lang)}</div>
+      </div>`;
+  }
+  window.Components = { esc, tx, badge, card, grid, copyText, connectBlock, detail };
 })();
