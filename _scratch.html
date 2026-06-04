@@ -2,7 +2,11 @@
 <link rel="stylesheet" href="assets/css/tokens.css"><link rel="stylesheet" href="assets/css/base.css"></head>
 <body>
 <header id="site-header"></header>
-<main class="container" style="padding:40px 32px">外壳验证 / shell check</main>
+<main class="container" style="padding:40px 32px">外壳验证 / shell check
+  <div class="cap-grid" id="g" style="margin-top:24px"></div>
+</main>
 <footer id="site-footer"></footer>
 <script src="assets/js/i18n.js"></script><script src="assets/js/main.js"></script>
+<script src="assets/js/capabilities.js"></script><script src="assets/js/components.js"></script>
+<script>document.getElementById('g').innerHTML = Components.grid(window.CAPABILITIES, UII.getLang(), '.');</script>
 </body></html>
