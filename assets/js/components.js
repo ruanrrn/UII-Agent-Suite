@@ -55,5 +55,12 @@
           ${connectBlock(cap, lang)}</div>
       </div>`;
   }
-  window.Components = { esc, tx, badge, card, grid, copyText, connectBlock, detail };
+  function consoleShell(active, lang, base) {
+    const nav = [
+      ['index', 'console.dashboard'], ['services', 'console.services'],
+      ['connect', 'console.connect'], ['usage', 'console.usage']
+    ].map(([k,key]) => `<a class="cn-link${k===active?' on':''}" href="${base}/console/${k}.html">${esc(window.t(key,lang))}</a>`).join('');
+    return `<aside class="cn-side"><div class="cn-brand">UII Console</div><nav>${nav}</nav></aside>`;
+  }
+  window.Components = { esc, tx, badge, card, grid, copyText, connectBlock, detail, consoleShell };
 })();
