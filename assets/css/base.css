@@ -84,3 +84,25 @@ a{color:inherit;text-decoration:none}
 .dual-agent code{color:var(--key);background:rgba(15,215,138,.1);padding:2px 6px;border-radius:4px;word-break:break-all}
 .mc-copy{margin-top:12px;background:var(--key);color:var(--key-ink);border:0;border-radius:var(--radius-md);padding:8px 14px;font-weight:600;cursor:pointer;font-family:var(--font-body)}
 @media(max-width:760px){.detail-dual{grid-template-columns:1fr}}
+.ghost-on-dark{border-color:#333;color:#fff}
+.hero{padding:96px 0}
+.hero-eyebrow{font-family:var(--font-mono);font-size:12px;color:var(--key);margin:0 0 16px}
+.hero-title{font-family:var(--font-display);font-size:clamp(30px,5vw,56px);line-height:1.12;margin:0;max-width:18em;color:#fff}
+.hero-sub{color:var(--on-dark-muted);font-size:17px;margin:18px 0 28px;max-width:40em}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+.section h2{font-family:var(--font-display);font-size:30px;margin:0 0 28px}
+.what-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.what-card{border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px}
+.what-dot{width:10px;height:10px;border-radius:50%;background:var(--key);margin-bottom:12px}
+.what-card h3{font-size:16px;margin:0 0 6px}
+.what-card p{color:var(--ink-3);font-size:13.5px;line-height:1.6;margin:0}
+.row-between{display:flex;justify-content:space-between;align-items:baseline}
+.row-between a{color:var(--key-strong);font-weight:600}
+.steps{display:flex;gap:18px;flex-wrap:wrap;align-items:stretch}
+.step{flex:1 1 200px;border:1px solid #242424;border-radius:var(--radius-lg);padding:20px}
+.step-n{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--key);color:var(--key-ink);font-weight:700;margin-bottom:10px}
+.step h3{margin:0 0 6px;color:#fff}.step p{color:var(--on-dark-muted);font-size:13.5px;margin:0}
+.trust-band{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.trust-chip{background:var(--key);color:var(--key-ink);font-weight:700;padding:6px 12px;border-radius:var(--radius-pill)}
+.trust-k{font-family:var(--font-mono);font-size:12px;color:var(--ink-2);background:var(--bg-pill);padding:4px 9px;border-radius:var(--radius-sm)}
+.trust-note{color:var(--ink-3);font-size:13px}
