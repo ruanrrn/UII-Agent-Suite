@@ -1,0 +1,11 @@
+{
+  "name": "uii-agent-hub",
+  "version": "0.1.0",
+  "private": true,
+  "description": "联影智能 Agent Hub 概念展示门户",
+  "scripts": {
+    "test": "node --test",
+    "build:machine": "node scripts/build-machine-views.js",
+    "serve": "npx -y serve -l 5050 ."
+  }
+}
