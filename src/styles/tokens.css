@@ -1,0 +1,48 @@
+/* assets/css/tokens.css — 黑底 + 青绿单一关键色 */
+:root {
+  /* 关键色（唯一） */
+  --key: #0fd78a; /* 青绿：AI/智能体/在线/主 CTA/强调 */
+  --key-ink: #063b2a; /* 青绿底上的深色文字 */
+  --key-strong: #0a8f5d; /* 浅底上的青绿文字（保对比） */
+  --key-tint: #e6faf2; /* 浅青绿底 */
+  --key-glow: rgb(15 215 138 / 14%);
+
+  /* 中性基底 */
+  --black: #121212; /* hero/页头/深色叙事/控制台外壳 */
+  --near-black: #0d1117; /* 机器视图/代码/连接块 */
+  --white: #fff;
+  --bg-section: #fafbfc;
+  --bg-pill: #f3f4f6;
+  --border: #e5e7eb;
+  --border-strong: #d1d5db;
+  --ink: #111827;
+  --ink-2: #4b5563;
+  --ink-3: #6b7280;
+  --ink-muted: #9ca3af;
+  --on-dark: #e5e7eb;
+  --on-dark-muted: #9aa0a6;
+
+  /* 装饰色（极少量） */
+  --gold: #c59d62; /* 仅"企业版/认证"点缀 */
+  --blue: #0599c8; /* 仅次级链接等极少量 */
+
+  /* 字体 */
+  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', consolas, monospace;
+
+  /* 圆角/阴影/尺寸（沿用 v1 量纲） */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+  --shadow-card: 0 1px 3px rgb(0 0 0 / 5%), 0 1px 2px rgb(0 0 0 / 3%);
+  --shadow-card-hover: 0 6px 20px rgb(0 0 0 / 8%), 0 2px 6px rgb(0 0 0 / 4%);
+  --max-width: 1280px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}

@@ -1,0 +1,124 @@
+/* assets/css/console.css */
+.cn-wrap {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: calc(100vh - 60px);
+}
+
+.cn-side {
+  background: var(--black);
+  color: var(--on-dark);
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cn-brand {
+  font-family: var(--font-display);
+  color: #fff;
+  font-weight: 700;
+  padding: 8px 12px 16px;
+}
+
+.cn-link {
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  color: var(--on-dark-muted);
+  font-weight: 500;
+}
+
+.cn-link:hover {
+  background: #1d1d1d;
+  color: #fff;
+}
+
+.cn-link.on {
+  background: var(--key);
+  color: var(--key-ink);
+}
+
+.cn-main {
+  padding: 28px 32px;
+  background: var(--bg-section);
+}
+
+.cn-demo {
+  display: inline-block;
+  background: var(--key-tint);
+  color: var(--key-strong);
+  font-weight: 700;
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 18px;
+}
+
+.cn-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.cn-stat {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+}
+
+.cn-stat .num {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.cn-stat .lbl {
+  color: var(--ink-3);
+  font-size: 13px;
+}
+
+.cn-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.cn-table th,
+.cn-table td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13.5px;
+}
+
+.cn-table th {
+  background: var(--bg-section);
+  color: var(--ink-3);
+  font-weight: 600;
+}
+
+.cn-online {
+  color: var(--key-strong);
+  font-weight: 600;
+}
+
+.cn-online::before {
+  content: '●';
+  margin-right: 5px;
+}
+
+.cn-soon {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+@media (width <= 760px) {
+  .cn-wrap {
+    grid-template-columns: 1fr;
+  }
+}
