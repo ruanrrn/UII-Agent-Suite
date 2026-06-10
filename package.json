@@ -1,11 +1,45 @@
 {
   "name": "uii-agent-hub",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "联影智能 Agent Hub 概念展示门户",
+  "type": "module",
+  "engines": {
+    "node": ">=22.18.0",
+    "pnpm": ">=10.14.0"
+  },
   "scripts": {
-    "test": "node --test",
-    "build:machine": "node scripts/build-machine-views.js",
-    "serve": "npx -y serve -l 5050 ."
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "build:pages": "vue-tsc --noEmit && vite build --mode mock",
+    "build:pkg": "vue-tsc --noEmit && vite build --mode mock --base ./ --outDir dist-pkg",
+    "preview": "vite preview --port 5050",
+    "gen:machine": "tsx scripts/build-machine-views.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "oxlint . && stylelint \"src/**/*.{css,vue}\"",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "deploy:pages": "node scripts/deploy-pages.mjs",
+    "prepare": "husky || true"
+  },
+  "dependencies": {
+    "vue": "3.5.18",
+    "vue-i18n": "^9.14.5",
+    "vue-router": "^4.4.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.7",
+    "@vue/test-utils": "^2.4.6",
+    "husky": "8.0.3",
+    "jsdom": "^25.0.1",
+    "oxlint": "1.39.0",
+    "prettier": "3.5.3",
+    "stylelint": "16.23.0",
+    "stylelint-config-standard": "^36.0.1",
+    "tsx": "^4.19.2",
+    "typescript": "5.9.2",
+    "vite": "^7.0.0",
+    "vitest": "3.1.1",
+    "vue-tsc": "^2.1.10"
   }
 }
