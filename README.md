@@ -1,6 +1,35 @@
-# UII Agent Hub v2
+# 联影智能 · Agent Hub (v2 · Vue + Vite + TS)
 
-Vue 3 + Vite + TypeScript migration of the Agent Hub portal.
+概念展示门户。MCSF2.0 规范栈。零运行时后端（Mock 数据）。
+
+## 开发
+
+```
+pnpm install
+pnpm dev            # 本地开发（mock 数据），默认 http://localhost:5173
+pnpm test           # Vitest
+pnpm lint           # oxlint + stylelint
+```
+
+## 构建
+
+- `pnpm build:pages`：GitHub Pages 版（用 `VITE_BASE=/<仓库名>/`）
+- `pnpm pkg:zip`：可移植 Mock 包 zip（相对路径，解压即用）
+
+## 部署（阶段 1 · 本地）
+
+```
+DEPLOY_REPO=git@github.com:<org>/uii-agent-hub-site.git PAGES_BASE=/uii-agent-hub-site/ pnpm deploy:pages
+```
+
+源码推上私有仓库后，`.github/workflows/deploy.yml` 可启用自动部署（配置 `DEPLOY_TOKEN` secret 与
+`PAGES_REPO`/`PAGES_BASE` vars）。
+
+## 数据
+
+- 源：`src/data/capabilities.ts`（真实 FDA 510(k) 清单，单一数据源）
+- 机器视图 / Mock：构建期由 `pnpm gen:machine` 生成 `public/{llms.txt,catalog.json,mock/*.json}`
+- 切真后端：实现 `src/services/httpDataSource.ts`，`--mode api` 即可，页面不变
 
 ## 版本偏差
 
