@@ -1,10 +1,17 @@
 <script setup lang="ts">
+import { ref, inject, onMounted, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { CAPABILITIES } from '@/data/capabilities';
+import type { DataSource } from '@/services';
+import type { Capability } from '@/types/capability';
 import CapabilityCard from '@/components/CapabilityCard.vue';
 import TrustBand from '@/components/TrustBand.vue';
 const { t } = useI18n();
-const featured = CAPABILITIES.filter(c => c.type !== 'skill').slice(0, 6);
+const ds = inject<DataSource>('dataSource')!;
+const all = ref<Capability[]>([]);
+onMounted(async () => {
+  all.value = await ds.listCapabilities();
+});
+const featured = computed(() => all.value.filter(c => c.type !== 'skill').slice(0, 6));
 const what = ['audience', 'private', 'mcp', 'real'] as const;
 const steps = ['discover', 'activate', 'connect'] as const;
 </script>
@@ -64,7 +71,7 @@ const steps = ['discover', 'activate', 'connect'] as const;
     <section class="section">
       <div class="container">
         <h2>{{ t('section.trust') }}</h2>
-        <TrustBand />
+        <TrustBand :capabilities="all" />
       </div>
     </section>
   </main>

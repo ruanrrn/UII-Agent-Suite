@@ -1,8 +1,12 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { CAPABILITIES } from '@/data/capabilities';
+import type { Capability } from '@/types/capability';
+const props = defineProps<{ capabilities: Capability[] }>();
 const { t } = useI18n();
-const ks = [...new Set(CAPABILITIES.filter(c => c.fda).map(c => c.fda!.kNumber))];
+const ks = computed(() => [
+  ...new Set(props.capabilities.filter(c => c.fda).map(c => c.fda!.kNumber))
+]);
 </script>
 <template>
   <div class="trust-band">

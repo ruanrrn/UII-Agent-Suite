@@ -10,10 +10,17 @@ const { t } = useI18n();
 const ds = inject<DataSource>('dataSource')!;
 const cap = ref<Capability | null>(null);
 const loaded = ref(false);
-watchEffect(async () => {
+watchEffect(async onInvalidate => {
+  let cancelled = false;
+  onInvalidate(() => {
+    cancelled = true;
+  });
   loaded.value = false;
-  cap.value = await ds.getCapability(String(route.params.id));
-  loaded.value = true;
+  const result = await ds.getCapability(String(route.params.id));
+  if (!cancelled) {
+    cap.value = result;
+    loaded.value = true;
+  }
 });
 </script>
 <template>

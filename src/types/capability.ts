@@ -23,7 +23,7 @@ export interface Capability {
   type: CapType;
   modality: Modality;
   icon: string;
-  badges: string[];
+  badges: Array<'fda' | 'demo' | 'system'>;
   fda: FdaInfo | null;
   inputs: string[];
   outputs: string[];

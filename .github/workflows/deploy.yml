@@ -22,6 +22,7 @@ jobs:
         env:
           VITE_BASE: ${{ vars.PAGES_BASE }}
       - run: cp public/.nojekyll dist/.nojekyll || true
+      - run: pnpm build:pkg
       - name: Push to public pages repo
         uses: peaceiris/actions-gh-pages@v4
         with:

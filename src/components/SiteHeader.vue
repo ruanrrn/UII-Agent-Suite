@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { setLang } from '@/i18n';
 const { t, locale } = useI18n();
@@ -12,6 +12,7 @@ onMounted(() => {
   const f = () => h?.classList.toggle('scrolled', window.scrollY > 12);
   window.addEventListener('scroll', f, { passive: true });
   f();
+  onUnmounted(() => window.removeEventListener('scroll', f));
 });
 </script>
 <template>

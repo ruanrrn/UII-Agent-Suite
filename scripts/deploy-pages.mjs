@@ -15,6 +15,7 @@ run('pnpm lint');
 run('pnpm test');
 process.env.VITE_BASE = base;
 run('pnpm build:pages');
+if (!existsSync('dist/index.html')) process.exit(1);
 writeFileSync('dist/.nojekyll', '');
 run('git init -q', { cwd: 'dist' });
 run('git checkout -q -B gh-pages', { cwd: 'dist' });
@@ -27,4 +28,3 @@ run(
 );
 run(`git push -f ${repo} gh-pages`, { cwd: 'dist' });
 console.log('Deployed dist →', repo, 'gh-pages. 到产物仓库 Settings→Pages 选择 gh-pages 分支。');
-if (!existsSync('dist/index.html')) process.exit(1);
