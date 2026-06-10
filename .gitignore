@@ -4,3 +4,6 @@ dist-pkg/
 .superpowers/
 .DS_Store
 .claude/
+public/catalog.json
+public/llms.txt
+public/mock/
