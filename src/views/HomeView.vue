@@ -1,0 +1,71 @@
+<script setup lang="ts">
+import { useI18n } from 'vue-i18n';
+import { CAPABILITIES } from '@/data/capabilities';
+import CapabilityCard from '@/components/CapabilityCard.vue';
+import TrustBand from '@/components/TrustBand.vue';
+const { t } = useI18n();
+const featured = CAPABILITIES.filter(c => c.type !== 'skill').slice(0, 6);
+const what = ['audience', 'private', 'mcp', 'real'] as const;
+const steps = ['discover', 'activate', 'connect'] as const;
+</script>
+<template>
+  <main>
+    <section class="hero section dark">
+      <div class="container">
+        <p class="hero-eyebrow">{{ t('home.eyebrow') }}</p>
+        <h1 class="hero-title">{{ t('hero.title') }}</h1>
+        <p class="hero-sub">{{ t('hero.sub') }}</p>
+        <div class="hero-cta">
+          <RouterLink class="btn btn-key" to="/catalog">{{ t('cta.browse') }}</RouterLink>
+          <RouterLink class="btn btn-ghost ghost-on-dark" to="/console">{{
+            t('nav.console')
+          }}</RouterLink>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2>{{ t('section.what') }}</h2>
+        <div class="what-grid">
+          <div v-for="w in what" :key="w" class="what-card">
+            <div class="what-dot"></div>
+            <h3>{{ t(`what.${w}.title`) }}</h3>
+            <p>{{ t(`what.${w}.desc`) }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="background: var(--bg-section)">
+      <div class="container">
+        <div class="row-between">
+          <h2>{{ t('section.featured') }}</h2>
+          <RouterLink to="/catalog">{{ t('home.viewAll') }}</RouterLink>
+        </div>
+        <div class="cap-grid"><CapabilityCard v-for="c in featured" :key="c.id" :cap="c" /></div>
+      </div>
+    </section>
+
+    <section class="section dark">
+      <div class="container">
+        <h2>{{ t('nav.how') }}</h2>
+        <div class="steps">
+          <div v-for="(s, i) in steps" :key="s" class="step">
+            <span class="step-n">{{ i + 1 }}</span>
+            <h3>{{ t(`step.${s}.title`) }}</h3>
+            <p>{{ t(`step.${s}.desc`) }}</p>
+          </div>
+          <RouterLink class="btn btn-key" to="/how-it-works">{{ t('nav.how') }} →</RouterLink>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2>{{ t('section.trust') }}</h2>
+        <TrustBand />
+      </div>
+    </section>
+  </main>
+</template>
