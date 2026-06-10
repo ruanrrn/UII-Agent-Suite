@@ -1,6 +1,7 @@
 node_modules/
 dist/
 dist-pkg/
+*.zip
 .superpowers/
 .DS_Store
 .claude/

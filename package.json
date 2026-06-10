@@ -19,6 +19,7 @@
     "lint": "oxlint . && stylelint \"src/**/*.{css,vue}\"",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "pkg:zip": "pnpm build:pkg && node scripts/zip-pkg.mjs",
     "deploy:pages": "node scripts/deploy-pages.mjs",
     "prepare": "husky || true"
   },
