@@ -1,0 +1,18 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["unicorn", "typescript", "oxc"],
+  "env": { "builtin": true },
+  "categories": { "correctness": "error", "suspicious": "error" },
+  "rules": {
+    "no-unused-vars": "allow",
+    "unicorn/no-empty-file": "allow",
+    "typescript/no-extraneous-class": "allow",
+    "preserve-caught-error": "allow",
+    "typescript/no-this-alias": "allow",
+    "unicorn/consistent-function-scoping": "allow",
+    "unicorn/no-array-sort": "allow",
+    "no-new-array": "allow",
+    "unicorn/prefer-add-event-listener": "allow"
+  },
+  "ignorePatterns": ["dist", "dist-pkg", "public", "node_modules"]
+}
