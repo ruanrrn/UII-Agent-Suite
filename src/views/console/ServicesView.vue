@@ -17,12 +17,21 @@ const services = computed(() => ov.value?.services ?? []);
   <ConsoleShell active="services">
     <h1>{{ t('console.services') }}</h1>
     <table class="cn-table">
-      <thead><tr><th>{{ t('col.capability') }}</th><th>{{ t('col.modality') }}</th><th>{{ t('col.status') }}</th><th>{{ t('col.expires') }}</th></tr></thead>
+      <thead>
+        <tr>
+          <th>{{ t('col.capability') }}</th>
+          <th>{{ t('col.modality') }}</th>
+          <th>{{ t('col.status') }}</th>
+          <th>{{ t('col.expires') }}</th>
+        </tr>
+      </thead>
       <tbody>
         <tr v-for="s in services" :key="s.id">
           <td>{{ s.title[L()] }}</td>
           <td>{{ s.modality }}</td>
-          <td :class="s.status === 'expiring' ? 'cn-soon' : 'cn-online'">{{ s.status === 'expiring' ? t('console.expiring') : t('status.online') }}</td>
+          <td :class="s.status === 'expiring' ? 'cn-soon' : 'cn-online'">
+            {{ s.status === 'expiring' ? t('console.expiring') : t('status.online') }}
+          </td>
           <td>2027-01-01</td>
         </tr>
       </tbody>

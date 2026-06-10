@@ -16,7 +16,9 @@ onMounted(async () => {
   <ConsoleShell active="connect">
     <h1>{{ t('console.connect') }}</h1>
     <p style="color: var(--ink-3); max-width: 46em">{{ t('connect.lead') }}</p>
-    <div style="display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))">
+    <div
+      style="display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))"
+    >
       <div v-for="c in caps" :key="c.id"><ConnectBlock :cap="c" /></div>
     </div>
   </ConsoleShell>

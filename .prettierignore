@@ -4,13 +4,5 @@ public/llms.txt
 public/catalog.json
 public/mock
 node_modules
-docs/references
 pnpm-lock.yaml
-
-# v0 files (vanilla JS portal, do not reformat)
-assets/
-console/
-scripts/*.js
-tests/*.js
-*.html
-docs/superpowers/
+docs
