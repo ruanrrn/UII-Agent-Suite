@@ -12,9 +12,9 @@ test('gen:machine writes catalog.json, llms.txt, mock JSON', () => {
   ])
     expect(existsSync(f), f).toBe(true);
   const cat = JSON.parse(readFileSync('public/catalog.json', 'utf8'));
-  expect(cat.version).toBe(1);
-  expect(cat.items.length).toBe(10);
+  expect(cat.version).toBe(2);
+  expect(cat.items.length).toBe(11);
   expect(readFileSync('public/llms.txt', 'utf8')).toContain('K242292');
   const mock = JSON.parse(readFileSync('public/mock/capabilities.json', 'utf8'));
-  expect(mock.length).toBe(10);
+  expect(mock.length).toBe(11);
 });

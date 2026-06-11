@@ -17,9 +17,10 @@ async function copy() {
   setTimeout(() => (label.value = t('detail.copyMd')), 1500);
 }
 const rows = () => [
-  ['MCP endpoint', props.cap.connect.mcpEndpoint],
-  ['API Key', props.cap.connect.apiKeyHint],
-  ['llms.txt', props.cap.connect.llmsTxt]
+  ['MCP endpoint', props.cap.mcp.endpointUrl],
+  ['Server key', props.cap.mcp.serverKey],
+  // eslint-disable-next-line no-template-curly-in-string
+  ['API Key', '${UII_API_KEY}']
 ];
 </script>
 <template>

@@ -181,6 +181,7 @@ a {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
+  cursor: pointer;
   transition:
     transform 0.2s,
     box-shadow 0.2s,
@@ -239,10 +240,22 @@ a {
   margin: 0 0 4px;
 }
 
-.cap-tagline {
+.cap-series {
+  font-size: 11px;
+  font-weight: 600;
   color: var(--ink-2);
-  font-size: 13px;
-  margin-bottom: 10px;
+  background: var(--bg-pill);
+  border-radius: var(--radius-pill);
+  padding: 3px 10px;
+}
+
+.cap-use-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 4px;
 }
 
 .cap-desc {
@@ -266,14 +279,27 @@ a {
   color: var(--ink-muted);
 }
 
-.cap-modality {
-  background: var(--bg-pill);
-  padding: 2px 8px;
-  border-radius: var(--radius-sm);
+.fda-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--key-ink);
+  background: var(--key);
+  border-radius: var(--radius-pill);
+  padding: 5px 12px;
+  text-decoration: none;
 }
 
-.cap-k {
-  color: var(--key-strong);
+.fda-pill:hover {
+  filter: brightness(0.95);
+  text-decoration: underline;
+}
+
+.fda-pill .fda-k {
+  font-family: var(--font-mono);
+  font-weight: 600;
 }
 
 .empty {
@@ -406,82 +432,229 @@ a {
   max-width: 980px;
 }
 
-.detail-head {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-  margin-bottom: 28px;
-}
-
 .cap-icon.big {
   font-size: 40px;
 }
 
-.detail-head h1 {
-  font-family: var(--font-display);
-  font-size: 30px;
-  margin: 0 0 4px;
-}
-
-.detail-tag {
-  color: var(--ink-2);
-  margin-bottom: 8px;
-}
-
-.detail-dual {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.dual-human,
-.dual-agent {
+/* detail = MCP server spec page */
+.detail-frame {
+  background: #fff;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 20px;
+  overflow: hidden;
 }
 
-.dual-agent {
-  background: var(--near-black);
-  border-color: #1f2937;
-  color: var(--on-dark);
+.detail-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 22px 24px;
+  border-bottom: 1px solid var(--border);
 }
 
-.dual-label {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--ink-3);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 12px;
+.detail-id {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
-.dual-label.dark {
-  color: var(--key);
+.detail-id h1 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  margin: 0;
 }
 
-.dual-sub {
-  font-size: 12px;
-  color: var(--ink-muted);
-  margin-top: 14px;
+.tabbar {
+  display: flex;
+  gap: 2px;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-section);
+  flex-wrap: wrap;
+}
+
+.tab {
+  font-size: 13.5px;
   font-weight: 600;
+  color: var(--ink-3);
+  padding: 13px 16px;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
 }
 
-.fda-line {
-  margin-top: 16px;
-  padding: 12px;
-  background: var(--key-tint);
-  border-radius: var(--radius-md);
-  font-size: 12.5px;
+.tab:hover {
+  color: var(--ink);
+}
+
+.tab.on {
+  color: var(--ink);
+  border-bottom-color: var(--key);
+}
+
+.tab-n {
   color: var(--key-strong);
 }
 
-.fda-applicant {
-  color: var(--ink-3);
+.detail-panels {
+  padding: 24px;
 }
 
+.tab-lead {
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.tab-lead.mt {
+  margin-top: 22px;
+}
+
+.ov-text {
+  color: var(--ink-2);
+  line-height: 1.7;
+  margin: 0;
+  max-width: 64em;
+}
+
+.ov-shot {
+  height: 200px;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  background: repeating-linear-gradient(45deg, #fafbfc, #fafbfc 10px, #f2f4f6 10px, #f2f4f6 20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-muted);
+  font-size: 13px;
+}
+
+.spec-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+
+.spec-name {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--key-ink);
+  background: var(--key-tint);
+  border: 1px solid #c8efdd;
+  border-radius: var(--radius-sm);
+  padding: 2px 9px;
+}
+
+.spec-desc {
+  font-size: 13px;
+  color: var(--ink-2);
+  margin: 9px 0 8px;
+  line-height: 1.6;
+}
+
+.spec-row {
+  display: flex;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--ink-3);
+  padding: 3px 0;
+}
+
+.spec-k {
+  color: var(--ink-muted);
+  min-width: 48px;
+}
+
+.spec-row code {
+  font-family: var(--font-mono);
+  background: var(--bg-pill);
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+
+.tab-note,
+.cfg-note {
+  font-size: 12px;
+  color: var(--ink-muted);
+  margin-top: 12px;
+}
+
+.cfg-code {
+  background: var(--near-black);
+  color: var(--on-dark);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.65;
+  overflow: auto;
+  margin: 0;
+}
+
+.cfg-acts {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.cfg-disc {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  padding: 11px 14px;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  background: var(--bg-section);
+  font-size: 12.5px;
+  color: var(--ink-2);
+}
+
+.cfg-disc code {
+  font-family: var(--font-mono);
+  background: var(--bg-pill);
+  border-radius: 4px;
+  padding: 2px 7px;
+}
+
+.detail-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 14px 24px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-section);
+}
+
+.fda-pill.amber {
+  color: #b45309;
+  background: #fff3df;
+}
+
+.foot-link {
+  font-size: 13px;
+  color: var(--ink-2);
+  font-weight: 600;
+}
+
+/* console connect cards (dark machine block) */
 .machine-block {
   font-family: var(--font-mono);
+  background: var(--near-black);
+  border: 1px solid #1f2937;
+  border-radius: var(--radius-lg);
+  color: var(--on-dark);
+  padding: 20px;
 }
 
 .mc-title {
@@ -502,7 +675,7 @@ a {
   min-width: 96px;
 }
 
-.dual-agent code {
+.machine-block code {
   color: var(--key);
   background: rgb(15 215 138 / 10%);
   padding: 2px 6px;
@@ -523,8 +696,9 @@ a {
 }
 
 @media (width <= 760px) {
-  .detail-dual {
-    grid-template-columns: 1fr;
+  .detail-top {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 

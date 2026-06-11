@@ -1,40 +1,50 @@
 // src/lib/catalogFormat.ts —— 纯函数；浏览器"复制成 markdown"与 Node 构建共用
 import type { Capability, Lang } from '@/types/capability';
+import { fdaPdfUrl } from './fda';
 
 export function capabilityToMarkdown(c: Capability, lang: Lang = 'zh'): string {
-  const tx = (f: 'title' | 'tagline' | 'description' | 'clinicalUse') =>
+  const tx = (f: 'title' | 'tagline' | 'description' | 'clinicalUse' | 'overview') =>
     c.i18n[f][lang] || c.i18n[f].zh;
   const lines = [
     `# ${tx('title')} — ${tx('tagline')}`,
     '',
-    tx('description'),
+    tx('overview'),
     '',
-    `- Type: ${c.type}`,
     `- Modality: ${c.modality}`,
     `- Clinical use: ${tx('clinicalUse')}`
   ];
   if (c.fda)
     lines.push(
-      `- FDA 510(k): ${c.fda.kNumber} (${c.fda.decisionDate}, ${c.fda.productCode}) — ${c.fda.applicant}`
+      `- FDA 510(k): ${c.fda.kNumber} (${c.fda.decisionDate}) — ${fdaPdfUrl(c.fda.kNumber)}`
     );
   else lines.push('- Status: demo, not a medical device');
-  lines.push(`- MCP endpoint: ${c.connect.mcpEndpoint}`, `- llms.txt: ${c.connect.llmsTxt}`);
+  lines.push(
+    `- MCP endpoint: ${c.mcp.endpointUrl}`,
+    `- MCP server key: ${c.mcp.serverKey}`,
+    `- Tools: ${c.mcp.tools.map(t => t.name).join(', ')}`,
+    '- Discovery: /llms.txt · /catalog.json'
+  );
   return lines.join('\n');
 }
 
 export function buildCatalogJson(caps: Capability[]) {
   return {
-    version: 1 as const,
+    version: 2 as const,
     name: '联影智能 · Agent Hub',
     items: caps.map(c => ({
       id: c.id,
       type: c.type,
       modality: c.modality,
+      series: c.series ?? null,
       title: c.i18n.title,
       tagline: c.i18n.tagline,
       description: c.i18n.description,
-      fda: c.fda,
-      mcpEndpoint: c.connect.mcpEndpoint
+      fda: c.fda ? { ...c.fda, pdfUrl: fdaPdfUrl(c.fda.kNumber) } : null,
+      mcp: {
+        endpointUrl: c.mcp.endpointUrl,
+        serverKey: c.mcp.serverKey,
+        tools: c.mcp.tools.map(t => t.name)
+      }
     }))
   };
 }
@@ -54,7 +64,7 @@ export function buildLlmsTxt(caps: Capability[]): string {
       ? ` — FDA ${c.fda.kNumber} (${c.fda.decisionDate})`
       : ' — demo (not a device)';
     out.push(
-      `- **${c.i18n.title.en}** [${c.type}/${c.modality}]${fda}: ${c.i18n.description.en} MCP: ${c.connect.mcpEndpoint}`
+      `- **${c.i18n.title.en}** [${c.type}/${c.modality}]${fda}: ${c.i18n.description.en} MCP: ${c.mcp.endpointUrl}`
     );
   }
   out.push('');

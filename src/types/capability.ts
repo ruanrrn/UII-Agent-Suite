@@ -13,22 +13,38 @@ export interface FdaInfo {
   productCodeName: string;
   applicant: string;
 }
-export interface CapConnect {
-  mcpEndpoint: string;
-  apiKeyHint: string;
-  llmsTxt: string;
+export interface McpToolSpec {
+  name: string;
+  desc: Bi;
+  input: string;
+  returns: string;
+}
+export interface McpPromptSpec {
+  name: string;
+  desc: Bi;
+  args: string;
+}
+export interface McpResourceSpec {
+  uri: string;
+  desc: Bi;
+}
+export interface McpSpec {
+  serverKey: string;
+  endpointUrl: string;
+  tools: McpToolSpec[];
+  prompts: McpPromptSpec[];
+  resources: McpResourceSpec[];
 }
 export interface Capability {
   id: string;
   type: CapType;
   modality: Modality;
   icon: string;
-  badges: Array<'fda' | 'demo' | 'system'>;
+  series?: string;
   fda: FdaInfo | null;
-  inputs: string[];
-  outputs: string[];
-  connect: CapConnect;
-  i18n: { title: Bi; tagline: Bi; description: Bi; clinicalUse: Bi };
+  brochureUrl?: string;
+  mcp: McpSpec;
+  i18n: { title: Bi; tagline: Bi; description: Bi; clinicalUse: Bi; overview: Bi };
 }
 export interface ConsoleService {
   id: string;

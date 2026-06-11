@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import type { DataSource } from '@/services';
 import type { Capability } from '@/types/capability';
-import DualRail from '@/components/DualRail.vue';
+import CapabilityDetail from '@/components/CapabilityDetail.vue';
 const route = useRoute();
 const { t } = useI18n();
 const ds = inject<DataSource>('dataSource')!;
@@ -25,7 +25,7 @@ watchEffect(async onInvalidate => {
 </script>
 <template>
   <main class="container detail-wrap">
-    <DualRail v-if="cap" :cap="cap" />
+    <CapabilityDetail v-if="cap" :cap="cap" />
     <p v-else-if="loaded" class="empty">{{ t('detail.notfound') }}</p>
   </main>
 </template>

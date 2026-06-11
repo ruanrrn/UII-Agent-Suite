@@ -3,19 +3,23 @@ import { capabilityToMarkdown, buildCatalogJson, buildLlmsTxt } from '@/lib/cata
 import { CAPABILITIES } from '@/data/capabilities';
 const ich = CAPABILITIES.find(c => c.id === 'uai-easy-triage-ich')!;
 
-test('markdown has title, K-number, MCP', () => {
+test('markdown has title, K-number + pdf url, MCP endpoint and tools', () => {
   const md = capabilityToMarkdown(ich, 'en');
   expect(md).toMatch(/uAI Easy Triage ICH/);
   expect(md).toMatch(/K242292/);
-  expect(md).toMatch(/mcp:\/\/hub\.uii-ai\.example\/ich-triage/);
+  expect(md).toContain('https://www.accessdata.fda.gov/cdrh_docs/pdf24/K242292.pdf');
+  expect(md).toContain('https://hub.uii-ai.example/mcp/ich-triage');
+  expect(md).toContain('detect_ich');
 });
-test('catalog json stable shape', () => {
+test('catalog json v2 stable shape', () => {
   const cat = buildCatalogJson(CAPABILITIES);
-  expect(cat.version).toBe(1);
-  expect(cat.items.length).toBe(10);
+  expect(cat.version).toBe(2);
+  expect(cat.items.length).toBe(11);
   const it = cat.items.find(i => i.id === 'uai-easy-triage-ich')!;
   expect(it.fda!.kNumber).toBe('K242292');
-  expect(it.mcpEndpoint).toBeTruthy();
+  expect(it.fda!.pdfUrl).toContain('K242292.pdf');
+  expect(it.mcp.endpointUrl).toBeTruthy();
+  expect(it.mcp.tools).toContain('detect_ich');
 });
 test('llms.txt lists every K-number', () => {
   const txt = buildLlmsTxt(CAPABILITIES);
