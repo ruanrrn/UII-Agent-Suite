@@ -24,7 +24,7 @@ watchEffect(async onInvalidate => {
 });
 </script>
 <template>
-  <main class="container detail-wrap">
+  <main class="detail-fill">
     <CapabilityDetail v-if="cap" :cap="cap" />
     <p v-else-if="loaded" class="empty">{{ t('detail.notfound') }}</p>
   </main>

@@ -4,8 +4,8 @@ import { CAPABILITIES } from '@/data/capabilities';
 const TYPES = ['clinical-ai', 'platform', 'reconstruction', 'skill'];
 const MODS = ['CT', 'MR', 'PET', 'X-ray', 'Cross'];
 
-test('exactly 11 capabilities, unique kebab ids', () => {
-  expect(CAPABILITIES.length).toBe(11);
+test('exactly 5 capabilities, unique kebab ids', () => {
+  expect(CAPABILITIES.length).toBe(5);
   const ids = CAPABILITIES.map(c => c.id);
   expect(new Set(ids).size).toBe(ids.length);
   ids.forEach(id => expect(id).toMatch(/^[a-z0-9-]+$/));
@@ -43,10 +43,12 @@ test('every capability exposes an MCP spec', () => {
     }
   }
 });
-test('flagship aortic entry uses real K240411', () => {
-  const a = CAPABILITIES.find(c => c.id === 'uai-discover-aortic-dissection')!;
-  expect(a.series).toBe('uAI Discover');
-  expect(a.fda!.kNumber).toBe('K240411');
-  expect(a.mcp.prompts.length).toBe(2);
-  expect(a.mcp.resources.length).toBe(3);
+test('all entries are uAI Portal apps cleared under K240411', () => {
+  for (const c of CAPABILITIES) {
+    expect(c.series).toBe('uAI Portal');
+    expect(c.fda!.kNumber).toBe('K240411');
+  }
+  const aorta = CAPABILITIES.find(c => c.id === 'uai-aorta-analysis')!;
+  expect(aorta.mcp.prompts.length).toBe(2);
+  expect(aorta.mcp.resources.length).toBe(3);
 });

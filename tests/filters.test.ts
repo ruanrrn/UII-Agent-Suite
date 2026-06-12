@@ -3,7 +3,7 @@ import { filterCapabilities } from '@/lib/filters';
 import { CAPABILITIES } from '@/data/capabilities';
 
 test('no filters → all', () => {
-  expect(filterCapabilities(CAPABILITIES, {}).length).toBe(11);
+  expect(filterCapabilities(CAPABILITIES, {}).length).toBe(5);
 });
 test('type filter', () => {
   const r = filterCapabilities(CAPABILITIES, { type: 'clinical-ai' });
@@ -11,15 +11,15 @@ test('type filter', () => {
   expect(r.every(c => c.type === 'clinical-ai')).toBe(true);
 });
 test('modality filter', () => {
-  expect(
-    filterCapabilities(CAPABILITIES, { modality: 'PET' }).every(c => c.modality === 'PET')
-  ).toBe(true);
+  expect(filterCapabilities(CAPABILITIES, { modality: 'CT' }).every(c => c.modality === 'CT')).toBe(
+    true
+  );
 });
 test('bilingual query', () => {
   expect(
-    filterCapabilities(CAPABILITIES, { q: 'ICH' }).some(c => c.id === 'uai-easy-triage-ich')
+    filterCapabilities(CAPABILITIES, { q: 'Coronary' }).some(c => c.id === 'uai-coronary-analysis')
   ).toBe(true);
   expect(
-    filterCapabilities(CAPABILITIES, { q: '肋骨' }).some(c => c.id === 'uai-easytriage-rib')
+    filterCapabilities(CAPABILITIES, { q: '主动脉' }).some(c => c.id === 'uai-aorta-analysis')
   ).toBe(true);
 });

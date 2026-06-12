@@ -12,6 +12,10 @@ onMounted(async () => {
 });
 const L = () => locale.value as 'zh' | 'en';
 const services = computed(() => ov.value?.services ?? []);
+const DAY = 86400000;
+function daysUsed(activatedAt: string) {
+  return Math.max(0, Math.floor((Date.now() - new Date(activatedAt).getTime()) / DAY));
+}
 </script>
 <template>
   <ConsoleShell active="services">
@@ -22,6 +26,7 @@ const services = computed(() => ov.value?.services ?? []);
           <th>{{ t('col.capability') }}</th>
           <th>{{ t('col.modality') }}</th>
           <th>{{ t('col.status') }}</th>
+          <th class="cn-num">{{ t('col.daysUsed') }}</th>
           <th>{{ t('col.expires') }}</th>
         </tr>
       </thead>
@@ -32,7 +37,8 @@ const services = computed(() => ov.value?.services ?? []);
           <td :class="s.status === 'expiring' ? 'cn-soon' : 'cn-online'">
             {{ s.status === 'expiring' ? t('console.expiring') : t('status.online') }}
           </td>
-          <td>2027-01-01</td>
+          <td class="cn-num">{{ daysUsed(s.activatedAt) }} {{ t('unit.days') }}</td>
+          <td :class="{ 'cn-soon': s.status === 'expiring' }">{{ s.expires }}</td>
         </tr>
       </tbody>
     </table>

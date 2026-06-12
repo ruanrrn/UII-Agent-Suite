@@ -42,9 +42,7 @@ async function copyMd() {
 </script>
 <template>
   <div>
-    <div class="tab-lead">{{ t('detail.configLead') }}</div>
-    <pre class="cfg-code">{{ cfg }}</pre>
-    <div class="cfg-acts">
+    <div class="cfg-acts top">
       <button class="btn btn-key" type="button" @click="copyCfg">
         {{ cfgLabel || t('detail.copyConfig') }}
       </button>
@@ -52,6 +50,7 @@ async function copyMd() {
         {{ mdLabel || t('detail.copyMd') }}
       </button>
     </div>
+    <pre class="cfg-code">{{ cfg }}</pre>
     <p class="cfg-note">{{ t('detail.configNote') }}</p>
     <div class="cfg-disc">
       <b>🔎 {{ t('detail.discoveryLabel') }}</b>

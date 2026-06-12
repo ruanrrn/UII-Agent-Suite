@@ -1,30 +1,28 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue';
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { setLang } from '@/i18n';
+defineProps<{ scrolled?: boolean }>();
 const { t, locale } = useI18n();
-const other = () => (locale.value === 'zh' ? 'en' : '中文');
+const logoSrc = computed(
+  () => `${import.meta.env.BASE_URL}brand/uii-logo-${locale.value === 'zh' ? 'zh' : 'en'}.png`
+);
+const other = () => (locale.value === 'zh' ? 'en' : 'zh');
 function toggle() {
   setLang(locale.value === 'zh' ? 'en' : 'zh');
 }
-onMounted(() => {
-  const h = document.getElementById('site-header');
-  const f = () => h?.classList.toggle('scrolled', window.scrollY > 12);
-  window.addEventListener('scroll', f, { passive: true });
-  f();
-  onUnmounted(() => window.removeEventListener('scroll', f));
-});
 </script>
 <template>
-  <header id="site-header">
+  <header id="site-header" :class="{ scrolled }">
     <div class="container nav-inner">
       <RouterLink class="brand" to="/">
-        <span class="brand-mark">UII</span><span class="brand-text">联影智能 · Agent Hub</span>
+        <img class="brand-logo" :src="logoSrc" :alt="t('brand.name')" />
+        <span class="brand-suffix">{{ t('brand.suffix') }}</span>
       </RouterLink>
       <nav class="nav-links">
+        <RouterLink class="nav-home" to="/">{{ t('nav.home') }}</RouterLink>
         <RouterLink to="/catalog">{{ t('nav.market') }}</RouterLink>
-        <RouterLink to="/how-it-works">{{ t('nav.how') }}</RouterLink>
-        <RouterLink class="nav-cta" to="/console">{{ t('nav.console') }}</RouterLink>
+        <RouterLink to="/console">{{ t('nav.console') }}</RouterLink>
         <button class="lang-toggle" type="button" @click="toggle">{{ other() }}</button>
       </nav>
     </div>

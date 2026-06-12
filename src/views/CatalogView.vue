@@ -19,7 +19,7 @@ const result = computed(() =>
 );
 </script>
 <template>
-  <main class="container catalog-wrap">
+  <main class="catalog-full">
     <div class="catalog-head">
       <h1>{{ t('catalog.title') }}</h1>
       <input v-model="q" class="cat-search" type="search" :placeholder="t('catalog.search')" />
@@ -39,7 +39,7 @@ const result = computed(() =>
           </button>
         </div>
       </aside>
-      <section>
+      <section class="catalog-results">
         <p class="cat-count">{{ result.length }} {{ t('catalog.count') }}</p>
         <div class="cap-grid"><CapabilityCard v-for="c in result" :key="c.id" :cap="c" /></div>
       </section>

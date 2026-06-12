@@ -12,7 +12,6 @@ const nav: Array<['index' | 'services' | 'connect' | 'usage', string, string]> =
 <template>
   <div class="cn-wrap">
     <aside class="cn-side">
-      <div class="cn-brand">UII Console</div>
       <nav>
         <RouterLink
           v-for="[k, to, key] in nav"
@@ -25,8 +24,7 @@ const nav: Array<['index' | 'services' | 'connect' | 'usage', string, string]> =
       </nav>
     </aside>
     <main class="cn-main">
-      <span class="cn-demo">{{ t('console.demo') }}</span
-      ><slot />
+      <slot />
     </main>
   </div>
 </template>

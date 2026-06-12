@@ -2,6 +2,7 @@ node_modules/
 dist/
 dist-pkg/
 *.zip
+*.7z
 .superpowers/
 .worktrees/
 .DS_Store

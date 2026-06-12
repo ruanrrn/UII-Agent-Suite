@@ -13,15 +13,12 @@ onMounted(async () => {
 });
 const featured = computed(() => all.value.filter(c => c.type !== 'skill').slice(0, 6));
 const what = ['audience', 'private', 'mcp', 'real'] as const;
-const steps = ['discover', 'activate', 'connect'] as const;
 </script>
 <template>
   <main>
-    <section class="hero section dark">
+    <section class="hero section">
       <div class="container">
-        <p class="hero-eyebrow">{{ t('home.eyebrow') }}</p>
         <h1 class="hero-title">{{ t('hero.title') }}</h1>
-        <p class="hero-sub">{{ t('hero.sub') }}</p>
         <div class="hero-cta">
           <RouterLink class="btn btn-key" to="/catalog">{{ t('cta.browse') }}</RouterLink>
           <RouterLink class="btn btn-ghost ghost-on-dark" to="/console">{{
@@ -51,20 +48,6 @@ const steps = ['discover', 'activate', 'connect'] as const;
           <RouterLink to="/catalog">{{ t('home.viewAll') }}</RouterLink>
         </div>
         <div class="cap-grid"><CapabilityCard v-for="c in featured" :key="c.id" :cap="c" /></div>
-      </div>
-    </section>
-
-    <section class="section dark">
-      <div class="container">
-        <h2>{{ t('nav.how') }}</h2>
-        <div class="steps">
-          <div v-for="(s, i) in steps" :key="s" class="step">
-            <span class="step-n">{{ i + 1 }}</span>
-            <h3>{{ t(`step.${s}.title`) }}</h3>
-            <p>{{ t(`step.${s}.desc`) }}</p>
-          </div>
-          <RouterLink class="btn btn-key" to="/how-it-works">{{ t('nav.how') }} →</RouterLink>
-        </div>
       </div>
     </section>
 

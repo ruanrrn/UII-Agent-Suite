@@ -2,21 +2,33 @@
 .cn-wrap {
   display: grid;
   grid-template-columns: 220px 1fr;
-  min-height: calc(100vh - 60px);
+  grid-template-rows: minmax(0, 1fr);
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
 }
 
-.cn-side {
-  background: var(--black);
-  color: var(--on-dark);
-  padding: 20px 12px;
+.cn-side nav {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
+.cn-side {
+  background: var(--white);
+  color: var(--ink-2);
+  border-right: 1px solid var(--border);
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-y: auto;
+  min-height: 0;
+}
+
 .cn-brand {
   font-family: var(--font-display);
-  color: #fff;
+  color: var(--ink);
   font-weight: 700;
   padding: 8px 12px 16px;
 }
@@ -24,29 +36,34 @@
 .cn-link {
   padding: 10px 12px;
   border-radius: var(--radius-md);
-  color: var(--on-dark-muted);
+  color: var(--ink-2);
   font-weight: 500;
 }
 
 .cn-link:hover {
-  background: #1d1d1d;
-  color: #fff;
+  background: var(--brand-tint);
+  color: var(--brand);
 }
 
 .cn-link.on {
-  background: var(--key);
-  color: var(--key-ink);
+  background: var(--brand);
+  color: #fff;
 }
 
 .cn-main {
   padding: 28px 32px;
   background: var(--bg-section);
+  overflow-y: auto;
+  min-height: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+  scrollbar-gutter: stable;
 }
 
 .cn-demo {
   display: inline-block;
-  background: var(--key-tint);
-  color: var(--key-strong);
+  background: var(--brand-tint);
+  color: var(--brand);
   font-weight: 700;
   font-size: 12px;
   padding: 4px 12px;
@@ -103,13 +120,14 @@
 }
 
 .cn-online {
-  color: var(--key-strong);
+  color: var(--brand);
   font-weight: 600;
 }
 
 .cn-online::before {
   content: '●';
   margin-right: 5px;
+  color: var(--key);
 }
 
 .cn-soon {
@@ -117,8 +135,259 @@
   font-weight: 600;
 }
 
+.cn-num {
+  white-space: nowrap;
+  text-align: right;
+}
+
+.cn-table th.cn-actions,
+.cn-table td.cn-actions {
+  text-align: right;
+  width: 64px;
+  padding-right: 14px;
+}
+
+/* Row action menu (kebab) */
+.rowmenu {
+  display: inline-block;
+}
+
+.rowmenu-btn {
+  border: 1px solid transparent;
+  background: none;
+  color: var(--ink-3);
+  font-size: 18px;
+  line-height: 1;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.rowmenu-btn:hover,
+.rowmenu-btn[aria-expanded='true'] {
+  background: var(--brand-tint);
+  color: var(--brand);
+}
+
+.rowmenu-pop {
+  position: fixed;
+  z-index: 1000;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rowmenu-item {
+  text-align: left;
+  background: none;
+  border: 0;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--ink-2);
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.rowmenu-item:hover {
+  background: var(--bg-section);
+  color: var(--brand);
+}
+
+.rowmenu-item.danger {
+  color: var(--gold);
+}
+
+/* Account credentials card */
+.cred-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  margin: 18px 0 24px;
+  box-shadow: var(--shadow-card);
+}
+
+.cred-head {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+.cred-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  font-size: 13px;
+}
+
+.cred-k {
+  color: var(--ink-3);
+  min-width: 84px;
+}
+
+.cred-val {
+  font-family: var(--font-mono);
+  background: var(--bg-pill);
+  color: var(--ink);
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+}
+
+.cred-key {
+  /* fixed width so toggling reveal/hide never shifts the row buttons */
+  width: 38ch;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  color: var(--brand-strong);
+  background: var(--brand-tint);
+}
+
+.cred-btn {
+  border: 1px solid var(--border-strong);
+  background: #fff;
+  color: var(--ink-2);
+  border-radius: var(--radius-md);
+  padding: 5px 12px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.cred-btn:hover:not(:disabled) {
+  border-color: var(--brand);
+  color: var(--brand);
+}
+
+.cred-btn.primary {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+}
+
+.cred-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cred-note {
+  color: var(--ink-muted);
+  font-size: 12px;
+  margin: 6px 0 0;
+}
+
+.connect-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  align-items: stretch;
+}
+
+/* equal-height cards: fill the grid cell, pin copy button to the bottom */
+.connect-grid .machine-block {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.connect-grid .machine-block .mc-copy {
+  margin-top: auto;
+}
+
+.chart-panel {
+  margin-bottom: 4px;
+}
+
+.chart-panel .lbl {
+  margin-bottom: 14px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+
+/* usage: KPI delta + quota progress */
+.cn-delta {
+  color: var(--key-strong);
+  font-weight: 600;
+}
+
+.quota-bar {
+  margin-top: 10px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-pill);
+  overflow: hidden;
+}
+
+.quota-fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--brand);
+}
+
+.quota-sub {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--ink-3);
+  font-family: var(--font-mono);
+}
+
+/* usage: per-capability cost table */
+.usage-table {
+  margin-top: 20px;
+}
+
+.usage-table tfoot td {
+  font-weight: 700;
+  color: var(--ink);
+  border-bottom: 0;
+  background: var(--bg-section);
+}
+
+.usage-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.usage-note {
+  color: var(--ink-muted);
+  font-size: 12px;
+  margin-top: 16px;
+}
+
 @media (width <= 760px) {
+  /* stack the sidebar and let the whole console scroll as one column */
   .cn-wrap {
     grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    height: auto;
+    overflow: visible;
+  }
+
+  .cn-side,
+  .cn-main {
+    overflow: visible;
+    min-height: 0;
+  }
+
+  .app-main.is-fill:has(.cn-wrap) {
+    overflow-y: auto;
   }
 }

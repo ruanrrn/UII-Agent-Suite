@@ -17,7 +17,6 @@ test('core keys present', () => {
     'cta.browse',
     'hero.title',
     'badge.fda',
-    'console.demo',
     'detail.tab.config',
     'filter.modality'
   ]) {

@@ -1,30 +1,38 @@
-/* assets/css/tokens.css — 黑底 + 青绿单一关键色 */
+/* assets/css/tokens.css — 联影浅色企业风：蓝主色 + 青绿 AI 强调 */
 :root {
-  /* 关键色（唯一） */
-  --key: #0fd78a; /* 青绿：AI/智能体/在线/主 CTA/强调 */
+  /* 主品牌色（联影蓝） */
+  --brand: #06c; /* 主色：CTA / 链接 / logo / 激活态 */
+  --brand-ink: #fff; /* 蓝底上的文字 */
+  --brand-strong: #0052a6; /* hover / 深一档蓝 */
+  --brand-tint: #e6f0fb; /* 浅蓝底 */
+  --brand-on-dark: #4d9fff; /* 深色面板上的蓝强调（保对比） */
+
+  /* AI 强调色（青绿；联影官网用于标签 / 智能体 / 在线） */
+  --key: #0fd78a; /* AI / 智能体 / 在线 / MCP 强调 */
   --key-ink: #063b2a; /* 青绿底上的深色文字 */
   --key-strong: #0a8f5d; /* 浅底上的青绿文字（保对比） */
   --key-tint: #e6faf2; /* 浅青绿底 */
   --key-glow: rgb(15 215 138 / 14%);
 
-  /* 中性基底 */
-  --black: #121212; /* hero/页头/深色叙事/控制台外壳 */
+  /* 次级点缀（极少量：企业版 / 认证） */
+  --accent: #ff5316; /* 联影橙 */
+  --gold: #c59d62; /* 仅"企业版/认证"点缀 */
+  --blue: #06c; /* 次级链接（对齐主蓝） */
+
+  /* 中性基底（对齐联影灰阶 + 近白底） */
+  --black: #121212; /* 仅代码/机器视图保留 */
   --near-black: #0d1117; /* 机器视图/代码/连接块 */
   --white: #fff;
-  --bg-section: #fafbfc;
-  --bg-pill: #f3f4f6;
-  --border: #e5e7eb;
-  --border-strong: #d1d5db;
-  --ink: #111827;
-  --ink-2: #4b5563;
-  --ink-3: #6b7280;
-  --ink-muted: #9ca3af;
+  --bg-section: #f7f8fb;
+  --bg-pill: #eef0f4;
+  --border: #e3e6ec;
+  --border-strong: #d3d7df;
+  --ink: #212529;
+  --ink-2: #47494e;
+  --ink-3: #7f828b;
+  --ink-muted: #a0a4ab;
   --on-dark: #e5e7eb;
   --on-dark-muted: #9aa0a6;
-
-  /* 装饰色（极少量） */
-  --gold: #c59d62; /* 仅"企业版/认证"点缀 */
-  --blue: #0599c8; /* 仅次级链接等极少量 */
 
   /* 字体 */
   --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;

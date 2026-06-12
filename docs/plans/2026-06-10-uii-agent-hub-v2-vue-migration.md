@@ -997,7 +997,7 @@ cd /e/UiiAgentHub && git add -A && git commit -m "feat(v2): hash router"
 import { useI18n } from 'vue-i18n'
 import { setLang } from '@/i18n'
 const { t, locale } = useI18n()
-const other = () => (locale.value === 'zh' ? 'en' : '中文')
+const other = () => (locale.value === 'zh' ? 'en' : 'zh')
 function toggle() { setLang(locale.value === 'zh' ? 'en' : 'zh') }
 </script>
 <template>

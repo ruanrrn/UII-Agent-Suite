@@ -13,11 +13,11 @@ beforeEach(() => {
 
 test('listCapabilities returns all', async () => {
   const ds = new MockDataSource('/');
-  expect((await ds.listCapabilities()).length).toBe(11);
+  expect((await ds.listCapabilities()).length).toBe(5);
 });
 test('getCapability by id, null when missing', async () => {
   const ds = new MockDataSource('/');
-  expect((await ds.getCapability('uai-easy-triage-ich'))?.id).toBe('uai-easy-triage-ich');
+  expect((await ds.getCapability('uai-coronary-analysis'))?.id).toBe('uai-coronary-analysis');
   expect(await ds.getCapability('nope')).toBeNull();
 });
 test('getConsoleOverview', async () => {

@@ -52,6 +52,8 @@ export interface ConsoleService {
   modality: Modality;
   kNumber: string | null;
   status: 'online' | 'expiring';
+  activatedAt: string;
+  expires: string;
 }
 export interface ConsoleOverview {
   activated: number;

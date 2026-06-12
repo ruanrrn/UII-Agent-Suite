@@ -17,7 +17,7 @@ export function capabilityToMarkdown(c: Capability, lang: Lang = 'zh'): string {
     lines.push(
       `- FDA 510(k): ${c.fda.kNumber} (${c.fda.decisionDate}) — ${fdaPdfUrl(c.fda.kNumber)}`
     );
-  else lines.push('- Status: demo, not a medical device');
+  else lines.push('- Status: research only, not a medical device');
   lines.push(
     `- MCP endpoint: ${c.mcp.endpointUrl}`,
     `- MCP server key: ${c.mcp.serverKey}`,
@@ -30,7 +30,7 @@ export function capabilityToMarkdown(c: Capability, lang: Lang = 'zh'): string {
 export function buildCatalogJson(caps: Capability[]) {
   return {
     version: 2 as const,
-    name: '联影智能 · Agent Hub',
+    name: '联影智能 AI 能力平台',
     items: caps.map(c => ({
       id: c.id,
       type: c.type,
@@ -51,10 +51,10 @@ export function buildCatalogJson(caps: Capability[]) {
 
 export function buildLlmsTxt(caps: Capability[]): string {
   const out = [
-    '# 联影智能 · Agent Hub / United Imaging Intelligence · Agent Hub',
+    '# 联影智能 AI 能力平台 / UII AI Capability Hub',
     '',
-    '> 把院内影像 AI 变成人和智能体都能直接调用的标准服务。本文件为机器可读的能力目录摘要。',
-    '> Turn in-house imaging AI into services people and agents can call. Machine-readable catalog summary.',
+    '> 把联影自研影像 AI 变成人和智能体都能直接调用的标准服务（云 SaaS 交付，HIPAA/BAA 合规）。本文件为机器可读的能力目录摘要。',
+    '> Turn UII first-party imaging AI into cloud services people and agents can call. Machine-readable catalog summary.',
     '',
     '## Capabilities',
     ''
@@ -62,7 +62,7 @@ export function buildLlmsTxt(caps: Capability[]): string {
   for (const c of caps) {
     const fda = c.fda
       ? ` — FDA ${c.fda.kNumber} (${c.fda.decisionDate})`
-      : ' — demo (not a device)';
+      : ' — research (not a device)';
     out.push(
       `- **${c.i18n.title.en}** [${c.type}/${c.modality}]${fda}: ${c.i18n.description.en} MCP: ${c.mcp.endpointUrl}`
     );
