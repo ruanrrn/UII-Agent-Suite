@@ -3,6 +3,7 @@ dist/
 dist-pkg/
 *.zip
 .superpowers/
+.worktrees/
 .DS_Store
 .claude/
 public/catalog.json
