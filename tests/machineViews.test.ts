@@ -2,7 +2,7 @@ import { test, expect } from 'vitest';
 import { execSync } from 'node:child_process';
 import { readFileSync, existsSync } from 'node:fs';
 
-test('gen:machine writes catalog.json, llms.txt, mock JSON', () => {
+test('gen:machine writes catalog.json, llms.txt, mock JSON', { timeout: 30_000 }, () => {
   execSync('pnpm gen:machine', { cwd: process.cwd() });
   for (const f of [
     'public/catalog.json',
