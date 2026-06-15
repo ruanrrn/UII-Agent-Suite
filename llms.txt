@@ -1,0 +1,12 @@
+# 联影智能 AI 能力平台 / UII AI Capability Hub
+
+> 把联影自研影像 AI 变成人和智能体都能直接调用的标准服务（云 SaaS 交付，HIPAA/BAA 合规）。本文件为机器可读的能力目录摘要。
+> Turn UII first-party imaging AI into cloud services people and agents can call. Machine-readable catalog summary.
+
+## Capabilities
+
+- **Coronary Analysis** [clinical-ai/CT] — FDA K240411 (2024-09-06): AI auto-segmentation and reconstruction for coronary CTA (CCTA) — extracts heart and coronary centerlines and supports stenosis measurement and multi-view visualization MCP: https://hub.uii-ai.example/mcp/uai-portal/coronary
+- **Aorta Analysis** [clinical-ai/CT] — FDA K240411 (2024-09-06): AI auto-segmentation and reconstruction for aortic CTA — extracts trunk and branch centerlines and supports lumen-diameter measurement and multi-view visualization MCP: https://hub.uii-ai.example/mcp/uai-portal/aorta
+- **Pulmonary Artery Analysis** [clinical-ai/CT] — FDA K240411 (2024-09-06): AI auto-segmentation and reconstruction for pulmonary CTA (CTPA) — extracts artery/vein centerlines and supports measurement and multi-view visualization MCP: https://hub.uii-ai.example/mcp/uai-portal/pulmonary
+- **Head and Neck Vessel Analysis** [clinical-ai/CT] — FDA K240411 (2024-09-06): AI auto-segmentation and reconstruction for head & neck CTA — separates vessel and bone, extracts centerlines and supports measurement and multi-view visualization MCP: https://hub.uii-ai.example/mcp/uai-portal/head-neck
+- **Lower Extremity Vessel Analysis** [clinical-ai/CT] — FDA K240411 (2024-09-06): AI auto-segmentation and reconstruction for lower-extremity CTA — separates vessel and bone, extracts centerlines and supports ROI and stenosis measurement MCP: https://hub.uii-ai.example/mcp/uai-portal/lower-extremity

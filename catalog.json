@@ -1,0 +1,196 @@
+{
+  "version": 2,
+  "name": "联影智能 AI 能力平台",
+  "items": [
+    {
+      "id": "uai-coronary-analysis",
+      "type": "clinical-ai",
+      "modality": "CT",
+      "series": "uAI Portal",
+      "title": {
+        "zh": "冠脉分析",
+        "en": "Coronary Analysis"
+      },
+      "tagline": {
+        "zh": "冠脉 CTA 分割与狭窄测量",
+        "en": "CCTA segmentation & stenosis measurement"
+      },
+      "description": {
+        "zh": "对冠脉 CTA(CCTA) 进行 AI 自动分割与重建，提取心脏与冠脉中心线，支持狭窄测量与多视图可视化",
+        "en": "AI auto-segmentation and reconstruction for coronary CTA (CCTA) — extracts heart and coronary centerlines and supports stenosis measurement and multi-view visualization"
+      },
+      "fda": {
+        "kNumber": "K240411",
+        "decisionDate": "2024-09-06",
+        "productCode": "QIH, LLZ",
+        "productCodeName": "Medical Image Management and Processing System (21 CFR 892.2050)",
+        "applicant": "Shanghai United Imaging Intelligence Co., Ltd.",
+        "pdfUrl": "https://www.accessdata.fda.gov/cdrh_docs/pdf24/K240411.pdf"
+      },
+      "mcp": {
+        "endpointUrl": "https://hub.uii-ai.example/mcp/uai-portal/coronary",
+        "serverKey": "uai-portal-coronary",
+        "tools": [
+          "analyze_coronary_cta",
+          "list_studies",
+          "get_processing_status",
+          "get_structured_report",
+          "edit_centerline",
+          "export_to_pacs"
+        ]
+      }
+    },
+    {
+      "id": "uai-aorta-analysis",
+      "type": "clinical-ai",
+      "modality": "CT",
+      "series": "uAI Portal",
+      "title": {
+        "zh": "主动脉分析",
+        "en": "Aorta Analysis"
+      },
+      "tagline": {
+        "zh": "主动脉 CTA 分割与腔径测量",
+        "en": "Aorta CTA segmentation & lumen measurement"
+      },
+      "description": {
+        "zh": "对主动脉 CTA 进行 AI 自动分割与重建，提取主干与分支中心线，支持腔径测量与多视图可视化",
+        "en": "AI auto-segmentation and reconstruction for aortic CTA — extracts trunk and branch centerlines and supports lumen-diameter measurement and multi-view visualization"
+      },
+      "fda": {
+        "kNumber": "K240411",
+        "decisionDate": "2024-09-06",
+        "productCode": "QIH, LLZ",
+        "productCodeName": "Medical Image Management and Processing System (21 CFR 892.2050)",
+        "applicant": "Shanghai United Imaging Intelligence Co., Ltd.",
+        "pdfUrl": "https://www.accessdata.fda.gov/cdrh_docs/pdf24/K240411.pdf"
+      },
+      "mcp": {
+        "endpointUrl": "https://hub.uii-ai.example/mcp/uai-portal/aorta",
+        "serverKey": "uai-portal-aorta",
+        "tools": [
+          "analyze_aortic_cta",
+          "list_studies",
+          "get_processing_status",
+          "get_structured_report",
+          "edit_centerline",
+          "export_to_pacs"
+        ]
+      }
+    },
+    {
+      "id": "uai-pulmonary-analysis",
+      "type": "clinical-ai",
+      "modality": "CT",
+      "series": "uAI Portal",
+      "title": {
+        "zh": "肺动脉分析",
+        "en": "Pulmonary Artery Analysis"
+      },
+      "tagline": {
+        "zh": "肺动脉 CTPA 分割与测量",
+        "en": "CTPA segmentation & measurement"
+      },
+      "description": {
+        "zh": "对肺动脉 CTA(CTPA) 进行 AI 自动分割与重建，提取动/静脉中心线并支持测量与多视图可视化",
+        "en": "AI auto-segmentation and reconstruction for pulmonary CTA (CTPA) — extracts artery/vein centerlines and supports measurement and multi-view visualization"
+      },
+      "fda": {
+        "kNumber": "K240411",
+        "decisionDate": "2024-09-06",
+        "productCode": "QIH, LLZ",
+        "productCodeName": "Medical Image Management and Processing System (21 CFR 892.2050)",
+        "applicant": "Shanghai United Imaging Intelligence Co., Ltd.",
+        "pdfUrl": "https://www.accessdata.fda.gov/cdrh_docs/pdf24/K240411.pdf"
+      },
+      "mcp": {
+        "endpointUrl": "https://hub.uii-ai.example/mcp/uai-portal/pulmonary",
+        "serverKey": "uai-portal-pulmonary",
+        "tools": [
+          "analyze_pulmonary_cta",
+          "list_studies",
+          "get_processing_status",
+          "get_structured_report",
+          "edit_centerline",
+          "export_to_pacs"
+        ]
+      }
+    },
+    {
+      "id": "uai-head-neck-analysis",
+      "type": "clinical-ai",
+      "modality": "CT",
+      "series": "uAI Portal",
+      "title": {
+        "zh": "头颈血管分析",
+        "en": "Head and Neck Vessel Analysis"
+      },
+      "tagline": {
+        "zh": "头颈 CTA 血管/骨分割与测量",
+        "en": "Head & neck CTA vessel/bone segmentation"
+      },
+      "description": {
+        "zh": "对头颈 CTA 进行 AI 自动分割与重建，分离血管与骨、提取中心线并支持测量与多视图可视化",
+        "en": "AI auto-segmentation and reconstruction for head & neck CTA — separates vessel and bone, extracts centerlines and supports measurement and multi-view visualization"
+      },
+      "fda": {
+        "kNumber": "K240411",
+        "decisionDate": "2024-09-06",
+        "productCode": "QIH, LLZ",
+        "productCodeName": "Medical Image Management and Processing System (21 CFR 892.2050)",
+        "applicant": "Shanghai United Imaging Intelligence Co., Ltd.",
+        "pdfUrl": "https://www.accessdata.fda.gov/cdrh_docs/pdf24/K240411.pdf"
+      },
+      "mcp": {
+        "endpointUrl": "https://hub.uii-ai.example/mcp/uai-portal/head-neck",
+        "serverKey": "uai-portal-head-neck",
+        "tools": [
+          "analyze_head_neck_cta",
+          "list_studies",
+          "get_processing_status",
+          "get_structured_report",
+          "edit_centerline",
+          "export_to_pacs"
+        ]
+      }
+    },
+    {
+      "id": "uai-lower-extremity-analysis",
+      "type": "clinical-ai",
+      "modality": "CT",
+      "series": "uAI Portal",
+      "title": {
+        "zh": "下肢血管分析",
+        "en": "Lower Extremity Vessel Analysis"
+      },
+      "tagline": {
+        "zh": "下肢 CTA 血管/骨分割与狭窄测量",
+        "en": "Lower-extremity CTA vessel/bone segmentation"
+      },
+      "description": {
+        "zh": "对下肢 CTA 进行 AI 自动分割与重建，分离血管与骨、提取中心线并支持 ROI 与狭窄测量",
+        "en": "AI auto-segmentation and reconstruction for lower-extremity CTA — separates vessel and bone, extracts centerlines and supports ROI and stenosis measurement"
+      },
+      "fda": {
+        "kNumber": "K240411",
+        "decisionDate": "2024-09-06",
+        "productCode": "QIH, LLZ",
+        "productCodeName": "Medical Image Management and Processing System (21 CFR 892.2050)",
+        "applicant": "Shanghai United Imaging Intelligence Co., Ltd.",
+        "pdfUrl": "https://www.accessdata.fda.gov/cdrh_docs/pdf24/K240411.pdf"
+      },
+      "mcp": {
+        "endpointUrl": "https://hub.uii-ai.example/mcp/uai-portal/lower-extremity",
+        "serverKey": "uai-portal-lower-extremity",
+        "tools": [
+          "analyze_lower_extremity_cta",
+          "list_studies",
+          "get_processing_status",
+          "get_structured_report",
+          "edit_centerline",
+          "export_to_pacs"
+        ]
+      }
+    }
+  ]
+}

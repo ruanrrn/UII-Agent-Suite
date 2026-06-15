@@ -1,0 +1,66 @@
+{
+  "activated": 5,
+  "callsThisMonth": "128k",
+  "services": [
+    {
+      "id": "uai-coronary-analysis",
+      "title": {
+        "zh": "冠脉分析",
+        "en": "Coronary Analysis"
+      },
+      "modality": "CT",
+      "kNumber": "K240411",
+      "status": "online",
+      "activatedAt": "2025-08-15",
+      "expires": "2027-01-01"
+    },
+    {
+      "id": "uai-aorta-analysis",
+      "title": {
+        "zh": "主动脉分析",
+        "en": "Aorta Analysis"
+      },
+      "modality": "CT",
+      "kNumber": "K240411",
+      "status": "online",
+      "activatedAt": "2025-09-20",
+      "expires": "2027-01-01"
+    },
+    {
+      "id": "uai-pulmonary-analysis",
+      "title": {
+        "zh": "肺动脉分析",
+        "en": "Pulmonary Artery Analysis"
+      },
+      "modality": "CT",
+      "kNumber": "K240411",
+      "status": "online",
+      "activatedAt": "2025-11-05",
+      "expires": "2027-01-01"
+    },
+    {
+      "id": "uai-head-neck-analysis",
+      "title": {
+        "zh": "头颈血管分析",
+        "en": "Head and Neck Vessel Analysis"
+      },
+      "modality": "CT",
+      "kNumber": "K240411",
+      "status": "online",
+      "activatedAt": "2026-01-10",
+      "expires": "2027-01-01"
+    },
+    {
+      "id": "uai-lower-extremity-analysis",
+      "title": {
+        "zh": "下肢血管分析",
+        "en": "Lower Extremity Vessel Analysis"
+      },
+      "modality": "CT",
+      "kNumber": "K240411",
+      "status": "expiring",
+      "activatedAt": "2026-03-01",
+      "expires": "2026-06-30"
+    }
+  ]
+}
