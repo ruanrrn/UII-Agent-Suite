@@ -5,7 +5,7 @@ export interface RowMenuItem {
   onSelect?: () => void;
   danger?: boolean;
 }
-const props = defineProps<{ items: RowMenuItem[] }>();
+defineProps<{ items: RowMenuItem[] }>();
 const open = ref(false);
 const placed = ref(false);
 const btn = ref<HTMLButtonElement | null>(null);
