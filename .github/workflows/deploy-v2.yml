@@ -1,0 +1,70 @@
+# V2 分支自动编译 → 部署到 GitHub Pages
+# 触发条件：push 到 v2 分支，或手动触发
+name: Deploy V2 (Pages)
+
+on:
+  push:
+    branches: [v2]
+    paths-ignore:
+      - 'docs/**'
+      - '*.md'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同一时间只允许一个部署任务运行，后续排队会自动取消前序
+concurrency:
+  group: deploy-v2-pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.14.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.18.0
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Test
+        run: pnpm test
+
+      - name: Build (mock mode for Pages)
+        run: pnpm build:pages
+        env:
+          VITE_BASE: /uii-agents-hub/
+
+      - name: Add .nojekyll
+        run: |
+          touch dist/.nojekyll
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
