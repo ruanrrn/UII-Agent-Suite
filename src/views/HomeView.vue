@@ -1,61 +1,45 @@
 <script setup lang="ts">
-import { ref, inject, onMounted, computed } from 'vue';
+import { nextTick, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import type { DataSource } from '@/services';
-import type { Capability } from '@/types/capability';
-import CapabilityCard from '@/components/CapabilityCard.vue';
-import TrustBand from '@/components/TrustBand.vue';
+import CatalogView from '@/views/CatalogView.vue';
+
 const { t } = useI18n();
-const ds = inject<DataSource>('dataSource')!;
-const all = ref<Capability[]>([]);
+const baseUrl = import.meta.env.BASE_URL;
+const route = useRoute();
+
 onMounted(async () => {
-  all.value = await ds.listCapabilities();
+  if (route.query.screen !== 'market') return;
+  await nextTick();
+  const restore = () => {
+    const scroller = document.querySelector<HTMLElement>('.app-main');
+    if (!scroller) return;
+    scroller.scrollTo({ top: scroller.clientHeight, behavior: 'auto' });
+  };
+  requestAnimationFrame(() => requestAnimationFrame(restore));
+  window.setTimeout(restore, 120);
+  window.setTimeout(restore, 320);
 });
-const featured = computed(() => all.value.filter(c => c.type !== 'skill').slice(0, 6));
-const what = ['audience', 'private', 'mcp', 'real'] as const;
 </script>
+
 <template>
-  <main>
-    <section class="hero section">
-      <div class="container">
-        <h1 class="hero-title">{{ t('hero.title') }}</h1>
-        <div class="hero-cta">
-          <RouterLink class="btn btn-key" to="/catalog">{{ t('cta.browse') }}</RouterLink>
-          <RouterLink class="btn btn-ghost ghost-on-dark" to="/console">{{
-            t('nav.console')
-          }}</RouterLink>
-        </div>
+  <div class="home-page">
+    <section class="hero home-snap" aria-labelledby="home-hero-title">
+      <div class="hero-face-panel hero-face-panel-human" aria-hidden="true">
+        <img class="hero-face hero-face-human" :src="`${baseUrl}brand/human-face.png`" alt="" />
+      </div>
+      <div class="hero-face-panel hero-face-panel-robot" aria-hidden="true">
+        <img class="hero-face hero-face-robot" :src="`${baseUrl}brand/robot-face.png`" alt="" />
+      </div>
+      <div class="hero-copy">
+        <p class="hero-kicker">{{ t('home.heroEyebrow') }}</p>
+        <h1 id="home-hero-title" class="hero-title">{{ t('home.heroTitle') }}</h1>
+        <p class="hero-lead">{{ t('home.heroSubtitle') }}</p>
       </div>
     </section>
 
-    <section class="section">
-      <div class="container">
-        <h2>{{ t('section.what') }}</h2>
-        <div class="what-grid">
-          <div v-for="w in what" :key="w" class="what-card">
-            <div class="what-dot"></div>
-            <h3>{{ t(`what.${w}.title`) }}</h3>
-            <p>{{ t(`what.${w}.desc`) }}</p>
-          </div>
-        </div>
-      </div>
+    <section id="home-market" class="home-market home-snap" aria-label="市场">
+      <CatalogView embedded />
     </section>
-
-    <section class="section" style="background: var(--bg-section)">
-      <div class="container">
-        <div class="row-between">
-          <h2>{{ t('section.featured') }}</h2>
-          <RouterLink to="/catalog">{{ t('home.viewAll') }}</RouterLink>
-        </div>
-        <div class="cap-grid"><CapabilityCard v-for="c in featured" :key="c.id" :cap="c" /></div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container">
-        <h2>{{ t('section.trust') }}</h2>
-        <TrustBand :capabilities="all" />
-      </div>
-    </section>
-  </main>
+  </div>
 </template>

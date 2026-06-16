@@ -18,7 +18,7 @@ test('core keys present', () => {
     'hero.title',
     'badge.fda',
     'detail.tab.config',
-    'filter.modality'
+    'catalog.title'
   ]) {
     expect(zh).toHaveProperty(k);
     expect(en).toHaveProperty(k);

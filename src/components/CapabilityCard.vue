@@ -1,23 +1,29 @@
 <script setup lang="ts">
 import type { Capability } from '@/types/capability';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { fdaPdfUrl } from '@/lib/fda';
 import Badge from './Badge.vue';
 const props = defineProps<{ cap: Capability }>();
 const router = useRouter();
+const route = useRoute();
 const { t, locale } = useI18n();
 const L = () => locale.value as 'zh' | 'en';
 const tx = (f: 'title' | 'description') => props.cap.i18n[f][L()] || props.cap.i18n[f].zh;
-const open = () => router.push(`/capability/${props.cap.id}`);
+const isImgIcon = (icon: string) => icon.startsWith('/');
+const open = () =>
+  router.push({
+    path: `/capability/${props.cap.id}`,
+    query: route.name === 'home' ? { from: 'market' } : undefined
+  });
 </script>
 <template>
   <div class="cap-card" role="link" tabindex="0" @click="open" @keydown.enter="open">
     <div class="cap-top">
-      <span class="cap-icon">{{ cap.icon }}</span>
-      <span v-if="cap.series" class="cap-series">{{ cap.series }}</span>
+      <img v-if="isImgIcon(cap.icon)" class="cap-icon-img" :src="cap.icon" :alt="tx('title')" />
+      <span v-else class="cap-icon">{{ cap.icon }}</span>
+      <h3 class="cap-name">{{ tx('title') }}</h3>
     </div>
-    <h3 class="cap-name">{{ tx('title') }}</h3>
     <div class="cap-use-label">{{ t('card.use') }}</div>
     <p class="cap-desc">{{ tx('description') }}</p>
     <div class="cap-foot">

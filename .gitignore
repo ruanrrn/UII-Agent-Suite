@@ -10,3 +10,5 @@ dist-pkg/
 public/catalog.json
 public/llms.txt
 public/mock/
+
+.playwright-mcp/
