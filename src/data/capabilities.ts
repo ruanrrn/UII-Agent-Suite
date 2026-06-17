@@ -204,6 +204,7 @@ export const CAPABILITIES: Capability[] = [
     type: 'skill',
     modality: 'CT',
     icon: '/assets/Easy-Triage-System(RiB).png',
+    visible: true,
     fda: null,
     mcp: blankMcp('easy-triage-rib'),
     i18n: blankI18n({
@@ -251,6 +252,7 @@ export const CAPABILITIES: Capability[] = [
     type: 'skill',
     modality: 'CT',
     icon: '/assets/Bony-Thorax-Fractures.png',
+    visible: true,
     fda: null,
     mcp: blankMcp('bony-thorax-fractures'),
     i18n: blankI18n({
@@ -263,6 +265,7 @@ export const CAPABILITIES: Capability[] = [
     type: 'skill',
     modality: 'CT',
     icon: '/assets/Aortic-Dissection.png',
+    visible: true,
     fda: null,
     mcp: blankMcp('aortic-dissection'),
     i18n: blankI18n({
@@ -275,6 +278,7 @@ export const CAPABILITIES: Capability[] = [
     type: 'skill',
     modality: 'CT',
     icon: '/assets/Cerebral-and-Carotid-Vessels.png',
+    visible: true,
     fda: null,
     mcp: blankMcp('cerebral-carotid-vessels'),
     i18n: blankI18n({
@@ -287,6 +291,7 @@ export const CAPABILITIES: Capability[] = [
     type: 'skill',
     modality: 'CT',
     icon: '/assets/Coronary-CTA-Imaging.png',
+    visible: true,
     fda: null,
     mcp: blankMcp('coronary-cta'),
     i18n: blankI18n({
@@ -299,6 +304,7 @@ export const CAPABILITIES: Capability[] = [
     type: 'skill',
     modality: 'CT',
     icon: '/assets/Lower-Extremity-CTA-Imaging.png',
+    visible: true,
     fda: null,
     mcp: blankMcp('lower-extremity-cta'),
     i18n: blankI18n({
@@ -311,6 +317,7 @@ export const CAPABILITIES: Capability[] = [
     type: 'skill',
     modality: 'CT',
     icon: '/assets/Intracerebral-Hemorrhage.png',
+    visible: true,
     fda: null,
     mcp: blankMcp('intracerebral-hemorrhage'),
     i18n: blankI18n({

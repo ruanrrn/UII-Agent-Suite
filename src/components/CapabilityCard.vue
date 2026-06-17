@@ -2,8 +2,7 @@
 import type { Capability } from '@/types/capability';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { fdaPdfUrl } from '@/lib/fda';
-import Badge from './Badge.vue';
+
 const props = defineProps<{ cap: Capability }>();
 const router = useRouter();
 const route = useRoute();
@@ -17,6 +16,7 @@ const open = () =>
     query: route.name === 'home' ? { from: 'market' } : undefined
   });
 </script>
+
 <template>
   <div class="cap-card" role="link" tabindex="0" @click="open" @keydown.enter="open">
     <div class="cap-top">
@@ -26,17 +26,5 @@ const open = () =>
     </div>
     <div class="cap-use-label">{{ t('card.use') }}</div>
     <p class="cap-desc">{{ tx('description') }}</p>
-    <div class="cap-foot">
-      <a
-        v-if="cap.fda"
-        class="fda-pill"
-        :href="fdaPdfUrl(cap.fda.kNumber)"
-        target="_blank"
-        rel="noopener"
-        @click.stop
-        >FDA 510(k) · <span class="fda-k">{{ cap.fda.kNumber }}</span> ↗</a
-      >
-      <Badge v-else kind="demo" />
-    </div>
   </div>
 </template>
