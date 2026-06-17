@@ -1,25 +1,12 @@
 <script setup lang="ts">
-import { nextTick, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import CatalogView from '@/views/CatalogView.vue';
 
+// Scroll restoration to the market panel is owned entirely by App.vue
+// (restoreHomeTo), so there is no duplicate deferred scroll here that would
+// otherwise re-introduce the hero flash on back-navigation.
 const { t } = useI18n();
 const baseUrl = import.meta.env.BASE_URL;
-const route = useRoute();
-
-onMounted(async () => {
-  if (route.query.screen !== 'market') return;
-  await nextTick();
-  const restore = () => {
-    const scroller = document.querySelector<HTMLElement>('.app-main');
-    if (!scroller) return;
-    scroller.scrollTo({ top: scroller.clientHeight, behavior: 'auto' });
-  };
-  requestAnimationFrame(() => requestAnimationFrame(restore));
-  window.setTimeout(restore, 120);
-  window.setTimeout(restore, 320);
-});
 </script>
 
 <template>

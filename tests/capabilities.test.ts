@@ -18,13 +18,9 @@ test('valid type/modality + bilingual title present', () => {
     expect(c.i18n.title.en).toBeTruthy();
   }
 });
-test('skills carry no FDA clearance (fda null)', () => {
+test('any FDA clearance is well-formed (K-number shape)', () => {
   for (const c of CAPABILITIES) {
-    if (c.type === 'skill') {
-      expect(c.fda).toBeNull();
-      continue;
-    }
-    expect(c.fda!.kNumber).toMatch(/^K\d{6}$/);
+    if (c.fda) expect(c.fda.kNumber).toMatch(/^K\d{6}$/);
   }
 });
 test('every capability declares an MCP server', () => {

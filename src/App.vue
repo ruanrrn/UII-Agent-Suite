@@ -50,21 +50,34 @@ function snapHomeTo(panel: 'home' | 'market') {
   }, 620);
 }
 function restoreHomeTo(panel: 'home' | 'market') {
-  const restore = () => {
-    const target = appMain.value;
-    if (!target) return;
-    const top = panel === 'market' ? target.clientHeight : 0;
-    isRestoring.value = true;
-    target.scrollTo({ top, behavior: 'auto' });
+  const target = appMain.value;
+  if (!target) return;
+  const top = panel === 'market' ? target.clientHeight : 0;
+  isRestoring.value = true;
+  // Disable snap + smooth scrolling imperatively so the jump lands
+  // synchronously, before the browser paints — otherwise scroll-snap defers
+  // the scroll and the black hero flashes on the way to the market panel.
+  // (The .is-restoring class sets these too, but it lands on Vue's async
+  // flush, which is too late for this synchronous scroll.)
+  const prevSnap = target.style.scrollSnapType;
+  const prevBehavior = target.style.scrollBehavior;
+  target.style.scrollSnapType = 'none';
+  target.style.scrollBehavior = 'auto';
+  const apply = () => {
+    target.scrollTop = top;
     homePanel.value = panel;
     scrolled.value = top > 12;
-    window.setTimeout(() => {
-      isRestoring.value = false;
-    }, 420);
   };
-  requestAnimationFrame(() => requestAnimationFrame(restore));
-  window.setTimeout(restore, 120);
-  window.setTimeout(restore, 320);
+  // `.home-market` is a fixed 100vh, so the scroll target exists at first
+  // layout regardless of async catalog content. Apply now (pre-paint) and
+  // re-assert once after layout settles, then release the lock.
+  apply();
+  requestAnimationFrame(apply);
+  window.setTimeout(() => {
+    target.style.scrollSnapType = prevSnap;
+    target.style.scrollBehavior = prevBehavior;
+    isRestoring.value = false;
+  }, 200);
 }
 async function scrollHomeTo(panel: 'home' | 'market') {
   if (!isHome.value) {

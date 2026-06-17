@@ -13,7 +13,9 @@ const q = ref('');
 onMounted(async () => {
   all.value = await ds.listCapabilities();
 });
-const result = computed(() => filterCapabilities(all.value, { q: q.value }));
+const result = computed(() =>
+  filterCapabilities(all.value, { q: q.value }).filter(c => c.visible === true)
+);
 </script>
 <template>
   <main class="catalog-full" :class="{ embedded }">
