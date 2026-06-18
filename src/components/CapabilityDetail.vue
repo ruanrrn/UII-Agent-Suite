@@ -31,7 +31,7 @@ function goBack() {
 }
 
 const L = () => locale.value as 'zh' | 'en';
-const bi = (b: { zh: string; en: string }) => b[L()] || b.zh;
+const bi = (b: string | { zh: string; en: string }) => (typeof b === 'string' ? b : b[L()] || b.zh);
 
 type Tab = 'overview' | 'install';
 const TABS: Tab[] = ['overview', 'install'];
@@ -122,7 +122,7 @@ async function copyQS() {
               <span class="sk-stat-tip">{{ bi(s.sub) }}</span>
             </button>
             <div class="sk-stat-label">{{ bi(s.label) }}</div>
-            <div class="sk-stat-value">{{ s.value }}</div>
+            <div class="sk-stat-value">{{ bi(s.value) }}</div>
           </div>
         </div>
 

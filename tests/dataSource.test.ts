@@ -13,7 +13,7 @@ beforeEach(() => {
 
 test('listCapabilities returns all', async () => {
   const ds = new MockDataSource('/');
-  expect((await ds.listCapabilities()).length).toBe(8);
+  expect((await ds.listCapabilities()).length).toBe(9);
 });
 test('getCapability by id, null when missing', async () => {
   const ds = new MockDataSource('/');

@@ -12,7 +12,7 @@ test('markdown has title, status line and MCP endpoint', () => {
 test('catalog json v2 stable shape', () => {
   const cat = buildCatalogJson(CAPABILITIES);
   expect(cat.version).toBe(2);
-  expect(cat.items.length).toBe(8);
+  expect(cat.items.length).toBe(9);
   const it = cat.items.find(i => i.id === 'coronary-cta')!;
   expect(it.fda).toBeNull();
   expect(it.mcp.endpointUrl).toBeTruthy();

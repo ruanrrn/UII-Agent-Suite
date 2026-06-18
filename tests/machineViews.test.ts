@@ -13,8 +13,8 @@ test('gen:machine writes catalog.json, llms.txt, mock JSON', { timeout: 30_000 }
     expect(existsSync(f), f).toBe(true);
   const cat = JSON.parse(readFileSync('public/catalog.json', 'utf8'));
   expect(cat.version).toBe(2);
-  expect(cat.items.length).toBe(8);
+  expect(cat.items.length).toBe(9);
   expect(readFileSync('public/llms.txt', 'utf8')).toContain('UII AI Capability Hub');
   const mock = JSON.parse(readFileSync('public/mock/capabilities.json', 'utf8'));
-  expect(mock.length).toBe(8);
+  expect(mock.length).toBe(9);
 });

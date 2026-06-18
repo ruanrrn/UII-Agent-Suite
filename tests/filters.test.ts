@@ -3,7 +3,7 @@ import { filterCapabilities } from '@/lib/filters';
 import { CAPABILITIES } from '@/data/capabilities';
 
 test('no filters → all', () => {
-  expect(filterCapabilities(CAPABILITIES, {}).length).toBe(8);
+  expect(filterCapabilities(CAPABILITIES, {}).length).toBe(9);
 });
 test('type filter', () => {
   const r = filterCapabilities(CAPABILITIES, { type: 'skill' });

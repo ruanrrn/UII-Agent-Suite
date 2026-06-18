@@ -4,8 +4,8 @@ import { CAPABILITIES } from '@/data/capabilities';
 const TYPES = ['clinical-ai', 'platform', 'reconstruction', 'skill'];
 const MODS = ['CT', 'MR', 'PET', 'X-ray', 'Cross'];
 
-test('exactly 8 capabilities, unique kebab ids', () => {
-  expect(CAPABILITIES.length).toBe(8);
+test('exactly 9 capabilities, unique kebab ids', () => {
+  expect(CAPABILITIES.length).toBe(9);
   const ids = CAPABILITIES.map(c => c.id);
   expect(new Set(ids).size).toBe(ids.length);
   ids.forEach(id => expect(id).toMatch(/^[a-z0-9-]+$/));

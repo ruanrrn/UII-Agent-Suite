@@ -1707,9 +1707,7 @@ a {
 .sk-stat-value {
   font-size: 32px;
   font-weight: 700;
-  background: linear-gradient(180deg, var(--brand-strong), var(--brand));
-  background-clip: text;
-  color: transparent;
+  color: var(--on-dark);
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.5px;
 }

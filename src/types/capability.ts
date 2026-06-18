@@ -37,7 +37,7 @@ export interface McpSpec {
 }
 export interface SkillStat {
   label: Bi;
-  value: string;
+  value: string | Bi;
   sub: Bi;
 }
 export interface FlowStep {
