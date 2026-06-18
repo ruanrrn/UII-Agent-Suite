@@ -3,193 +3,226 @@
   "name": "联影智能 AI 能力平台",
   "items": [
     {
-      "id": "uai-coronary-analysis",
-      "type": "clinical-ai",
+      "id": "easy-triage-rib",
+      "type": "skill",
       "modality": "CT",
-      "series": "uAI Portal",
+      "series": null,
       "title": {
-        "zh": "冠脉分析",
-        "en": "Coronary Analysis"
+        "zh": "智能危急预警系统 - 肋骨骨折检测",
+        "en": "AI-Assisted Easy Triage System - Rib"
       },
       "tagline": {
-        "zh": "冠脉 CTA 分割与狭窄测量",
-        "en": "CCTA segmentation & stenosis measurement"
+        "zh": "",
+        "en": ""
       },
       "description": {
-        "zh": "对冠脉 CTA(CCTA) 进行 AI 自动分割与重建，提取心脏与冠脉中心线，支持狭窄测量与多视图可视化",
-        "en": "AI auto-segmentation and reconstruction for coronary CTA (CCTA) — extracts heart and coronary centerlines and supports stenosis measurement and multi-view visualization"
+        "zh": "",
+        "en": ""
       },
-      "fda": {
-        "kNumber": "K240411",
-        "decisionDate": "2024-09-06",
-        "productCode": "QIH, LLZ",
-        "productCodeName": "Medical Image Management and Processing System (21 CFR 892.2050)",
-        "applicant": "Shanghai United Imaging Intelligence Co., Ltd.",
-        "pdfUrl": "https://www.accessdata.fda.gov/cdrh_docs/pdf24/K240411.pdf"
-      },
+      "fda": null,
       "mcp": {
-        "endpointUrl": "https://hub.uii-ai.example/mcp/uai-portal/coronary",
-        "serverKey": "uai-portal-coronary",
-        "tools": [
-          "analyze_coronary_cta",
-          "list_studies",
-          "get_processing_status",
-          "get_structured_report",
-          "edit_centerline",
-          "export_to_pacs"
-        ]
+        "endpointUrl": "https://hub.uii-ai.example/mcp/easy-triage-rib",
+        "serverKey": "easy-triage-rib",
+        "tools": []
       }
     },
     {
-      "id": "uai-aorta-analysis",
-      "type": "clinical-ai",
+      "id": "easy-triage-ich",
+      "type": "skill",
       "modality": "CT",
-      "series": "uAI Portal",
+      "series": null,
       "title": {
-        "zh": "主动脉分析",
-        "en": "Aorta Analysis"
+        "zh": "智能危急预警系统 - 颅内出血检测",
+        "en": "Easy Triage System - ICH"
       },
       "tagline": {
-        "zh": "主动脉 CTA 分割与腔径测量",
-        "en": "Aorta CTA segmentation & lumen measurement"
+        "zh": "急诊颅内出血 AI 辅助筛查与分诊",
+        "en": "AI-assisted ICH screening and triage for emergency"
       },
       "description": {
-        "zh": "对主动脉 CTA 进行 AI 自动分割与重建，提取主干与分支中心线，支持腔径测量与多视图可视化",
-        "en": "AI auto-segmentation and reconstruction for aortic CTA — extracts trunk and branch centerlines and supports lumen-diameter measurement and multi-view visualization"
+        "zh": "当急诊科医生需要评估患者头颅 CT 是否存在颅内出血时，自动完成 ICH 筛查与量化分析，输出结构化分诊结论，辅助医生快速识别危急病情。",
+        "en": "When an ER physician needs to evaluate a patient's head CT for intracranial hemorrhage, this Skill automatically performs ICH screening and quantitative analysis, outputs a structured triage summary, and assists the physician in rapidly identifying critical conditions."
       },
       "fda": {
-        "kNumber": "K240411",
-        "decisionDate": "2024-09-06",
-        "productCode": "QIH, LLZ",
-        "productCodeName": "Medical Image Management and Processing System (21 CFR 892.2050)",
+        "kNumber": "K242292",
+        "decisionDate": "2024-12-20",
+        "productCode": "QAS",
+        "productCodeName": "Radiology Computer Aided Triage And Notification Software",
         "applicant": "Shanghai United Imaging Intelligence Co., Ltd.",
-        "pdfUrl": "https://www.accessdata.fda.gov/cdrh_docs/pdf24/K240411.pdf"
+        "pdfUrl": "https://www.accessdata.fda.gov/cdrh_docs/pdf24/K242292.pdf"
       },
       "mcp": {
-        "endpointUrl": "https://hub.uii-ai.example/mcp/uai-portal/aorta",
-        "serverKey": "uai-portal-aorta",
-        "tools": [
-          "analyze_aortic_cta",
-          "list_studies",
-          "get_processing_status",
-          "get_structured_report",
-          "edit_centerline",
-          "export_to_pacs"
-        ]
+        "endpointUrl": "https://hub.uii-ai.example/mcp/easy-triage-ich",
+        "serverKey": "easy-triage-ich",
+        "tools": []
       }
     },
     {
-      "id": "uai-pulmonary-analysis",
-      "type": "clinical-ai",
+      "id": "bony-thorax-fractures",
+      "type": "skill",
       "modality": "CT",
-      "series": "uAI Portal",
+      "series": null,
       "title": {
-        "zh": "肺动脉分析",
-        "en": "Pulmonary Artery Analysis"
+        "zh": "CT 胸部骨折智能分析系统",
+        "en": "AI-Assisted Analysis System for Bony Thorax Fractures"
       },
       "tagline": {
-        "zh": "肺动脉 CTPA 分割与测量",
-        "en": "CTPA segmentation & measurement"
+        "zh": "",
+        "en": ""
       },
       "description": {
-        "zh": "对肺动脉 CTA(CTPA) 进行 AI 自动分割与重建，提取动/静脉中心线并支持测量与多视图可视化",
-        "en": "AI auto-segmentation and reconstruction for pulmonary CTA (CTPA) — extracts artery/vein centerlines and supports measurement and multi-view visualization"
+        "zh": "",
+        "en": ""
       },
-      "fda": {
-        "kNumber": "K240411",
-        "decisionDate": "2024-09-06",
-        "productCode": "QIH, LLZ",
-        "productCodeName": "Medical Image Management and Processing System (21 CFR 892.2050)",
-        "applicant": "Shanghai United Imaging Intelligence Co., Ltd.",
-        "pdfUrl": "https://www.accessdata.fda.gov/cdrh_docs/pdf24/K240411.pdf"
-      },
+      "fda": null,
       "mcp": {
-        "endpointUrl": "https://hub.uii-ai.example/mcp/uai-portal/pulmonary",
-        "serverKey": "uai-portal-pulmonary",
-        "tools": [
-          "analyze_pulmonary_cta",
-          "list_studies",
-          "get_processing_status",
-          "get_structured_report",
-          "edit_centerline",
-          "export_to_pacs"
-        ]
+        "endpointUrl": "https://hub.uii-ai.example/mcp/bony-thorax-fractures",
+        "serverKey": "bony-thorax-fractures",
+        "tools": []
       }
     },
     {
-      "id": "uai-head-neck-analysis",
-      "type": "clinical-ai",
+      "id": "aortic-dissection",
+      "type": "skill",
       "modality": "CT",
-      "series": "uAI Portal",
+      "series": null,
       "title": {
-        "zh": "头颈血管分析",
-        "en": "Head and Neck Vessel Analysis"
+        "zh": "CT 主动脉智能分析系统",
+        "en": "AI-Assisted Analysis System for Aortic Dissection"
       },
       "tagline": {
-        "zh": "头颈 CTA 血管/骨分割与测量",
-        "en": "Head & neck CTA vessel/bone segmentation"
+        "zh": "",
+        "en": ""
       },
       "description": {
-        "zh": "对头颈 CTA 进行 AI 自动分割与重建，分离血管与骨、提取中心线并支持测量与多视图可视化",
-        "en": "AI auto-segmentation and reconstruction for head & neck CTA — separates vessel and bone, extracts centerlines and supports measurement and multi-view visualization"
+        "zh": "",
+        "en": ""
       },
-      "fda": {
-        "kNumber": "K240411",
-        "decisionDate": "2024-09-06",
-        "productCode": "QIH, LLZ",
-        "productCodeName": "Medical Image Management and Processing System (21 CFR 892.2050)",
-        "applicant": "Shanghai United Imaging Intelligence Co., Ltd.",
-        "pdfUrl": "https://www.accessdata.fda.gov/cdrh_docs/pdf24/K240411.pdf"
-      },
+      "fda": null,
       "mcp": {
-        "endpointUrl": "https://hub.uii-ai.example/mcp/uai-portal/head-neck",
-        "serverKey": "uai-portal-head-neck",
-        "tools": [
-          "analyze_head_neck_cta",
-          "list_studies",
-          "get_processing_status",
-          "get_structured_report",
-          "edit_centerline",
-          "export_to_pacs"
-        ]
+        "endpointUrl": "https://hub.uii-ai.example/mcp/aortic-dissection",
+        "serverKey": "aortic-dissection",
+        "tools": []
       }
     },
     {
-      "id": "uai-lower-extremity-analysis",
-      "type": "clinical-ai",
+      "id": "cerebral-carotid-vessels",
+      "type": "skill",
       "modality": "CT",
-      "series": "uAI Portal",
+      "series": null,
       "title": {
-        "zh": "下肢血管分析",
-        "en": "Lower Extremity Vessel Analysis"
+        "zh": "CT头颈血管智能分析系统",
+        "en": "AI-Assisted Analysis System for Cerebral and Carotid Vessels"
       },
       "tagline": {
-        "zh": "下肢 CTA 血管/骨分割与狭窄测量",
-        "en": "Lower-extremity CTA vessel/bone segmentation"
+        "zh": "",
+        "en": ""
       },
       "description": {
-        "zh": "对下肢 CTA 进行 AI 自动分割与重建，分离血管与骨、提取中心线并支持 ROI 与狭窄测量",
-        "en": "AI auto-segmentation and reconstruction for lower-extremity CTA — separates vessel and bone, extracts centerlines and supports ROI and stenosis measurement"
+        "zh": "",
+        "en": ""
       },
-      "fda": {
-        "kNumber": "K240411",
-        "decisionDate": "2024-09-06",
-        "productCode": "QIH, LLZ",
-        "productCodeName": "Medical Image Management and Processing System (21 CFR 892.2050)",
-        "applicant": "Shanghai United Imaging Intelligence Co., Ltd.",
-        "pdfUrl": "https://www.accessdata.fda.gov/cdrh_docs/pdf24/K240411.pdf"
-      },
+      "fda": null,
       "mcp": {
-        "endpointUrl": "https://hub.uii-ai.example/mcp/uai-portal/lower-extremity",
-        "serverKey": "uai-portal-lower-extremity",
-        "tools": [
-          "analyze_lower_extremity_cta",
-          "list_studies",
-          "get_processing_status",
-          "get_structured_report",
-          "edit_centerline",
-          "export_to_pacs"
-        ]
+        "endpointUrl": "https://hub.uii-ai.example/mcp/cerebral-carotid-vessels",
+        "serverKey": "cerebral-carotid-vessels",
+        "tools": []
+      }
+    },
+    {
+      "id": "coronary-cta",
+      "type": "skill",
+      "modality": "CT",
+      "series": null,
+      "title": {
+        "zh": "CT 冠脉智能分析系统",
+        "en": "AI-Assisted Analysis System for Coronary CTA Imaging"
+      },
+      "tagline": {
+        "zh": "",
+        "en": ""
+      },
+      "description": {
+        "zh": "",
+        "en": ""
+      },
+      "fda": null,
+      "mcp": {
+        "endpointUrl": "https://hub.uii-ai.example/mcp/coronary-cta",
+        "serverKey": "coronary-cta",
+        "tools": []
+      }
+    },
+    {
+      "id": "lower-extremity-cta",
+      "type": "skill",
+      "modality": "CT",
+      "series": null,
+      "title": {
+        "zh": "CT 下肢血管智能评估系统",
+        "en": "AI-Assisted Analysis System for Lower Extremity CTA Imaging"
+      },
+      "tagline": {
+        "zh": "",
+        "en": ""
+      },
+      "description": {
+        "zh": "",
+        "en": ""
+      },
+      "fda": null,
+      "mcp": {
+        "endpointUrl": "https://hub.uii-ai.example/mcp/lower-extremity-cta",
+        "serverKey": "lower-extremity-cta",
+        "tools": []
+      }
+    },
+    {
+      "id": "intracerebral-hemorrhage",
+      "type": "skill",
+      "modality": "CT",
+      "series": null,
+      "title": {
+        "zh": "CT 颅内出血智能分析系统",
+        "en": "AI-Assisted Analysis System for Intracerebral Hemorrhage"
+      },
+      "tagline": {
+        "zh": "",
+        "en": ""
+      },
+      "description": {
+        "zh": "",
+        "en": ""
+      },
+      "fda": null,
+      "mcp": {
+        "endpointUrl": "https://hub.uii-ai.example/mcp/intracerebral-hemorrhage",
+        "serverKey": "intracerebral-hemorrhage",
+        "tools": []
+      }
+    },
+    {
+      "id": "vitallens-rppg",
+      "type": "skill",
+      "modality": "Cross",
+      "series": null,
+      "title": {
+        "zh": "VitalLens",
+        "en": "VitalLens"
+      },
+      "tagline": {
+        "zh": "General Wellness · Non-Medical",
+        "en": "General Wellness · Non-Medical"
+      },
+      "description": {
+        "zh": "通过普通摄像头捕捉面部视频，完成心率与呼吸率的无接触检测，输出带置信度评分的测量数值。",
+        "en": "Capture facial video through a standard camera to perform non-contact heart-rate and respiratory-rate detection, returning measurements with confidence scores."
+      },
+      "fda": null,
+      "mcp": {
+        "endpointUrl": "https://hub.uii-ai.example/mcp/vitallens-rppg",
+        "serverKey": "vitallens-rppg",
+        "tools": []
       }
     }
   ]

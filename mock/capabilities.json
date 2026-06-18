@@ -1,686 +1,753 @@
 [
   {
-    "id": "uai-coronary-analysis",
-    "type": "clinical-ai",
+    "id": "easy-triage-rib",
+    "type": "skill",
     "modality": "CT",
-    "icon": "❤️",
-    "series": "uAI Portal",
-    "fda": {
-      "kNumber": "K240411",
-      "decisionDate": "2024-09-06",
-      "productCode": "QIH, LLZ",
-      "productCodeName": "Medical Image Management and Processing System (21 CFR 892.2050)",
-      "applicant": "Shanghai United Imaging Intelligence Co., Ltd."
-    },
+    "icon": "/assets/Easy-Triage-System(RiB).png",
+    "visible": true,
+    "fda": null,
     "mcp": {
-      "serverKey": "uai-portal-coronary",
-      "endpointUrl": "https://hub.uii-ai.example/mcp/uai-portal/coronary",
-      "tools": [
-        {
-          "name": "analyze_coronary_cta",
-          "desc": {
-            "zh": "提交一例 CCTA 检查；执行心脏与冠脉分割、中心线提取与狭窄测量",
-            "en": "Submit a CCTA study; runs heart & coronary segmentation, centerline extraction, and stenosis measurement"
-          },
-          "input": "study_uid: string · priority?: \"routine\"|\"stat\"",
-          "returns": "CoronaryFindings"
-        },
-        {
-          "name": "list_studies",
-          "desc": {
-            "zh": "列出与筛选已接入的检查",
-            "en": "List and filter ingested studies"
-          },
-          "input": "application?: AppName · date_from? · date_to? · status?",
-          "returns": "StudySummary[]"
-        },
-        {
-          "name": "get_processing_status",
-          "desc": {
-            "zh": "查询某检查的处理状态",
-            "en": "Query the processing state for a study"
-          },
-          "input": "study_uid: string",
-          "returns": "ProcessingStatus"
-        },
-        {
-          "name": "get_structured_report",
-          "desc": {
-            "zh": "获取某检查的结构化报告",
-            "en": "Fetch the structured report for a study"
-          },
-          "input": "study_uid: string · format?: \"json\"|\"pdf\"",
-          "returns": "ReportDoc"
-        },
-        {
-          "name": "edit_centerline",
-          "desc": {
-            "zh": "提交医师对中心线/分割的修正并重新测量",
-            "en": "Submit physician corrections to centerline/segmentation and re-run measurement"
-          },
-          "input": "study_uid: string · corrections: CenterlineEdit[]",
-          "returns": "AnalysisResult"
-        },
-        {
-          "name": "export_to_pacs",
-          "desc": {
-            "zh": "结果归档或送至胶片",
-            "en": "Archive results or send to filming"
-          },
-          "input": "study_uid: string · target: \"pacs\"|\"filming\"",
-          "returns": "ExportReceipt"
-        }
-      ],
-      "prompts": [
-        {
-          "name": "triage_acute_chest_pain",
-          "desc": {
-            "zh": "识别模态并以 stat 优先级调用对应分析器，概述血管重建状态与关键测量，附 JSON 报告并注明需医师确认",
-            "en": "Detect modality and call the matching analyzer at stat priority; summarize vessel reconstruction and key measurements, attach the JSON report, and flag for physician confirmation"
-          },
-          "args": "study_uid: string"
-        },
-        {
-          "name": "generate_vascular_report",
-          "desc": {
-            "zh": "获取结构化报告并撰写与应用相符的简明报告：重建解剖、关键测量与标注的狭窄/腔径；说明为测量/可视化辅助而非诊断",
-            "en": "Fetch the structured report and write a concise, application-specific report: reconstructed anatomy, key measurements, and flagged stenosis/diameters; states it is a measurement/visualization aid, not a diagnosis"
-          },
-          "args": "study_uid: string · language?: string"
-        }
-      ],
-      "resources": [
-        {
-          "uri": "fda://K240411",
-          "desc": {
-            "zh": "获批函与 510(k) 摘要（uAI Portal，Class II，QIH/LLZ）",
-            "en": "Clearance letter & 510(k) summary (uAI Portal, Class II, QIH/LLZ)"
-          }
-        },
-        {
-          "uri": "doc://ifu/uai-portal",
-          "desc": {
-            "zh": "获批预期用途与各应用范围",
-            "en": "Cleared intended use & per-application scope"
-          }
-        },
-        {
-          "uri": "doc://validation/dice-metrics",
-          "desc": {
-            "zh": "各应用 Dice 指标与亚组分析",
-            "en": "Per-application Dice metrics & subgroup analysis"
-          }
-        }
-      ]
+      "serverKey": "easy-triage-rib",
+      "endpointUrl": "https://hub.uii-ai.example/mcp/easy-triage-rib",
+      "tools": [],
+      "prompts": [],
+      "resources": []
     },
     "i18n": {
       "title": {
-        "zh": "冠脉分析",
-        "en": "Coronary Analysis"
+        "zh": "智能危急预警系统 - 肋骨骨折检测",
+        "en": "AI-Assisted Easy Triage System - Rib"
       },
       "tagline": {
-        "zh": "冠脉 CTA 分割与狭窄测量",
-        "en": "CCTA segmentation & stenosis measurement"
+        "zh": "",
+        "en": ""
       },
       "description": {
-        "zh": "对冠脉 CTA(CCTA) 进行 AI 自动分割与重建，提取心脏与冠脉中心线，支持狭窄测量与多视图可视化",
-        "en": "AI auto-segmentation and reconstruction for coronary CTA (CCTA) — extracts heart and coronary centerlines and supports stenosis measurement and multi-view visualization"
+        "zh": "",
+        "en": ""
       },
       "clinicalUse": {
-        "zh": "冠脉 CTA 的血管重建、中心线提取与狭窄测量（查看/测量辅助，非诊断）",
-        "en": "Vessel reconstruction, centerline extraction and stenosis measurement for CCTA (viewing/measurement aid, not diagnosis)"
+        "zh": "",
+        "en": ""
       },
       "overview": {
-        "zh": "将 uAI Portal「冠脉分析」应用封装为标准 MCP 服务：自动分割心脏与冠脉(LM/LAD/LCX/RCA)、提取中心线并测量狭窄，输出结构化结果供医师审阅（验证 Dice：冠脉 0.920、心脏 0.980）",
-        "en": "Wraps the uAI Portal Coronary Analysis app as a standard MCP service: segments heart and coronary vessels (LM/LAD/LCX/RCA), extracts centerlines, and measures stenosis — structured outputs for physician review (validation Dice: coronary 0.920, heart 0.980)"
+        "zh": "",
+        "en": ""
       }
     }
   },
   {
-    "id": "uai-aorta-analysis",
-    "type": "clinical-ai",
+    "id": "easy-triage-ich",
+    "type": "skill",
     "modality": "CT",
-    "icon": "🩸",
-    "series": "uAI Portal",
+    "icon": "/assets/Triage-System-ICH.png",
+    "visible": true,
     "fda": {
-      "kNumber": "K240411",
-      "decisionDate": "2024-09-06",
-      "productCode": "QIH, LLZ",
-      "productCodeName": "Medical Image Management and Processing System (21 CFR 892.2050)",
+      "kNumber": "K242292",
+      "decisionDate": "2024-12-20",
+      "productCode": "QAS",
+      "productCodeName": "Radiology Computer Aided Triage And Notification Software",
       "applicant": "Shanghai United Imaging Intelligence Co., Ltd."
     },
     "mcp": {
-      "serverKey": "uai-portal-aorta",
-      "endpointUrl": "https://hub.uii-ai.example/mcp/uai-portal/aorta",
-      "tools": [
-        {
-          "name": "analyze_aortic_cta",
-          "desc": {
-            "zh": "提交一例主动脉 CTA 检查；执行主干与分支分割、中心线提取与腔径测量",
-            "en": "Submit an aortic CTA study; runs trunk & branch segmentation, centerline extraction, and lumen-diameter measurement"
-          },
-          "input": "study_uid: string · priority?: \"routine\"|\"stat\"",
-          "returns": "AorticFindings"
-        },
-        {
-          "name": "list_studies",
-          "desc": {
-            "zh": "列出与筛选已接入的检查",
-            "en": "List and filter ingested studies"
-          },
-          "input": "application?: AppName · date_from? · date_to? · status?",
-          "returns": "StudySummary[]"
-        },
-        {
-          "name": "get_processing_status",
-          "desc": {
-            "zh": "查询某检查的处理状态",
-            "en": "Query the processing state for a study"
-          },
-          "input": "study_uid: string",
-          "returns": "ProcessingStatus"
-        },
-        {
-          "name": "get_structured_report",
-          "desc": {
-            "zh": "获取某检查的结构化报告",
-            "en": "Fetch the structured report for a study"
-          },
-          "input": "study_uid: string · format?: \"json\"|\"pdf\"",
-          "returns": "ReportDoc"
-        },
-        {
-          "name": "edit_centerline",
-          "desc": {
-            "zh": "提交医师对中心线/分割的修正并重新测量",
-            "en": "Submit physician corrections to centerline/segmentation and re-run measurement"
-          },
-          "input": "study_uid: string · corrections: CenterlineEdit[]",
-          "returns": "AnalysisResult"
-        },
-        {
-          "name": "export_to_pacs",
-          "desc": {
-            "zh": "结果归档或送至胶片",
-            "en": "Archive results or send to filming"
-          },
-          "input": "study_uid: string · target: \"pacs\"|\"filming\"",
-          "returns": "ExportReceipt"
-        }
-      ],
-      "prompts": [
-        {
-          "name": "triage_acute_chest_pain",
-          "desc": {
-            "zh": "识别模态并以 stat 优先级调用对应分析器，概述血管重建状态与关键测量，附 JSON 报告并注明需医师确认",
-            "en": "Detect modality and call the matching analyzer at stat priority; summarize vessel reconstruction and key measurements, attach the JSON report, and flag for physician confirmation"
-          },
-          "args": "study_uid: string"
-        },
-        {
-          "name": "generate_vascular_report",
-          "desc": {
-            "zh": "获取结构化报告并撰写与应用相符的简明报告：重建解剖、关键测量与标注的狭窄/腔径；说明为测量/可视化辅助而非诊断",
-            "en": "Fetch the structured report and write a concise, application-specific report: reconstructed anatomy, key measurements, and flagged stenosis/diameters; states it is a measurement/visualization aid, not a diagnosis"
-          },
-          "args": "study_uid: string · language?: string"
-        }
-      ],
-      "resources": [
-        {
-          "uri": "fda://K240411",
-          "desc": {
-            "zh": "获批函与 510(k) 摘要（uAI Portal，Class II，QIH/LLZ）",
-            "en": "Clearance letter & 510(k) summary (uAI Portal, Class II, QIH/LLZ)"
-          }
-        },
-        {
-          "uri": "doc://ifu/uai-portal",
-          "desc": {
-            "zh": "获批预期用途与各应用范围",
-            "en": "Cleared intended use & per-application scope"
-          }
-        },
-        {
-          "uri": "doc://validation/dice-metrics",
-          "desc": {
-            "zh": "各应用 Dice 指标与亚组分析",
-            "en": "Per-application Dice metrics & subgroup analysis"
-          }
-        }
-      ]
+      "serverKey": "easy-triage-ich",
+      "endpointUrl": "https://hub.uii-ai.example/mcp/easy-triage-ich",
+      "tools": [],
+      "prompts": [],
+      "resources": []
     },
     "i18n": {
       "title": {
-        "zh": "主动脉分析",
-        "en": "Aorta Analysis"
+        "zh": "智能危急预警系统 - 颅内出血检测",
+        "en": "Easy Triage System - ICH"
       },
       "tagline": {
-        "zh": "主动脉 CTA 分割与腔径测量",
-        "en": "Aorta CTA segmentation & lumen measurement"
+        "zh": "急诊颅内出血 AI 辅助筛查与分诊",
+        "en": "AI-assisted ICH screening and triage for emergency"
       },
       "description": {
-        "zh": "对主动脉 CTA 进行 AI 自动分割与重建，提取主干与分支中心线，支持腔径测量与多视图可视化",
-        "en": "AI auto-segmentation and reconstruction for aortic CTA — extracts trunk and branch centerlines and supports lumen-diameter measurement and multi-view visualization"
+        "zh": "当急诊科医生需要评估患者头颅 CT 是否存在颅内出血时，自动完成 ICH 筛查与量化分析，输出结构化分诊结论，辅助医生快速识别危急病情。",
+        "en": "When an ER physician needs to evaluate a patient's head CT for intracranial hemorrhage, this Skill automatically performs ICH screening and quantitative analysis, outputs a structured triage summary, and assists the physician in rapidly identifying critical conditions."
       },
       "clinicalUse": {
-        "zh": "主动脉 CTA 的主干/分支重建、中心线提取与腔径测量（查看/测量辅助，非诊断）",
-        "en": "Trunk/branch reconstruction, centerline extraction and lumen-diameter measurement for aortic CTA (viewing/measurement aid, not diagnosis)"
+        "zh": "",
+        "en": ""
       },
       "overview": {
-        "zh": "将 uAI Portal「主动脉分析」应用封装为标准 MCP 服务：自动分割主动脉主干与分支、提取中心线并测量腔径，输出结构化结果供医师审阅（验证 Dice：主干 0.946、分支 0.846）",
-        "en": "Wraps the uAI Portal Aorta Analysis app as a standard MCP service: segments aortic trunk and branches, extracts centerlines, and measures lumen diameter — structured outputs for physician review (validation Dice: trunk 0.946, branches 0.846)"
+        "zh": "急诊颅内出血 AI 辅助筛查与分诊",
+        "en": "AI-assisted ICH screening and triage for emergency"
+      }
+    },
+    "detail": {
+      "intro": {
+        "zh": "当急诊科医生需要评估患者头颅 CT 是否存在颅内出血时，自动完成 ICH 筛查与量化分析，输出结构化分诊结论，辅助医生快速识别危急病情。",
+        "en": "When an ER physician needs to evaluate a patient's head CT for intracranial hemorrhage, this Skill automatically performs ICH screening and quantitative analysis, outputs a structured triage summary, and assists the physician in rapidly identifying critical conditions."
+      },
+      "stats": [
+        {
+          "label": {
+            "zh": "AI 灵敏度",
+            "en": "AI Sensitivity"
+          },
+          "value": "92%",
+          "sub": {
+            "zh": "ICH 阳性检出\nFDA 验证集",
+            "en": "ICH positive detection\nFDA validation set"
+          }
+        },
+        {
+          "label": {
+            "zh": "AI 特异度",
+            "en": "AI Specificity"
+          },
+          "value": "95%",
+          "sub": {
+            "zh": "ICH 阴性排除\nFDA 验证集",
+            "en": "ICH negative exclusion\nFDA validation set"
+          }
+        },
+        {
+          "label": {
+            "zh": "覆盖出血亚型",
+            "en": "Hemorrhage subtypes"
+          },
+          "value": "5",
+          "sub": {
+            "zh": "IPH · IVH · SAH\nSDH · EDH",
+            "en": "IPH · IVH · SAH\nSDH · EDH"
+          }
+        }
+      ],
+      "capabilities": [
+        {
+          "zh": "检测颅内出血阳性/阴性，输出总体积及 5 种亚型分量（IPH / IVH / SAH / SDH / EDH）",
+          "en": "Detect ICH positive/negative, output total volume and 5 subtype volumes (IPH / IVH / SAH / SDH / EDH)"
+        },
+        {
+          "zh": "检出水肿并量化中线位移距离及方向",
+          "en": "Detect edema and quantify midline shift distance and direction"
+        },
+        {
+          "zh": "按固化规则自动判定危急值（ICH 阳性 / 中线位移 > 5mm）",
+          "en": "Automatically determine critical values by fixed rules (ICH positive / midline shift > 5mm)"
+        },
+        {
+          "zh": "生成结构化分诊摘要",
+          "en": "Generate structured triage summary"
+        }
+      ],
+      "workflow": [
+        {
+          "nodeType": "default",
+          "nodeLabel": "①",
+          "title": {
+            "zh": "医生自然语言请求",
+            "en": "Physician natural language request"
+          },
+          "desc": {
+            "zh": "急诊医生向 Agent 描述评估需求，或 PACS 收到新扫描完成事件后自动触发",
+            "en": "ER physician describes assessment needs to Agent, or PACS triggers automatically upon new scan completion"
+          }
+        },
+        {
+          "nodeType": "default",
+          "nodeLabel": "②",
+          "title": {
+            "zh": "检查类型验证",
+            "en": "Exam type validation"
+          },
+          "desc": {
+            "zh": "确认：模态 = CT · 序列 = 非增强 · 部位 = 头颅；不符则终止并提示",
+            "en": "Verify: modality = CT · series = non-contrast · region = head; abort with notice if mismatch"
+          }
+        },
+        {
+          "nodeType": "default",
+          "nodeLabel": "③",
+          "title": {
+            "zh": "DICOM 调阅",
+            "en": "DICOM retrieval"
+          },
+          "desc": {
+            "zh": "调用 PACS 基础工具，按患者 ID / 检查号获取目标序列",
+            "en": "Call PACS base tools to retrieve target series by patient ID / accession number"
+          }
+        },
+        {
+          "nodeType": "warn",
+          "nodeLabel": "④",
+          "title": {
+            "zh": "去标识化",
+            "en": "De-identification"
+          },
+          "desc": {
+            "zh": "影像出院内网前必须完成，调用 PACS 去标识化工具处理 DICOM",
+            "en": "Must be completed before images leave the intranet; call PACS de-identification tool to process DICOM"
+          }
+        },
+        {
+          "nodeType": "mcp",
+          "nodeLabel": "MCP",
+          "title": {
+            "zh": "提交推理",
+            "en": "Submit inference"
+          },
+          "desc": {
+            "zh": "传入去标识后 DICOM URI，返回 job_id",
+            "en": "Pass de-identified DICOM URI, returns job_id"
+          }
+        },
+        {
+          "nodeType": "mcp",
+          "nodeLabel": "MCP",
+          "title": {
+            "zh": "轮询进度",
+            "en": "Poll status"
+          },
+          "desc": {
+            "zh": "循环查询直至 status = completed；失败则终止返回错误",
+            "en": "Poll until status = completed; abort and return error on failure"
+          }
+        },
+        {
+          "nodeType": "mcp",
+          "nodeLabel": "MCP",
+          "title": {
+            "zh": "获取结果",
+            "en": "Get result"
+          },
+          "desc": {
+            "zh": "返回：出血阳性/阴性 · 总体积 · 5 种亚型体积 · 水肿 · 中线位移 · 危急值标记",
+            "en": "Returns: hemorrhage pos/neg · total volume · 5 subtype volumes · edema · midline shift · critical flag"
+          }
+        },
+        {
+          "nodeType": "default",
+          "nodeLabel": "⑧",
+          "title": {
+            "zh": "危急值判定",
+            "en": "Critical value determination"
+          },
+          "desc": {
+            "zh": "规则固化，不由 LLM 推断：ICH 阳性 → 危急（T/CHAS 10-4-9-2019）；中线位移 > 5mm → 危急（产品参考值）",
+            "en": "Rules are hardcoded, not inferred by LLM: ICH positive → critical (T/CHAS 10-4-9-2019); midline shift > 5mm → critical (product reference)"
+          }
+        },
+        {
+          "nodeType": "end",
+          "nodeLabel": "⑨",
+          "title": {
+            "zh": "输出结构化分诊摘要",
+            "en": "Output structured triage summary"
+          },
+          "desc": {
+            "zh": "返回给 Agent / 医生，含免责声明",
+            "en": "Return to Agent / physician, with disclaimer"
+          }
+        }
+      ],
+      "prerequisites": [
+        {
+          "name": {
+            "zh": "UII MCP Server",
+            "en": "UII MCP Server"
+          },
+          "desc": {
+            "zh": "联影智能 ICH 推理服务，提供 submit_inference / poll_status / get_result 三个工具接口",
+            "en": "UII ICH inference service, providing submit_inference / poll_status / get_result tool interfaces"
+          },
+          "iconType": "mcp"
+        },
+        {
+          "name": {
+            "zh": "PACS 基础工具",
+            "en": "PACS Base Tools"
+          },
+          "desc": {
+            "zh": "需支持 DICOM 调阅 · DICOM 去标识化两项操作；去标识化为合规强制步骤，不可跳过",
+            "en": "Must support DICOM retrieval and DICOM de-identification; de-identification is a mandatory compliance step"
+          },
+          "iconType": "pacs"
+        },
+        {
+          "name": {
+            "zh": "合规要求",
+            "en": "Compliance requirements"
+          },
+          "desc": {
+            "zh": "影像出院内网前须完成去标识化，Skill 内已将此步骤设为强制执行，Agent 不可绕过",
+            "en": "Images must be de-identified before leaving the intranet; this step is enforced within the Skill and cannot be bypassed by the Agent"
+          },
+          "iconType": "compliance"
+        }
+      ],
+      "triggers": {
+        "phrases": [],
+        "note": {
+          "zh": "急诊医生向 Agent 描述评估需求，或 PACS 收到新扫描完成事件后自动触发。",
+          "en": "The ER physician describes the assessment request to the Agent, or PACS triggers automatically when a new scan-complete event is received."
+        }
+      },
+      "quickStart": {
+        "hint": {
+          "zh": "复制下面这段话，粘贴给任一能读懂自然语言、可执行本地脚本的 AI 助手",
+          "en": "Copy the text below and paste it to any AI assistant that can read natural language and execute local scripts"
+        },
+        "code": {
+          "zh": "安装 ich_emergency_triage：\n\n源码：https://github.com/uii-ai/agents-hub/tree/main/skills/ich-emergency-triage\n\n依赖：\n  • UII MCP Server（联影智能 ICH 推理接口）\n  • PACS 基础工具（DICOM 调阅 + 去标识化）",
+          "en": "Install ich_emergency_triage:\n\nSource: https://github.com/uii-ai/agents-hub/tree/main/skills/ich-emergency-triage\n\nDependencies:\n  • UII MCP Server (UII ICH inference API)\n  • PACS Base Tools (DICOM retrieval + de-identification)"
+        },
+        "links": [
+          {
+            "label": "SKILL.md",
+            "href": "https://github.com/uii-ai/agents-hub/tree/main/skills/ich-emergency-triage/SKILL.md"
+          },
+          {
+            "label": "References",
+            "href": "https://github.com/uii-ai/agents-hub/tree/main/skills/ich-emergency-triage/references"
+          }
+        ]
       }
     }
   },
   {
-    "id": "uai-pulmonary-analysis",
-    "type": "clinical-ai",
+    "id": "bony-thorax-fractures",
+    "type": "skill",
     "modality": "CT",
-    "icon": "💨",
-    "series": "uAI Portal",
-    "fda": {
-      "kNumber": "K240411",
-      "decisionDate": "2024-09-06",
-      "productCode": "QIH, LLZ",
-      "productCodeName": "Medical Image Management and Processing System (21 CFR 892.2050)",
-      "applicant": "Shanghai United Imaging Intelligence Co., Ltd."
-    },
+    "icon": "/assets/Bony-Thorax-Fractures.png",
+    "visible": true,
+    "fda": null,
     "mcp": {
-      "serverKey": "uai-portal-pulmonary",
-      "endpointUrl": "https://hub.uii-ai.example/mcp/uai-portal/pulmonary",
-      "tools": [
-        {
-          "name": "analyze_pulmonary_cta",
-          "desc": {
-            "zh": "提交一例 CTPA 检查；执行动/静脉分割、中心线提取与测量",
-            "en": "Submit a CTPA study; runs artery/vein segmentation, centerline extraction, and measurement"
-          },
-          "input": "study_uid: string · priority?: \"routine\"|\"stat\"",
-          "returns": "PulmonaryFindings"
-        },
-        {
-          "name": "list_studies",
-          "desc": {
-            "zh": "列出与筛选已接入的检查",
-            "en": "List and filter ingested studies"
-          },
-          "input": "application?: AppName · date_from? · date_to? · status?",
-          "returns": "StudySummary[]"
-        },
-        {
-          "name": "get_processing_status",
-          "desc": {
-            "zh": "查询某检查的处理状态",
-            "en": "Query the processing state for a study"
-          },
-          "input": "study_uid: string",
-          "returns": "ProcessingStatus"
-        },
-        {
-          "name": "get_structured_report",
-          "desc": {
-            "zh": "获取某检查的结构化报告",
-            "en": "Fetch the structured report for a study"
-          },
-          "input": "study_uid: string · format?: \"json\"|\"pdf\"",
-          "returns": "ReportDoc"
-        },
-        {
-          "name": "edit_centerline",
-          "desc": {
-            "zh": "提交医师对中心线/分割的修正并重新测量",
-            "en": "Submit physician corrections to centerline/segmentation and re-run measurement"
-          },
-          "input": "study_uid: string · corrections: CenterlineEdit[]",
-          "returns": "AnalysisResult"
-        },
-        {
-          "name": "export_to_pacs",
-          "desc": {
-            "zh": "结果归档或送至胶片",
-            "en": "Archive results or send to filming"
-          },
-          "input": "study_uid: string · target: \"pacs\"|\"filming\"",
-          "returns": "ExportReceipt"
-        }
-      ],
-      "prompts": [
-        {
-          "name": "triage_acute_chest_pain",
-          "desc": {
-            "zh": "识别模态并以 stat 优先级调用对应分析器，概述血管重建状态与关键测量，附 JSON 报告并注明需医师确认",
-            "en": "Detect modality and call the matching analyzer at stat priority; summarize vessel reconstruction and key measurements, attach the JSON report, and flag for physician confirmation"
-          },
-          "args": "study_uid: string"
-        },
-        {
-          "name": "generate_vascular_report",
-          "desc": {
-            "zh": "获取结构化报告并撰写与应用相符的简明报告：重建解剖、关键测量与标注的狭窄/腔径；说明为测量/可视化辅助而非诊断",
-            "en": "Fetch the structured report and write a concise, application-specific report: reconstructed anatomy, key measurements, and flagged stenosis/diameters; states it is a measurement/visualization aid, not a diagnosis"
-          },
-          "args": "study_uid: string · language?: string"
-        }
-      ],
-      "resources": [
-        {
-          "uri": "fda://K240411",
-          "desc": {
-            "zh": "获批函与 510(k) 摘要（uAI Portal，Class II，QIH/LLZ）",
-            "en": "Clearance letter & 510(k) summary (uAI Portal, Class II, QIH/LLZ)"
-          }
-        },
-        {
-          "uri": "doc://ifu/uai-portal",
-          "desc": {
-            "zh": "获批预期用途与各应用范围",
-            "en": "Cleared intended use & per-application scope"
-          }
-        },
-        {
-          "uri": "doc://validation/dice-metrics",
-          "desc": {
-            "zh": "各应用 Dice 指标与亚组分析",
-            "en": "Per-application Dice metrics & subgroup analysis"
-          }
-        }
-      ]
+      "serverKey": "bony-thorax-fractures",
+      "endpointUrl": "https://hub.uii-ai.example/mcp/bony-thorax-fractures",
+      "tools": [],
+      "prompts": [],
+      "resources": []
     },
     "i18n": {
       "title": {
-        "zh": "肺动脉分析",
-        "en": "Pulmonary Artery Analysis"
+        "zh": "CT 胸部骨折智能分析系统",
+        "en": "AI-Assisted Analysis System for Bony Thorax Fractures"
       },
       "tagline": {
-        "zh": "肺动脉 CTPA 分割与测量",
-        "en": "CTPA segmentation & measurement"
+        "zh": "",
+        "en": ""
       },
       "description": {
-        "zh": "对肺动脉 CTA(CTPA) 进行 AI 自动分割与重建，提取动/静脉中心线并支持测量与多视图可视化",
-        "en": "AI auto-segmentation and reconstruction for pulmonary CTA (CTPA) — extracts artery/vein centerlines and supports measurement and multi-view visualization"
+        "zh": "",
+        "en": ""
       },
       "clinicalUse": {
-        "zh": "肺动脉 CTPA 的动/静脉重建、中心线提取与测量（查看/测量辅助，非诊断）",
-        "en": "Artery/vein reconstruction, centerline extraction and measurement for CTPA (viewing/measurement aid, not diagnosis)"
+        "zh": "",
+        "en": ""
       },
       "overview": {
-        "zh": "将 uAI Portal「肺动脉分析」应用封装为标准 MCP 服务：自动分割肺动脉与肺静脉、提取中心线并测量，输出结构化结果供医师审阅（验证 Dice：动脉 0.953、静脉 0.933）",
-        "en": "Wraps the uAI Portal Pulmonary Artery Analysis app as a standard MCP service: segments pulmonary arteries and veins, extracts centerlines, and measures — structured outputs for physician review (validation Dice: arteries 0.953, veins 0.933)"
+        "zh": "",
+        "en": ""
       }
     }
   },
   {
-    "id": "uai-head-neck-analysis",
-    "type": "clinical-ai",
+    "id": "aortic-dissection",
+    "type": "skill",
     "modality": "CT",
-    "icon": "🧠",
-    "series": "uAI Portal",
-    "fda": {
-      "kNumber": "K240411",
-      "decisionDate": "2024-09-06",
-      "productCode": "QIH, LLZ",
-      "productCodeName": "Medical Image Management and Processing System (21 CFR 892.2050)",
-      "applicant": "Shanghai United Imaging Intelligence Co., Ltd."
-    },
+    "icon": "/assets/Aortic-Dissection.png",
+    "visible": true,
+    "fda": null,
     "mcp": {
-      "serverKey": "uai-portal-head-neck",
-      "endpointUrl": "https://hub.uii-ai.example/mcp/uai-portal/head-neck",
-      "tools": [
-        {
-          "name": "analyze_head_neck_cta",
-          "desc": {
-            "zh": "提交一例头颈 CTA 检查；执行血管与骨分割、中心线提取与测量",
-            "en": "Submit a head & neck CTA study; runs vessel & bone segmentation, centerline extraction, and measurement"
-          },
-          "input": "study_uid: string",
-          "returns": "HeadNeckFindings"
-        },
-        {
-          "name": "list_studies",
-          "desc": {
-            "zh": "列出与筛选已接入的检查",
-            "en": "List and filter ingested studies"
-          },
-          "input": "application?: AppName · date_from? · date_to? · status?",
-          "returns": "StudySummary[]"
-        },
-        {
-          "name": "get_processing_status",
-          "desc": {
-            "zh": "查询某检查的处理状态",
-            "en": "Query the processing state for a study"
-          },
-          "input": "study_uid: string",
-          "returns": "ProcessingStatus"
-        },
-        {
-          "name": "get_structured_report",
-          "desc": {
-            "zh": "获取某检查的结构化报告",
-            "en": "Fetch the structured report for a study"
-          },
-          "input": "study_uid: string · format?: \"json\"|\"pdf\"",
-          "returns": "ReportDoc"
-        },
-        {
-          "name": "edit_centerline",
-          "desc": {
-            "zh": "提交医师对中心线/分割的修正并重新测量",
-            "en": "Submit physician corrections to centerline/segmentation and re-run measurement"
-          },
-          "input": "study_uid: string · corrections: CenterlineEdit[]",
-          "returns": "AnalysisResult"
-        },
-        {
-          "name": "export_to_pacs",
-          "desc": {
-            "zh": "结果归档或送至胶片",
-            "en": "Archive results or send to filming"
-          },
-          "input": "study_uid: string · target: \"pacs\"|\"filming\"",
-          "returns": "ExportReceipt"
-        }
-      ],
-      "prompts": [
-        {
-          "name": "generate_vascular_report",
-          "desc": {
-            "zh": "获取结构化报告并撰写与应用相符的简明报告：重建解剖、关键测量与标注的狭窄/腔径；说明为测量/可视化辅助而非诊断",
-            "en": "Fetch the structured report and write a concise, application-specific report: reconstructed anatomy, key measurements, and flagged stenosis/diameters; states it is a measurement/visualization aid, not a diagnosis"
-          },
-          "args": "study_uid: string · language?: string"
-        },
-        {
-          "name": "batch_qc_review",
-          "desc": {
-            "zh": "对指定日期调用 list_studies，概述各检查分割状态，挑出 error 状态或测量异常者供医师复核",
-            "en": "Call list_studies for a date, summarize segmentation status per study, and surface error states or out-of-range measurements for physician review"
-          },
-          "args": "date: string"
-        }
-      ],
-      "resources": [
-        {
-          "uri": "fda://K240411",
-          "desc": {
-            "zh": "获批函与 510(k) 摘要（uAI Portal，Class II，QIH/LLZ）",
-            "en": "Clearance letter & 510(k) summary (uAI Portal, Class II, QIH/LLZ)"
-          }
-        },
-        {
-          "uri": "doc://ifu/uai-portal",
-          "desc": {
-            "zh": "获批预期用途与各应用范围",
-            "en": "Cleared intended use & per-application scope"
-          }
-        },
-        {
-          "uri": "doc://validation/dice-metrics",
-          "desc": {
-            "zh": "各应用 Dice 指标与亚组分析",
-            "en": "Per-application Dice metrics & subgroup analysis"
-          }
-        }
-      ]
+      "serverKey": "aortic-dissection",
+      "endpointUrl": "https://hub.uii-ai.example/mcp/aortic-dissection",
+      "tools": [],
+      "prompts": [],
+      "resources": []
     },
     "i18n": {
       "title": {
-        "zh": "头颈血管分析",
-        "en": "Head and Neck Vessel Analysis"
+        "zh": "CT 主动脉智能分析系统",
+        "en": "AI-Assisted Analysis System for Aortic Dissection"
       },
       "tagline": {
-        "zh": "头颈 CTA 血管/骨分割与测量",
-        "en": "Head & neck CTA vessel/bone segmentation"
+        "zh": "",
+        "en": ""
       },
       "description": {
-        "zh": "对头颈 CTA 进行 AI 自动分割与重建，分离血管与骨、提取中心线并支持测量与多视图可视化",
-        "en": "AI auto-segmentation and reconstruction for head & neck CTA — separates vessel and bone, extracts centerlines and supports measurement and multi-view visualization"
+        "zh": "",
+        "en": ""
       },
       "clinicalUse": {
-        "zh": "头颈 CTA 的血管/骨分离、中心线提取与测量（查看/测量辅助，非诊断）",
-        "en": "Vessel/bone separation, centerline extraction and measurement for head & neck CTA (viewing/measurement aid, not diagnosis)"
+        "zh": "",
+        "en": ""
       },
       "overview": {
-        "zh": "将 uAI Portal「头颈血管分析」应用封装为标准 MCP 服务：自动分割头颈血管与骨、提取中心线并测量，输出结构化结果供医师审阅（验证 Dice：头部血管 0.902、颈部血管 0.967）",
-        "en": "Wraps the uAI Portal Head & Neck Vessel Analysis app as a standard MCP service: segments head/neck vessels and bone, extracts centerlines, and measures — structured outputs for physician review (validation Dice: head vessels 0.902, neck vessels 0.967)"
+        "zh": "",
+        "en": ""
       }
     }
   },
   {
-    "id": "uai-lower-extremity-analysis",
-    "type": "clinical-ai",
+    "id": "cerebral-carotid-vessels",
+    "type": "skill",
     "modality": "CT",
-    "icon": "🦵",
-    "series": "uAI Portal",
-    "fda": {
-      "kNumber": "K240411",
-      "decisionDate": "2024-09-06",
-      "productCode": "QIH, LLZ",
-      "productCodeName": "Medical Image Management and Processing System (21 CFR 892.2050)",
-      "applicant": "Shanghai United Imaging Intelligence Co., Ltd."
-    },
+    "icon": "/assets/Cerebral-and-Carotid-Vessels.png",
+    "visible": true,
+    "fda": null,
     "mcp": {
-      "serverKey": "uai-portal-lower-extremity",
-      "endpointUrl": "https://hub.uii-ai.example/mcp/uai-portal/lower-extremity",
-      "tools": [
-        {
-          "name": "analyze_lower_extremity_cta",
-          "desc": {
-            "zh": "提交一例下肢 CTA 检查；执行血管与骨分割、中心线提取、ROI 与狭窄测量",
-            "en": "Submit a lower-extremity CTA study; runs vessel & bone segmentation, centerline extraction, ROI, and stenosis measurement"
-          },
-          "input": "study_uid: string",
-          "returns": "LowerExtremityFindings"
-        },
-        {
-          "name": "list_studies",
-          "desc": {
-            "zh": "列出与筛选已接入的检查",
-            "en": "List and filter ingested studies"
-          },
-          "input": "application?: AppName · date_from? · date_to? · status?",
-          "returns": "StudySummary[]"
-        },
-        {
-          "name": "get_processing_status",
-          "desc": {
-            "zh": "查询某检查的处理状态",
-            "en": "Query the processing state for a study"
-          },
-          "input": "study_uid: string",
-          "returns": "ProcessingStatus"
-        },
-        {
-          "name": "get_structured_report",
-          "desc": {
-            "zh": "获取某检查的结构化报告",
-            "en": "Fetch the structured report for a study"
-          },
-          "input": "study_uid: string · format?: \"json\"|\"pdf\"",
-          "returns": "ReportDoc"
-        },
-        {
-          "name": "edit_centerline",
-          "desc": {
-            "zh": "提交医师对中心线/分割的修正并重新测量",
-            "en": "Submit physician corrections to centerline/segmentation and re-run measurement"
-          },
-          "input": "study_uid: string · corrections: CenterlineEdit[]",
-          "returns": "AnalysisResult"
-        },
-        {
-          "name": "export_to_pacs",
-          "desc": {
-            "zh": "结果归档或送至胶片",
-            "en": "Archive results or send to filming"
-          },
-          "input": "study_uid: string · target: \"pacs\"|\"filming\"",
-          "returns": "ExportReceipt"
-        }
-      ],
-      "prompts": [
-        {
-          "name": "generate_vascular_report",
-          "desc": {
-            "zh": "获取结构化报告并撰写与应用相符的简明报告：重建解剖、关键测量与标注的狭窄/腔径；说明为测量/可视化辅助而非诊断",
-            "en": "Fetch the structured report and write a concise, application-specific report: reconstructed anatomy, key measurements, and flagged stenosis/diameters; states it is a measurement/visualization aid, not a diagnosis"
-          },
-          "args": "study_uid: string · language?: string"
-        },
-        {
-          "name": "batch_qc_review",
-          "desc": {
-            "zh": "对指定日期调用 list_studies，概述各检查分割状态，挑出 error 状态或测量异常者供医师复核",
-            "en": "Call list_studies for a date, summarize segmentation status per study, and surface error states or out-of-range measurements for physician review"
-          },
-          "args": "date: string"
-        }
-      ],
-      "resources": [
-        {
-          "uri": "fda://K240411",
-          "desc": {
-            "zh": "获批函与 510(k) 摘要（uAI Portal，Class II，QIH/LLZ）",
-            "en": "Clearance letter & 510(k) summary (uAI Portal, Class II, QIH/LLZ)"
-          }
-        },
-        {
-          "uri": "doc://ifu/uai-portal",
-          "desc": {
-            "zh": "获批预期用途与各应用范围",
-            "en": "Cleared intended use & per-application scope"
-          }
-        },
-        {
-          "uri": "doc://validation/dice-metrics",
-          "desc": {
-            "zh": "各应用 Dice 指标与亚组分析",
-            "en": "Per-application Dice metrics & subgroup analysis"
-          }
-        }
-      ]
+      "serverKey": "cerebral-carotid-vessels",
+      "endpointUrl": "https://hub.uii-ai.example/mcp/cerebral-carotid-vessels",
+      "tools": [],
+      "prompts": [],
+      "resources": []
     },
     "i18n": {
       "title": {
-        "zh": "下肢血管分析",
-        "en": "Lower Extremity Vessel Analysis"
+        "zh": "CT头颈血管智能分析系统",
+        "en": "AI-Assisted Analysis System for Cerebral and Carotid Vessels"
       },
       "tagline": {
-        "zh": "下肢 CTA 血管/骨分割与狭窄测量",
-        "en": "Lower-extremity CTA vessel/bone segmentation"
+        "zh": "",
+        "en": ""
       },
       "description": {
-        "zh": "对下肢 CTA 进行 AI 自动分割与重建，分离血管与骨、提取中心线并支持 ROI 与狭窄测量",
-        "en": "AI auto-segmentation and reconstruction for lower-extremity CTA — separates vessel and bone, extracts centerlines and supports ROI and stenosis measurement"
+        "zh": "",
+        "en": ""
       },
       "clinicalUse": {
-        "zh": "下肢 CTA 的血管/骨分离、中心线提取、ROI 与狭窄测量（查看/测量辅助，非诊断）",
-        "en": "Vessel/bone separation, centerline extraction, ROI and stenosis measurement for lower-extremity CTA (viewing/measurement aid, not diagnosis)"
+        "zh": "",
+        "en": ""
       },
       "overview": {
-        "zh": "将 uAI Portal「下肢血管分析」应用封装为标准 MCP 服务：自动分割下肢血管与骨、提取中心线，支持 ROI 与狭窄测量，输出结构化结果供医师审阅（验证 Dice：动脉 0.892）",
-        "en": "Wraps the uAI Portal Lower Extremity Vessel Analysis app as a standard MCP service: segments lower-extremity vessels and bone, extracts centerlines, supports ROI and stenosis measurement — structured outputs for physician review (validation Dice: arteries 0.892)"
+        "zh": "",
+        "en": ""
+      }
+    }
+  },
+  {
+    "id": "coronary-cta",
+    "type": "skill",
+    "modality": "CT",
+    "icon": "/assets/Coronary-CTA-Imaging.png",
+    "visible": true,
+    "fda": null,
+    "mcp": {
+      "serverKey": "coronary-cta",
+      "endpointUrl": "https://hub.uii-ai.example/mcp/coronary-cta",
+      "tools": [],
+      "prompts": [],
+      "resources": []
+    },
+    "i18n": {
+      "title": {
+        "zh": "CT 冠脉智能分析系统",
+        "en": "AI-Assisted Analysis System for Coronary CTA Imaging"
+      },
+      "tagline": {
+        "zh": "",
+        "en": ""
+      },
+      "description": {
+        "zh": "",
+        "en": ""
+      },
+      "clinicalUse": {
+        "zh": "",
+        "en": ""
+      },
+      "overview": {
+        "zh": "",
+        "en": ""
+      }
+    }
+  },
+  {
+    "id": "lower-extremity-cta",
+    "type": "skill",
+    "modality": "CT",
+    "icon": "/assets/Lower-Extremity-CTA-Imaging.png",
+    "visible": true,
+    "fda": null,
+    "mcp": {
+      "serverKey": "lower-extremity-cta",
+      "endpointUrl": "https://hub.uii-ai.example/mcp/lower-extremity-cta",
+      "tools": [],
+      "prompts": [],
+      "resources": []
+    },
+    "i18n": {
+      "title": {
+        "zh": "CT 下肢血管智能评估系统",
+        "en": "AI-Assisted Analysis System for Lower Extremity CTA Imaging"
+      },
+      "tagline": {
+        "zh": "",
+        "en": ""
+      },
+      "description": {
+        "zh": "",
+        "en": ""
+      },
+      "clinicalUse": {
+        "zh": "",
+        "en": ""
+      },
+      "overview": {
+        "zh": "",
+        "en": ""
+      }
+    }
+  },
+  {
+    "id": "intracerebral-hemorrhage",
+    "type": "skill",
+    "modality": "CT",
+    "icon": "/assets/Intracerebral-Hemorrhage.png",
+    "visible": true,
+    "fda": null,
+    "mcp": {
+      "serverKey": "intracerebral-hemorrhage",
+      "endpointUrl": "https://hub.uii-ai.example/mcp/intracerebral-hemorrhage",
+      "tools": [],
+      "prompts": [],
+      "resources": []
+    },
+    "i18n": {
+      "title": {
+        "zh": "CT 颅内出血智能分析系统",
+        "en": "AI-Assisted Analysis System for Intracerebral Hemorrhage"
+      },
+      "tagline": {
+        "zh": "",
+        "en": ""
+      },
+      "description": {
+        "zh": "",
+        "en": ""
+      },
+      "clinicalUse": {
+        "zh": "",
+        "en": ""
+      },
+      "overview": {
+        "zh": "",
+        "en": ""
+      }
+    }
+  },
+  {
+    "id": "vitallens-rppg",
+    "type": "skill",
+    "modality": "Cross",
+    "icon": "/assets/vitallens.svg",
+    "visible": true,
+    "fda": null,
+    "mcp": {
+      "serverKey": "vitallens-rppg",
+      "endpointUrl": "https://hub.uii-ai.example/mcp/vitallens-rppg",
+      "tools": [],
+      "prompts": [],
+      "resources": []
+    },
+    "i18n": {
+      "title": {
+        "zh": "VitalLens",
+        "en": "VitalLens"
+      },
+      "tagline": {
+        "zh": "General Wellness · Non-Medical",
+        "en": "General Wellness · Non-Medical"
+      },
+      "description": {
+        "zh": "通过普通摄像头捕捉面部视频，完成心率与呼吸率的无接触检测，输出带置信度评分的测量数值。",
+        "en": "Capture facial video through a standard camera to perform non-contact heart-rate and respiratory-rate detection, returning measurements with confidence scores."
+      },
+      "clinicalUse": {
+        "zh": "",
+        "en": ""
+      },
+      "overview": {
+        "zh": "General Wellness · Non-Medical",
+        "en": "General Wellness · Non-Medical"
+      }
+    },
+    "detail": {
+      "intro": {
+        "zh": "用户以自然语言发起生命体征测量请求，Agent 识别意图后调用本 Skill，通过普通摄像头捕捉面部视频，完成心率与呼吸率的无接触检测，输出带置信度评分的测量数值。",
+        "en": "The user requests a vital-sign measurement in natural language. After the Agent recognizes the intent, it invokes this Skill to capture facial video through a standard camera, perform non-contact heart-rate and respiratory-rate detection, and return measurements with confidence scores."
+      },
+      "stats": [
+        {
+          "label": {
+            "zh": "检测指标",
+            "en": "Detected metrics"
+          },
+          "value": {
+            "zh": "心率、呼吸",
+            "en": "HR、RR"
+          },
+          "sub": {
+            "zh": "",
+            "en": ""
+          }
+        },
+        {
+          "label": {
+            "zh": "输入",
+            "en": "Input"
+          },
+          "value": {
+            "zh": "摄像头视频",
+            "en": "Camera video"
+          },
+          "sub": {
+            "zh": "",
+            "en": ""
+          }
+        }
+      ],
+      "capabilities": [
+        {
+          "zh": "通过摄像头无接触检测心率（HR）与呼吸率（RR）",
+          "en": "Detect heart rate (HR) and respiratory rate (RR) without contact through a camera"
+        },
+        {
+          "zh": "每项测量结果附带置信度评分",
+          "en": "Attach a confidence score to each measurement result"
+        }
+      ],
+      "workflow": [
+        {
+          "nodeType": "default",
+          "nodeLabel": "①",
+          "title": {
+            "zh": "用户自然语言请求",
+            "en": "User natural-language request"
+          },
+          "desc": {
+            "zh": "用户向 Agent 表达测量心率、呼吸率或进行快速健康自测的意图。",
+            "en": "The user tells the Agent they want to measure heart rate, respiratory rate, or run a quick wellness check."
+          }
+        },
+        {
+          "nodeType": "warn",
+          "nodeLabel": "②",
+          "title": {
+            "zh": "环境条件检查",
+            "en": "Environment check"
+          },
+          "desc": {
+            "zh": "检查摄像头可用、光线充足，并提示用户保持正面朝向与相对静止。",
+            "en": "Check that the camera is available, lighting is sufficient, and the user is facing forward while staying relatively still."
+          }
+        },
+        {
+          "nodeType": "default",
+          "nodeLabel": "③",
+          "title": {
+            "zh": "采集面部视频",
+            "en": "Capture facial video"
+          },
+          "desc": {
+            "zh": "通过摄像头采集一段面部视频，作为无接触体征检测输入。",
+            "en": "Capture a short facial video through the camera as input for non-contact vital-sign detection."
+          }
+        },
+        {
+          "nodeType": "default",
+          "nodeLabel": "④",
+          "title": {
+            "zh": "调用 VitalLens API 进行 rPPG 分析",
+            "en": "Call VitalLens API for rPPG analysis"
+          },
+          "desc": {
+            "zh": "将面部视频提交给 VitalLens API，通过 rPPG 分析提取心率与呼吸率信号。",
+            "en": "Submit the facial video to the VitalLens API and use rPPG analysis to extract heart-rate and respiratory-rate signals."
+          }
+        },
+        {
+          "nodeType": "default",
+          "nodeLabel": "⑤",
+          "title": {
+            "zh": "接收测量结果",
+            "en": "Receive measurement results"
+          },
+          "desc": {
+            "zh": "接收心率、呼吸率测量结果及对应置信度评分。",
+            "en": "Receive heart-rate and respiratory-rate measurements with their confidence scores."
+          }
+        },
+        {
+          "nodeType": "end",
+          "nodeLabel": "⑥",
+          "title": {
+            "zh": "输出一次呼吸心率测量结果",
+            "en": "Output one respiratory and heart-rate measurement"
+          },
+          "desc": {
+            "zh": "以自然语言输出本次呼吸率与心率测量结果，并附带置信度评分。",
+            "en": "Output the respiratory-rate and heart-rate measurements in natural language with confidence scores."
+          }
+        }
+      ],
+      "prerequisites": [
+        {
+          "name": {
+            "zh": "VitalLens API Key",
+            "en": "VitalLens API Key"
+          },
+          "desc": {
+            "zh": "需要配置 VITALLENS_API_KEY 环境变量。",
+            "en": "Requires the VITALLENS_API_KEY environment variable."
+          },
+          "iconType": "mcp"
+        },
+        {
+          "name": {
+            "zh": "摄像头访问权限",
+            "en": "Camera access permission"
+          },
+          "desc": {
+            "zh": "需要允许访问摄像头以采集面部视频。",
+            "en": "Requires camera access permission to capture facial video."
+          },
+          "iconType": "pacs"
+        },
+        {
+          "name": {
+            "zh": "拍摄环境",
+            "en": "Capture environment"
+          },
+          "desc": {
+            "zh": "稳定光源、正面朝向，并避免大幅移动。",
+            "en": "Stable lighting, front-facing posture, and avoiding large movements."
+          },
+          "iconType": "compliance"
+        }
+      ],
+      "triggers": {
+        "phrases": [],
+        "note": {
+          "zh": "当用户希望通过摄像头了解自己当前的心率或呼吸率时触发，包括主动询问实时体征、运动后想确认心率恢复状态，或想做一次快速健康自测等场景。",
+          "en": "Triggers when the user wants to understand their current heart rate or respiratory rate through a camera, including asking about real-time vitals, checking heart-rate recovery after exercise, or doing a quick wellness self-check."
+        }
+      },
+      "quickStart": {
+        "hint": {
+          "zh": "复制下面这段话，粘贴给任一能执行本地脚本的 AI 助手（如 Claude Code）",
+          "en": "Copy the text below and paste it to any AI assistant that can run local scripts (e.g. Claude Code)"
+        },
+        "code": {
+          "zh": "安装 vitallens_noncontact_vitals：\n\n源码：https://github.com/ruanrrn/uii-agents-hub/tree/main/vitallens\n\n依赖：\n  • VitalLens API Key（环境变量 VITALLENS_API_KEY）\n  • 摄像头访问权限",
+          "en": "Install vitallens_noncontact_vitals:\n\nSource: https://github.com/ruanrrn/uii-agents-hub/tree/main/vitallens\n\nDependencies:\n  • VitalLens API Key (VITALLENS_API_KEY environment variable)\n  • Camera access permission"
+        },
+        "links": [
+          {
+            "label": "SKILL.md",
+            "href": "https://github.com/ruanrrn/uii-agents-hub/blob/main/vitallens/SKILL.md"
+          },
+          {
+            "label": "VitalLens API 注册",
+            "href": "https://www.rouast.com/api"
+          }
+        ]
       }
     }
   }
