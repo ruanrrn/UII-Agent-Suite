@@ -1,51 +1,51 @@
-/* assets/css/tokens.css — 联影浅色企业风：蓝主色 + 青绿 AI 强调 */
+/* assets/css/tokens.css */
 :root {
-  /* 主品牌色（联影蓝） */
-  --brand: #06c; /* 主色：CTA / 链接 / logo / 激活态 */
-  --brand-ink: #fff; /* 蓝底上的文字 */
-  --brand-strong: #0052a6; /* hover / 深一档蓝 */
-  --brand-tint: #e6f0fb; /* 浅蓝底 */
-  --brand-on-dark: #4d9fff; /* 深色面板上的蓝强调（保对比） */
+  --brand: #4d9fff;
+  --brand-ink: #fff;
+  --brand-strong: #7bb8ff;
+  --brand-tint: #0b2542;
+  --brand-on-dark: #66adff;
 
-  /* AI 强调色（青绿；联影官网用于标签 / 智能体 / 在线） */
-  --key: #0fd78a; /* AI / 智能体 / 在线 / MCP 强调 */
-  --key-ink: #063b2a; /* 青绿底上的深色文字 */
-  --key-strong: #0a8f5d; /* 浅底上的青绿文字（保对比） */
-  --key-tint: #e6faf2; /* 浅青绿底 */
-  --key-glow: rgb(15 215 138 / 14%);
+  --key: #0fd78a;
+  --key-ink: #063b2a;
+  --key-strong: #35e7a1;
+  --key-tint: #06291c;
+  --key-glow: rgb(15 215 138 / 16%);
 
-  /* 次级点缀（极少量：企业版 / 认证） */
-  --accent: #ff5316; /* 联影橙 */
-  --gold: #c59d62; /* 仅"企业版/认证"点缀 */
-  --blue: #06c; /* 次级链接（对齐主蓝） */
+  --accent: #ff6a3d;
+  --gold: #d6ad72;
+  --blue: #4d9fff;
 
-  /* 中性基底（对齐联影灰阶 + 近白底） */
-  --black: #121212; /* 仅代码/机器视图保留 */
-  --near-black: #0d1117; /* 机器视图/代码/连接块 */
-  --white: #fff;
-  --bg-section: #f7f8fb;
-  --bg-pill: #eef0f4;
-  --border: #e3e6ec;
-  --border-strong: #d3d7df;
-  --ink: #212529;
-  --ink-2: #47494e;
-  --ink-3: #7f828b;
-  --ink-muted: #a0a4ab;
-  --on-dark: #e5e7eb;
-  --on-dark-muted: #9aa0a6;
+  --black: #000;
+  --near-black: #05070a;
+  --white: #000;
 
-  /* 字体 */
+  /* Elevation ladder over the true-black page so cards/panels read clearly */
+  --surface: #0f141b;
+  --surface-strong: #171d26;
+  --bg-section: #000;
+  --bg-pill: #1b2230;
+  --border: #262d39;
+  --border-strong: #39414f;
+  --ink: #f8fafc;
+  --ink-2: #d7dde8;
+  --ink-3: #a8b0bd;
+  --ink-muted: #768091;
+  --on-dark: #f8fafc;
+  --on-dark-muted: #a8b0bd;
+
   --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
   --font-body: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', consolas, monospace;
 
-  /* 圆角/阴影/尺寸（沿用 v1 量纲） */
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 14px;
   --radius-pill: 999px;
-  --shadow-card: 0 1px 3px rgb(0 0 0 / 5%), 0 1px 2px rgb(0 0 0 / 3%);
-  --shadow-card-hover: 0 6px 20px rgb(0 0 0 / 8%), 0 2px 6px rgb(0 0 0 / 4%);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 45%), inset 0 1px 0 rgb(255 255 255 / 4%);
+  --shadow-card-hover:
+    0 14px 38px rgb(0 0 0 / 55%), 0 0 0 1px rgb(77 159 255 / 28%),
+    inset 0 1px 0 rgb(255 255 255 / 7%);
   --max-width: 1280px;
 }
 

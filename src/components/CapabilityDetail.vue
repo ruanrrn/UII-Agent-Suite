@@ -12,11 +12,22 @@ const { t, locale } = useI18n();
 
 function goBack() {
   if (route.query.from === 'market') {
-    router.push({ path: '/', query: { screen: 'market' } });
+    router.push({
+      path: '/',
+      query: {
+        screen: 'market',
+        ...(route.query.category ? { category: route.query.category } : {})
+      }
+    });
     return;
   }
   if (window.history.length > 1) router.back();
-  else router.push('/catalog');
+  else {
+    router.push({
+      path: '/catalog',
+      query: route.query.category ? { category: route.query.category } : undefined
+    });
+  }
 }
 
 const L = () => locale.value as 'zh' | 'en';
@@ -68,7 +79,7 @@ async function copyQS() {
             <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
               <path
                 d="M5.5 1L6.8 4.1H10L7.6 6L8.5 9.2L5.5 7.4L2.5 9.2L3.4 6L1 4.1H4.2L5.5 1Z"
-                fill="#166534"
+                fill="currentColor"
               />
             </svg>
             FDA 510(k) {{ cap.fda.kNumber }}
@@ -314,12 +325,12 @@ async function copyQS() {
                       width="7"
                       height="7"
                       rx="1"
-                      stroke="#555"
+                      stroke="currentColor"
                       stroke-width="1.2"
                     />
                     <path
                       d="M1 8V2C1 1.45 1.45 1 2 1H8"
-                      stroke="#555"
+                      stroke="currentColor"
                       stroke-width="1.2"
                       stroke-linecap="round"
                     />
@@ -340,11 +351,16 @@ async function copyQS() {
                 <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
                   <path
                     d="M2 2H8L11 5V11H2V2Z"
-                    stroke="#444"
+                    stroke="currentColor"
                     stroke-width="1.2"
                     stroke-linejoin="round"
                   />
-                  <path d="M8 2V5H11" stroke="#444" stroke-width="1.2" stroke-linejoin="round" />
+                  <path
+                    d="M8 2V5H11"
+                    stroke="currentColor"
+                    stroke-width="1.2"
+                    stroke-linejoin="round"
+                  />
                 </svg>
                 {{ link.label }}
               </a>

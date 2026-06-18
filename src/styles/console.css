@@ -79,7 +79,7 @@
 }
 
 .cn-stat {
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 18px;
@@ -99,7 +99,7 @@
 .cn-table {
   width: 100%;
   border-collapse: collapse;
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -174,7 +174,7 @@
 .rowmenu-pop {
   position: fixed;
   z-index: 1000;
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-card);
@@ -208,7 +208,7 @@
 
 /* Account credentials card */
 .cred-card {
-  background: #fff;
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 18px 20px;
@@ -257,7 +257,7 @@
 
 .cred-btn {
   border: 1px solid var(--border-strong);
-  background: #fff;
+  background: var(--surface);
   color: var(--ink-2);
   border-radius: var(--radius-md);
   padding: 5px 12px;

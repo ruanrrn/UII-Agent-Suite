@@ -198,6 +198,162 @@ const ichDetail: SkillDetail = {
   }
 };
 
+const vitallensDetail: SkillDetail = {
+  intro: {
+    zh: '当用户想快速了解自己的心率与呼吸率时，Vitallens 通过约 12 秒录制完成一次 rPPG（远程光电容积脉搏波）测量，调用 VitalLens API 返回心率、呼吸率及各自的置信度。',
+    en: 'When a user wants a quick read of their heart and respiratory rate, Vitallens runs a single ~12-second rPPG (remote photoplethysmography) measurement, calls the VitalLens API, and returns heart rate, respiratory rate, and a confidence score for each.'
+  },
+  stats: [
+    {
+      label: { zh: '录制时长', en: 'Capture time' },
+      value: '~12s',
+      sub: {
+        zh: '单次网络摄像头录制\n3 秒倒计时后开始',
+        en: 'Single webcam capture\nstarts after a 3s countdown'
+      }
+    },
+    {
+      label: { zh: '输出指标', en: 'Vitals returned' },
+      value: '2',
+      sub: {
+        zh: '心率 HR · 呼吸率 RR\n各带置信度',
+        en: 'Heart rate · Respiratory rate\neach with confidence'
+      }
+    },
+    {
+      label: { zh: '置信度阈值', en: 'Confidence threshold' },
+      value: '0.7',
+      sub: {
+        zh: '低于此值提示\n结果可能不可靠',
+        en: 'Below this, the reading\nmay be unreliable'
+      }
+    }
+  ],
+  capabilities: [
+    {
+      zh: '通过约 12 秒录制，无需穿戴设备即可估算心率（HR）',
+      en: 'Estimate heart rate (HR) from a ~12-second webcam recording — no wearable required'
+    },
+    {
+      zh: '同步估算呼吸率（RR），并为每项指标返回 0–1 置信度',
+      en: 'Estimate respiratory rate (RR) in the same pass, with a 0–1 confidence score per vital'
+    },
+    {
+      zh: '单条命令完成：预检 → 本地服务 → 自动授权摄像头 → 录制 → 调用 API → 输出结果',
+      en: 'One command runs the whole flow: preflight → local server → auto-granted camera → capture → API → result'
+    },
+    {
+      zh: '跨平台（Windows / macOS / Linux），自动检测 Node、浏览器与摄像头',
+      en: 'Cross-platform (Windows / macOS / Linux); auto-checks Node, browser and webcam'
+    },
+    {
+      zh: '置信度低于 0.7 时提示结果可能不可靠，并建议在良好光照、保持静止下重测',
+      en: 'Flags readings below 0.7 confidence and suggests a retry in good lighting while staying still'
+    }
+  ],
+  workflow: [
+    {
+      nodeType: 'default',
+      nodeLabel: '①',
+      title: { zh: '自然语言请求', en: 'Natural-language request' },
+      desc: {
+        zh: '用户说“测一下心率”“我现在心率多少”等，Agent 识别意图并触发本 Skill',
+        en: 'The user says "check my pulse" / "what\'s my heart rate", and the Agent recognizes the intent and triggers this Skill'
+      }
+    },
+    {
+      nodeType: 'warn',
+      nodeLabel: '②',
+      title: { zh: '环境预检', en: 'Environment preflight' },
+      desc: {
+        zh: '检查 Node 18+、Chromium 浏览器与摄像头；缺失则中止并引导配置',
+        en: 'Verify Node 18+, a Chromium browser and a webcam; abort and guide setup if any is missing'
+      }
+    },
+    {
+      nodeType: 'default',
+      nodeLabel: '③',
+      title: { zh: '启动本地服务', en: 'Launch local server' },
+      desc: {
+        zh: '运行 node scripts/launch.js，在空闲端口启动本地 HTTP 服务并打开无边框 Chromium 窗口',
+        en: 'Run node scripts/launch.js to start a local HTTP server on a free port and open a chromeless Chromium window'
+      }
+    },
+    {
+      nodeType: 'default',
+      nodeLabel: '④',
+      title: { zh: '摄像头录制', en: 'Webcam capture' },
+      desc: {
+        zh: '摄像头自动授权，页面 3 秒倒计时后录制约 12 秒，全程无需手动点击“允许”',
+        en: 'Camera is auto-granted; the page counts down 3s then records ~12s — no manual "Allow" click needed'
+      }
+    },
+    {
+      nodeType: 'default',
+      nodeLabel: '⑤',
+      title: { zh: '调用 VitalLens API', en: 'Call VitalLens API' },
+      desc: {
+        zh: '上传录制片段，远程 rPPG 推理返回心率、呼吸率及置信度',
+        en: 'Upload the clip; remote rPPG inference returns heart rate, respiratory rate and confidence'
+      }
+    },
+    {
+      nodeType: 'end',
+      nodeLabel: '⑥',
+      title: { zh: '结果输出', en: 'Result output' },
+      desc: {
+        zh: '自然语音描述测量结果，并自动清除临时服务。',
+        en: 'Describe the measurement results in natural language and automatically clear the temporary service.'
+      }
+    }
+  ],
+  prerequisites: [
+    {
+      name: { zh: '运行环境', en: 'Runtime' },
+      desc: {
+        zh: 'Node.js 18+ 与 Chromium 内核浏览器（Edge / Chrome），跨平台运行 launch.js',
+        en: 'Node.js 18+ and a Chromium-based browser (Edge / Chrome); launch.js runs cross-platform'
+      },
+      iconType: 'pacs'
+    },
+    {
+      name: { zh: '摄像头与合规', en: 'Camera & compliance' },
+      desc: {
+        zh: '需可用摄像头；单人入镜、保持静止以保证信号质量',
+        en: 'A working camera; one person in frame, staying still for signal quality'
+      },
+      iconType: 'compliance'
+    }
+  ],
+  triggers: {
+    phrases: [],
+    note: {
+      zh: '用户向 Agent 提及测量心率或呼吸时自动触发',
+      en: 'Automatically triggers when the user mentions measuring heart rate or breathing to the Agent.'
+    }
+  },
+  quickStart: {
+    hint: {
+      zh: '复制下面这段话，粘贴给任一能执行本地脚本的 AI 助手（如 Claude Code）',
+      en: 'Copy the text below and paste it to any AI assistant that can run local scripts (e.g. Claude Code)'
+    },
+    code: {
+      zh: '安装 vitallens-rppg：\n\n源码：https://github.com/ruanrrn/uii-agents-hub/tree/main/vitallens\n\n运行：node scripts/launch.js\n\n依赖：\n  • Node.js 18+\n  • Chromium 内核浏览器（Edge / Chrome）\n  • 可用摄像头',
+      en: 'Install vitallens-rppg:\n\nSource: https://github.com/ruanrrn/uii-agents-hub/tree/main/vitallens\n\nRun: node scripts/launch.js\n\nDependencies:\n  • Node.js 18+\n  • Chromium-based browser (Edge / Chrome)\n  • A working camera'
+    },
+    links: [
+      {
+        label: 'SKILL.md',
+        href: 'https://github.com/ruanrrn/uii-agents-hub/blob/main/vitallens/SKILL.md'
+      },
+      {
+        label: 'VitalLens API',
+        href: 'https://www.rouast.com/api'
+      }
+    ]
+  }
+};
+
 export const CAPABILITIES: Capability[] = [
   {
     id: 'easy-triage-rib',
@@ -324,5 +480,31 @@ export const CAPABILITIES: Capability[] = [
       zh: 'CT 颅内出血智能分析系统',
       en: 'AI-Assisted Analysis System for Intracerebral Hemorrhage'
     })
+  },
+  {
+    id: 'vitallens-rppg',
+    type: 'skill',
+    modality: 'Cross',
+    icon: '/assets/vitallens.svg',
+    visible: true,
+    fda: null,
+    mcp: blankMcp('vitallens-rppg'),
+    i18n: {
+      title: { zh: 'Vitallens', en: 'Vitallens' },
+      tagline: {
+        zh: '网络摄像头 rPPG 心率与呼吸率估算',
+        en: 'Webcam rPPG heart & respiratory rate estimation'
+      },
+      description: {
+        zh: '约 12 秒录制，通过 rPPG 远程光电容积脉搏波技术估算心率与呼吸率，并返回置信度。',
+        en: 'A ~12-second recording estimates heart rate and respiratory rate via rPPG (remote photoplethysmography), returning a confidence score for each.'
+      },
+      clinicalUse: { ...empty },
+      overview: {
+        zh: '网络摄像头 rPPG 心率与呼吸率估算',
+        en: 'Webcam rPPG heart & respiratory rate estimation'
+      }
+    },
+    detail: vitallensDetail
   }
 ];

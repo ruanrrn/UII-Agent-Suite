@@ -13,7 +13,10 @@ const isImgIcon = (icon: string) => icon.startsWith('/');
 const open = () =>
   router.push({
     path: `/capability/${props.cap.id}`,
-    query: route.name === 'home' ? { from: 'market' } : undefined
+    query: {
+      ...(route.name === 'home' ? { from: 'market' } : {}),
+      ...(route.query.category ? { category: route.query.category } : {})
+    }
   });
 </script>
 
