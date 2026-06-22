@@ -6,7 +6,7 @@ import type { DataSource } from '@/services';
 import type { Capability } from '@/types/capability';
 import { filterCapabilities } from '@/lib/filters';
 import CapabilityCard from '@/components/CapabilityCard.vue';
-defineProps<{ embedded?: boolean }>();
+const props = defineProps<{ embedded?: boolean }>();
 const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
@@ -46,7 +46,12 @@ watch(
 );
 function setCategory(category: SkillCategory) {
   activeCategory.value = category;
-  void router.replace({ query: { ...route.query, category } });
+  const query = {
+    ...route.query,
+    ...(props.embedded && route.name === 'home' ? { screen: 'market' } : {}),
+    category
+  };
+  void router.replace({ query });
 }
 const result = computed(() =>
   filterCapabilities(all.value, { q: q.value })

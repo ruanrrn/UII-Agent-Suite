@@ -15,39 +15,33 @@ const isFill = computed(
 const appMain = ref<HTMLElement | null>(null);
 const scrolled = ref(false);
 const homePanel = ref<'home' | 'market'>('home');
-let snapTimer: number | undefined;
-const isSnapping = ref(false);
 const isRestoring = ref(false);
+let scrollFrame: number | undefined;
+let scrollTarget: HTMLElement | null = null;
 const activeTab = computed<'home' | 'market'>(() => {
   if (isHome.value) return homePanel.value;
   if (route.name === 'catalog' || route.name === 'capability') return 'market';
   return 'home';
 });
 function onScroll(e: Event) {
-  const target = e.target as HTMLElement;
+  scrollTarget = e.target as HTMLElement;
+  if (scrollFrame !== undefined) return;
+  scrollFrame = window.requestAnimationFrame(() => {
+    scrollFrame = undefined;
+    if (scrollTarget) updateScrollState(scrollTarget);
+  });
+}
+function updateScrollState(target: HTMLElement) {
   scrolled.value = target.scrollTop > 12;
   if (isHome.value) {
     homePanel.value = target.scrollTop >= target.clientHeight * 0.5 ? 'market' : 'home';
-    if (!isSnapping.value) {
-      window.clearTimeout(snapTimer);
-      snapTimer = window.setTimeout(() => {
-        const top = target.scrollTop;
-        const height = target.clientHeight;
-        if (top > height * 0.24 && top < height * 0.92) snapHomeTo('market');
-        else if (top > height * 0.04 && top <= height * 0.24) snapHomeTo('home');
-      }, 140);
-    }
   }
 }
 function snapHomeTo(panel: 'home' | 'market') {
   const target = appMain.value;
   if (!target) return;
-  isSnapping.value = true;
   target.scrollTo({ top: panel === 'market' ? target.clientHeight : 0, behavior: 'smooth' });
   homePanel.value = panel;
-  window.setTimeout(() => {
-    isSnapping.value = false;
-  }, 620);
 }
 function restoreHomeTo(panel: 'home' | 'market') {
   const target = appMain.value;
@@ -87,11 +81,12 @@ async function scrollHomeTo(panel: 'home' | 'market') {
   snapHomeTo(panel);
 }
 watch(
-  () => route.fullPath,
-  async () => {
-    if (route.name !== 'home') return;
+  [() => route.name, () => route.query.screen],
+  async ([name, screen], [oldName, oldScreen]) => {
+    if (name !== 'home') return;
+    if (oldName === 'home' && screen === oldScreen) return;
     await nextTick();
-    restoreHomeTo(route.query.screen === 'market' ? 'market' : 'home');
+    restoreHomeTo(screen === 'market' ? 'market' : 'home');
   },
   { immediate: true, flush: 'post' }
 );

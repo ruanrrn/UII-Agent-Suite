@@ -38,6 +38,7 @@ a {
   display: flex;
   flex-direction: column;
   overflow: hidden auto;
+  overflow-anchor: none;
   scrollbar-width: thin;
   scrollbar-color: var(--border-strong) transparent;
   scrollbar-gutter: stable;
@@ -48,8 +49,7 @@ a {
 }
 
 .app-main.is-home {
-  scroll-snap-type: y proximity;
-  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
 }
 
 .app-main.is-home.is-restoring {
@@ -532,6 +532,7 @@ a {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  overflow-anchor: none;
 }
 
 .catalog-head {
@@ -604,6 +605,7 @@ a {
 
 .catalog-results {
   overflow-y: auto;
+  overflow-anchor: none;
   padding: 20px 32px 32px;
   scrollbar-gutter: stable;
   scrollbar-width: thin;
