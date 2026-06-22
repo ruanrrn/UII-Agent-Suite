@@ -1,10 +1,10 @@
-# V2 分支自动编译 → 部署到 GitHub Pages
-# 触发条件：push 到 v2 分支，或手动触发
-name: Deploy V2 (Pages)
+# V2/V3 分支自动编译 → 部署到 GitHub Pages
+# 触发条件：push 到 v2/v3 分支，或手动触发
+name: Deploy Pages
 
 on:
   push:
-    branches: [v2]
+    branches: [v2, v3]
     paths-ignore:
       - 'docs/**'
       - '*.md'
@@ -17,7 +17,7 @@ permissions:
 
 # 同一时间只允许一个部署任务运行，后续排队会自动取消前序
 concurrency:
-  group: deploy-v2-pages
+  group: deploy-pages
   cancel-in-progress: true
 
 jobs:
