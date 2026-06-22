@@ -1,1 +1,0 @@
-import{d as t,u as s,c as a,a as n,t as o,b as c,o as p}from"./index-Bti4fX1m.js";const r={class:"container",style:{padding:"60px 32px"}},i={class:"empty"},m=t({__name:"NotFoundView",setup(_){const{t:e}=s();return(d,l)=>(p(),a("main",r,[n("p",i,"404 · "+o(c(e)("detail.notfound")),1)]))}});export{m as default};
