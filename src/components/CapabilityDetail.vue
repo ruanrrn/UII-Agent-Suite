@@ -32,6 +32,7 @@ function goBack() {
 
 const L = () => locale.value as 'zh' | 'en';
 const bi = (b: string | { zh: string; en: string }) => (typeof b === 'string' ? b : b[L()] || b.zh);
+const assetUrl = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;
 
 type Tab = 'overview' | 'install';
 const TABS: Tab[] = ['overview', 'install'];
@@ -61,7 +62,7 @@ async function copyQS() {
         <div class="sk-product-icon">
           <img
             v-if="cap.icon.startsWith('/')"
-            :src="cap.icon"
+            :src="assetUrl(cap.icon)"
             :alt="bi(cap.i18n.title)"
             class="sk-product-icon-img"
           />
