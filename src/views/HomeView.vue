@@ -15,20 +15,23 @@ const { t } = useI18n();
       <div class="hero-face-panel hero-face-panel-human" aria-hidden="true">
         <img
           class="hero-face hero-face-human"
-          :src="publicAssetUrl('brand/human-face.png')"
+          :src="publicAssetUrl('brand/human-face.svg')"
           alt=""
         />
       </div>
       <div class="hero-face-panel hero-face-panel-robot" aria-hidden="true">
         <img
           class="hero-face hero-face-robot"
-          :src="publicAssetUrl('brand/robot-face.png')"
+          :src="publicAssetUrl('brand/robot-face.svg')"
           alt=""
         />
       </div>
       <div class="hero-copy">
         <h1 id="home-hero-title" class="hero-title">{{ t('home.heroTitle') }}</h1>
-        <p class="hero-lead">{{ t('home.heroSubtitle') }}</p>
+        <div class="hero-lead" aria-label="hero subtitle">
+          <p>{{ t('home.heroSubtitleLine1') }}</p>
+          <p>{{ t('home.heroSubtitleLine2') }}</p>
+        </div>
       </div>
     </section>
 

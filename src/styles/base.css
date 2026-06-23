@@ -1327,12 +1327,11 @@ a {
   position: absolute;
   z-index: 1;
   top: 50%;
-  height: var(--hero-face-height);
-  max-height: 100%;
+  height: calc(var(--hero-face-height) * 1.7);
+  max-height: none;
   width: auto;
   object-fit: contain;
   transform: translateY(-50%);
-  filter: invert(1);
 }
 
 .hero-face-human {
@@ -1374,6 +1373,10 @@ a {
   font-size: var(--text-lg);
   font-weight: 400;
   line-height: 1.72;
+}
+
+.hero-lead p {
+  margin: 0;
 }
 
 /* Mid widths: shrink the face zones so the copy never collapses into a column */
