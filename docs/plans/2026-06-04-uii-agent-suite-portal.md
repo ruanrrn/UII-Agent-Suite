@@ -77,7 +77,7 @@ if (typeof window !== 'undefined') window.CAPABILITIES = CAPABILITIES;
 
 ```json
 {
-  "name": "uii-agent-hub",
+  "name": "uii-agent-suite",
   "version": "0.1.0",
   "private": true,
   "description": "联影智能 Agent Hub 概念展示门户",
@@ -695,7 +695,7 @@ git commit -q -m "feat: machine-view formatters (markdown/catalog.json/llms.txt)
     return `<div class="container foot-inner">
       <span>${T('foot.copy')}</span>
       <a href="${base}/llms.txt">llms.txt</a><a href="${base}/data/catalog.json">catalog.json</a>
-      <a href="https://github.com/ruanrrn/uii-skills-hub" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/ruanrrn/UII-Agent-Suite" target="_blank" rel="noopener">GitHub</a>
     </div>`;
   }
   function mount() {

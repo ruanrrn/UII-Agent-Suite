@@ -182,17 +182,17 @@ const ichDetail: SkillDetail = {
       en: 'Copy the text below and paste it to any AI assistant that can read natural language and execute local scripts'
     },
     code: {
-      zh: '安装 ich_emergency_triage：\n\n源码：https://github.com/uii-ai/agents-hub/tree/main/skills/ich-emergency-triage\n\n依赖：\n  • UII MCP Server（联影智能 ICH 推理接口）\n  • PACS 基础工具（DICOM 调阅 + 去标识化）',
-      en: 'Install ich_emergency_triage:\n\nSource: https://github.com/uii-ai/agents-hub/tree/main/skills/ich-emergency-triage\n\nDependencies:\n  • UII MCP Server (UII ICH inference API)\n  • PACS Base Tools (DICOM retrieval + de-identification)'
+      zh: '安装 ich_emergency_triage：\n\n源码：https://github.com/ruanrrn/UII-Agent-Suite/tree/main/skills/ich-emergency-triage\n\n依赖：\n  • UII MCP Server（联影智能 ICH 推理接口）\n  • PACS 基础工具（DICOM 调阅 + 去标识化）',
+      en: 'Install ich_emergency_triage:\n\nSource: https://github.com/ruanrrn/UII-Agent-Suite/tree/main/skills/ich-emergency-triage\n\nDependencies:\n  • UII MCP Server (UII ICH inference API)\n  • PACS Base Tools (DICOM retrieval + de-identification)'
     },
     links: [
       {
         label: 'SKILL.md',
-        href: 'https://github.com/uii-ai/agents-hub/tree/main/skills/ich-emergency-triage/SKILL.md'
+        href: 'https://github.com/ruanrrn/UII-Agent-Suite/tree/main/skills/ich-emergency-triage/SKILL.md'
       },
       {
         label: 'References',
-        href: 'https://github.com/uii-ai/agents-hub/tree/main/skills/ich-emergency-triage/references'
+        href: 'https://github.com/ruanrrn/UII-Agent-Suite/tree/main/skills/ich-emergency-triage/references'
       }
     ]
   }
@@ -338,13 +338,13 @@ const vitallensDetail: SkillDetail = {
       en: 'Copy the text below and paste it to any AI assistant that can run local scripts (e.g. Claude Code)'
     },
     code: {
-      zh: '安装 vitallens_noncontact_vitals：\n\n源码：https://github.com/ruanrrn/uii-agents-hub/tree/main/vitallens\n\n依赖：\n  • VitalLens API Key（环境变量 VITALLENS_API_KEY）\n  • 摄像头访问权限',
-      en: 'Install vitallens_noncontact_vitals:\n\nSource: https://github.com/ruanrrn/uii-agents-hub/tree/main/vitallens\n\nDependencies:\n  • VitalLens API Key (VITALLENS_API_KEY environment variable)\n  • Camera access permission'
+      zh: '安装 vitallens_noncontact_vitals：\n\n源码：https://github.com/ruanrrn/UII-Agent-Suite/tree/main/vitallens\n\n依赖：\n  • VitalLens API Key（环境变量 VITALLENS_API_KEY）\n  • 摄像头访问权限',
+      en: 'Install vitallens_noncontact_vitals:\n\nSource: https://github.com/ruanrrn/UII-Agent-Suite/tree/main/vitallens\n\nDependencies:\n  • VitalLens API Key (VITALLENS_API_KEY environment variable)\n  • Camera access permission'
     },
     links: [
       {
         label: 'SKILL.md',
-        href: 'https://github.com/ruanrrn/uii-agents-hub/blob/main/vitallens/SKILL.md'
+        href: 'https://github.com/ruanrrn/UII-Agent-Suite/blob/main/vitallens/SKILL.md'
       },
       {
         label: { zh: 'VitalLens API 注册', en: 'VitalLens API sign-up' },

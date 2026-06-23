@@ -19,7 +19,7 @@ pnpm lint           # oxlint + stylelint
 ## 部署（阶段 1 · 本地）
 
 ```
-DEPLOY_REPO=git@github.com:<org>/uii-agent-hub-site.git PAGES_BASE=/uii-agent-hub-site/ pnpm deploy:pages
+DEPLOY_REPO=git@github.com:<org>/UII-Agent-Suite.git PAGES_BASE=/UII-Agent-Suite/ pnpm deploy:pages
 ```
 
 源码推上私有仓库后，`.github/workflows/deploy.yml` 可启用自动部署（配置 `DEPLOY_TOKEN` secret 与

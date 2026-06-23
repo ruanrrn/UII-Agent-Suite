@@ -4,6 +4,7 @@ import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { fdaPdfUrl } from '@/lib/fda';
+import { publicAssetUrl } from '@/lib/assetUrl';
 
 const props = defineProps<{ cap: Capability }>();
 const router = useRouter();
@@ -32,7 +33,6 @@ function goBack() {
 
 const L = () => locale.value as 'zh' | 'en';
 const bi = (b: string | { zh: string; en: string }) => (typeof b === 'string' ? b : b[L()] || b.zh);
-const assetUrl = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;
 
 type Tab = 'overview' | 'install';
 const TABS: Tab[] = ['overview', 'install'];
@@ -62,7 +62,7 @@ async function copyQS() {
         <div class="sk-product-icon">
           <img
             v-if="cap.icon.startsWith('/')"
-            :src="assetUrl(cap.icon)"
+            :src="publicAssetUrl(cap.icon)"
             :alt="bi(cap.i18n.title)"
             class="sk-product-icon-img"
           />

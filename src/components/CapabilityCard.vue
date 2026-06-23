@@ -2,6 +2,7 @@
 import type { Capability } from '@/types/capability';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
+import { publicAssetUrl } from '@/lib/assetUrl';
 
 const props = defineProps<{ cap: Capability }>();
 const router = useRouter();
@@ -10,7 +11,6 @@ const { t, locale } = useI18n();
 const L = () => locale.value as 'zh' | 'en';
 const tx = (f: 'title' | 'description') => props.cap.i18n[f][L()] || props.cap.i18n[f].zh;
 const isImgIcon = (icon: string) => icon.startsWith('/');
-const assetUrl = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;
 const open = () =>
   router.push({
     path: `/capability/${props.cap.id}`,
@@ -27,7 +27,7 @@ const open = () =>
       <img
         v-if="isImgIcon(cap.icon)"
         class="cap-icon-img"
-        :src="assetUrl(cap.icon)"
+        :src="publicAssetUrl(cap.icon)"
         :alt="tx('title')"
       />
       <span v-else class="cap-icon">{{ cap.icon }}</span>

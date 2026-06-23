@@ -2,11 +2,12 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { setLang } from '@/i18n';
+import { publicAssetUrl } from '@/lib/assetUrl';
 defineProps<{ scrolled?: boolean; home?: boolean; activeTab?: 'home' | 'market' }>();
 defineEmits<{ 'select-tab': ['home' | 'market'] }>();
 const { t, locale } = useI18n();
-const logoSrc = computed(
-  () => `${import.meta.env.BASE_URL}brand/uii-logo-${locale.value === 'zh' ? 'zh' : 'en'}.png`
+const logoSrc = computed(() =>
+  publicAssetUrl(`brand/uii-logo-${locale.value === 'zh' ? 'zh' : 'en'}.png`)
 );
 const other = () => (locale.value === 'zh' ? 'en' : 'zh');
 const currentLang = computed(() => (locale.value === 'zh' ? 'CN' : 'EN'));

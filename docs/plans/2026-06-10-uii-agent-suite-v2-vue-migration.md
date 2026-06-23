@@ -1,4 +1,4 @@
-# UII Agent Hub v2 · Vue 工程化迁移 Implementation Plan
+# UII Agent Suite v2 · Vue 工程化迁移 Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -25,7 +25,7 @@
 ## 文件结构（决策锁定）
 
 ```
-uii-agent-hub/
+uii-agent-suite/
   package.json              # deps/scripts/engines（替换 v0 的 package.json）
   tsconfig.json  tsconfig.node.json
   vite.config.ts           # base 由 env 注入；含机器视图生成插件
@@ -74,7 +74,7 @@ uii-agent-hub/
 把 v0 的 `package.json` 内容用以下替换（注意：保留项目名）：
 ```json
 {
-  "name": "uii-agent-hub",
+  "name": "uii-agent-suite",
   "version": "2.0.0",
   "private": true,
   "type": "module",
@@ -199,7 +199,7 @@ createApp(App).mount('#app')
 ```
 ```vue
 <!-- src/App.vue -->
-<template><div>UII Agent Hub v2 scaffold</div></template>
+<template><div>UII Agent Suite v2 scaffold</div></template>
 ```
 
 - [ ] **Step 8: 安装依赖（含版本兜底）**
@@ -1033,7 +1033,7 @@ const base = import.meta.env.BASE_URL
       <span>{{ t('foot.copy') }}</span>
       <a :href="base + 'llms.txt'">llms.txt</a>
       <a :href="base + 'catalog.json'">catalog.json</a>
-      <a href="https://github.com/ruanrrn/uii-skills-hub" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/ruanrrn/UII-Agent-Suite" target="_blank" rel="noopener">GitHub</a>
     </div>
   </footer>
 </template>
@@ -1570,8 +1570,8 @@ cd /e/UiiAgentHub && git add -A && git commit -m "feat(v2): console views (dashb
 
 - [ ] **Step 1: 验证 Pages 版构建（带子路径 base）**
 
-Run: `cd /e/UiiAgentHub && VITE_BASE=/uii-agent-hub-site/ pnpm build:pages`
-Expected: `dist/` 生成；`dist/index.html` 内资源引用以 `/uii-agent-hub-site/` 前缀；`dist/llms.txt`、`dist/catalog.json`、`dist/mock/*.json` 存在。
+Run: `cd /e/UiiAgentHub && VITE_BASE=/UII-Agent-Suite/ pnpm build:pages`
+Expected: `dist/` 生成；`dist/index.html` 内资源引用以 `/UII-Agent-Suite/` 前缀；`dist/llms.txt`、`dist/catalog.json`、`dist/mock/*.json` 存在。
 
 - [ ] **Step 2: 验证可移植 Mock 包构建（相对 base）**
 
@@ -1584,7 +1584,7 @@ Expected: `dist-pkg/` 生成；`dist-pkg/index.html` 资源引用为相对路径
 import { execSync } from 'node:child_process'
 import { existsSync } from 'node:fs'
 if (!existsSync('dist-pkg')) { console.error('run build:pkg first'); process.exit(1) }
-const out = 'uii-agent-hub-mock.zip'
+const out = 'uii-agent-suite-mock.zip'
 try {
   // Windows PowerShell Compress-Archive
   execSync(`powershell -NoProfile -Command "Compress-Archive -Path dist-pkg/* -DestinationPath ${out} -Force"`, { stdio: 'inherit' })
@@ -1598,7 +1598,7 @@ Add script to package.json `"pkg:zip": "pnpm build:pkg && node scripts/zip-pkg.m
 - [ ] **Step 4: 验证 zip**
 
 Run: `cd /e/UiiAgentHub && pnpm pkg:zip`
-Expected: 生成 `uii-agent-hub-mock.zip`（解压后任意静态服务器/双击 index.html via 本地服务器即可运行——hash 路由免配置）。
+Expected: 生成 `uii-agent-suite-mock.zip`（解压后任意静态服务器/双击 index.html via 本地服务器即可运行——hash 路由免配置）。
 
 - [ ] **Step 5: gitignore 构建产物 + 提交脚本**
 
@@ -1625,7 +1625,7 @@ cd /e/UiiAgentHub && git add -A && git commit -m "build(v2): dual-product build 
 - [ ] **Step 2: scripts/deploy-pages.mjs（阶段 1 本地部署：构建→推产物仓库）**
 ```js
 // scripts/deploy-pages.mjs —— 本地把 Pages 版部署到“公开产物仓库”
-// 用法：DEPLOY_REPO=git@github.com:<org>/uii-agent-hub-site.git PAGES_BASE=/uii-agent-hub-site/ node scripts/deploy-pages.mjs
+// 用法：DEPLOY_REPO=git@github.com:<org>/UII-Agent-Suite.git PAGES_BASE=/UII-Agent-Suite/ node scripts/deploy-pages.mjs
 import { execSync } from 'node:child_process'
 import { existsSync, writeFileSync } from 'node:fs'
 const repo = process.env.DEPLOY_REPO
@@ -1677,7 +1677,7 @@ jobs:
           publish_branch: gh-pages
           publish_dir: ./dist
       - uses: actions/upload-artifact@v4
-        with: { name: uii-agent-hub-mock, path: dist-pkg }
+        with: { name: uii-agent-suite-mock, path: dist-pkg }
 ```
 
 - [ ] **Step 4: README.md**
@@ -1700,7 +1700,7 @@ pnpm lint           # oxlint + stylelint
 
 ## 部署（阶段 1 · 本地）
 \`\`\`
-DEPLOY_REPO=git@github.com:<org>/uii-agent-hub-site.git PAGES_BASE=/uii-agent-hub-site/ pnpm deploy:pages
+DEPLOY_REPO=git@github.com:<org>/UII-Agent-Suite.git PAGES_BASE=/UII-Agent-Suite/ pnpm deploy:pages
 \`\`\`
 源码推上私有仓库后，\`.github/workflows/deploy.yml\` 可启用自动部署（需配置 \`DEPLOY_TOKEN\` secret 与 \`PAGES_REPO\`/\`PAGES_BASE\` vars）。
 
