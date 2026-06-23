@@ -19,7 +19,6 @@ const baseUrl = import.meta.env.BASE_URL;
         <img class="hero-face hero-face-robot" :src="`${baseUrl}brand/robot-face.png`" alt="" />
       </div>
       <div class="hero-copy">
-        <p class="hero-kicker">{{ t('home.heroEyebrow') }}</p>
         <h1 id="home-hero-title" class="hero-title">{{ t('home.heroTitle') }}</h1>
         <p class="hero-lead">{{ t('home.heroSubtitle') }}</p>
       </div>

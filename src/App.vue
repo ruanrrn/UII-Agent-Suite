@@ -4,8 +4,10 @@ import SiteFooter from '@/components/SiteFooter.vue';
 import AppErrorBoundary from '@/components/AppErrorBoundary.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { computed, nextTick, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 const route = useRoute();
 const router = useRouter();
+const { locale } = useI18n();
 const isConsole = computed(() => String(route.path).startsWith('/console'));
 const isHome = computed(() => route.name === 'home');
 // Pages that own the full viewport height and scroll internally (no outer scroll)
@@ -92,7 +94,7 @@ watch(
 );
 </script>
 <template>
-  <div class="app-shell">
+  <div class="app-shell" :class="{ 'is-zh': locale === 'zh', 'is-en': locale !== 'zh' }">
     <SiteHeader
       :scrolled="scrolled"
       :home="isHome"

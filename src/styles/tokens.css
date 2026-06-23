@@ -34,9 +34,20 @@
   --on-dark: #f8fafc;
   --on-dark-muted: #a8b0bd;
 
-  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
-  --font-body: 'Inter', -apple-system, 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', consolas, monospace;
+  --font-zh:
+    'Source Han Sans SC', 'SourceHanSansSC', 'Source Han Sans CN', 'SourceHanSansCN',
+    'source-han-sans-simplified-c', 'Noto Sans CJK SC', 'Noto Sans SC', 'PingFang SC',
+    'Microsoft YaHei', sans-serif;
+  --font-en: 'Roboto', 'Segoe UI', arial, sans-serif;
+  --font-display: var(--font-en);
+  --font-body: var(--font-en);
+  --font-mono: consolas, 'SFMono-Regular', 'Liberation Mono', monospace;
+
+  --text-h1: 40px;
+  --text-h2: 24px;
+  --text-lg: 20px;
+  --text-md: 16px;
+  --text-sm: 14px;
 
   --radius-sm: 6px;
   --radius-md: 10px;

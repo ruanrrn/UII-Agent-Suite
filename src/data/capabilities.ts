@@ -22,8 +22,8 @@ const blankMcp = (serverKey: string) => ({
 
 const ichDetail: SkillDetail = {
   intro: {
-    zh: '当急诊科医生需要评估患者头颅 CT 是否存在颅内出血时，自动完成 ICH 筛查与量化分析，输出结构化分诊结论，辅助医生快速识别危急病情。',
-    en: "When an ER physician needs to evaluate a patient's head CT for intracranial hemorrhage, this Skill automatically performs ICH screening and quantitative analysis, outputs a structured triage summary, and assists the physician in rapidly identifying critical conditions."
+    zh: '当急诊科医生需要评估患者头颅 CT 是否存在颅内出血时，自动完成 ICH 筛查与量化分析，输出结构化分诊结论，辅助医生快速识别危急病情',
+    en: "When an ER physician needs to evaluate a patient's head CT for intracranial hemorrhage, this Skill automatically performs ICH screening and quantitative analysis, outputs a structured triage summary, and assists the physician in rapidly identifying critical conditions"
   },
   stats: [
     {
@@ -172,8 +172,8 @@ const ichDetail: SkillDetail = {
   triggers: {
     phrases: [],
     note: {
-      zh: '急诊医生向 Agent 描述评估需求，或 PACS 收到新扫描完成事件后自动触发。',
-      en: 'The ER physician describes the assessment request to the Agent, or PACS triggers automatically when a new scan-complete event is received.'
+      zh: '急诊医生向 Agent 描述评估需求，或 PACS 收到新扫描完成事件后自动触发',
+      en: 'The ER physician describes the assessment request to the Agent, or PACS triggers automatically when a new scan-complete event is received'
     }
   },
   quickStart: {
@@ -200,15 +200,15 @@ const ichDetail: SkillDetail = {
 
 const vitallensDetail: SkillDetail = {
   intro: {
-    zh: '用户以自然语言发起生命体征测量请求，Agent 识别意图后调用本 Skill，通过普通摄像头捕捉面部视频，完成心率与呼吸率的无接触检测，输出带置信度评分的测量数值。',
-    en: 'The user requests a vital-sign measurement in natural language. After the Agent recognizes the intent, it invokes this Skill to capture facial video through a standard camera, perform non-contact heart-rate and respiratory-rate detection, and return measurements with confidence scores.'
+    zh: '用户以自然语言发起生命体征测量请求，Agent 识别意图后调用本 Skill，通过普通摄像头捕捉面部视频，完成心率与呼吸率的无接触检测，输出带置信度评分的测量数值',
+    en: 'The user requests a vital-sign measurement in natural language. After the Agent recognizes the intent, it invokes this Skill to capture facial video through a standard camera, perform non-contact heart-rate and respiratory-rate detection, and return measurements with confidence scores'
   },
   stats: [
     {
       label: { zh: '检测指标', en: 'Detected metrics' },
       value: {
         zh: '心率、呼吸',
-        en: 'HR、RR'
+        en: 'HR & RR'
       },
       sub: {
         zh: '',
@@ -243,8 +243,8 @@ const vitallensDetail: SkillDetail = {
       nodeLabel: '①',
       title: { zh: '用户自然语言请求', en: 'User natural-language request' },
       desc: {
-        zh: '用户向 Agent 表达测量心率、呼吸率或进行快速健康自测的意图。',
-        en: 'The user tells the Agent they want to measure heart rate, respiratory rate, or run a quick wellness check.'
+        zh: '用户向 Agent 表达测量心率、呼吸率或进行快速健康自测的意图',
+        en: 'The user tells the Agent they want to measure heart rate, respiratory rate, or run a quick wellness check'
       }
     },
     {
@@ -252,8 +252,8 @@ const vitallensDetail: SkillDetail = {
       nodeLabel: '②',
       title: { zh: '环境条件检查', en: 'Environment check' },
       desc: {
-        zh: '检查摄像头可用、光线充足，并提示用户保持正面朝向与相对静止。',
-        en: 'Check that the camera is available, lighting is sufficient, and the user is facing forward while staying relatively still.'
+        zh: '检查摄像头可用、光线充足，并提示用户保持正面朝向与相对静止',
+        en: 'Check that the camera is available, lighting is sufficient, and the user is facing forward while staying relatively still'
       }
     },
     {
@@ -261,8 +261,8 @@ const vitallensDetail: SkillDetail = {
       nodeLabel: '③',
       title: { zh: '采集面部视频', en: 'Capture facial video' },
       desc: {
-        zh: '通过摄像头采集一段面部视频，作为无接触体征检测输入。',
-        en: 'Capture a short facial video through the camera as input for non-contact vital-sign detection.'
+        zh: '通过摄像头采集一段面部视频，作为无接触体征检测输入',
+        en: 'Capture a short facial video through the camera as input for non-contact vital-sign detection'
       }
     },
     {
@@ -273,8 +273,8 @@ const vitallensDetail: SkillDetail = {
         en: 'Call VitalLens API for rPPG analysis'
       },
       desc: {
-        zh: '将面部视频提交给 VitalLens API，通过 rPPG 分析提取心率与呼吸率信号。',
-        en: 'Submit the facial video to the VitalLens API and use rPPG analysis to extract heart-rate and respiratory-rate signals.'
+        zh: '将面部视频提交给 VitalLens API，通过 rPPG 分析提取心率与呼吸率信号',
+        en: 'Submit the facial video to the VitalLens API and use rPPG analysis to extract heart-rate and respiratory-rate signals'
       }
     },
     {
@@ -282,8 +282,8 @@ const vitallensDetail: SkillDetail = {
       nodeLabel: '⑤',
       title: { zh: '接收测量结果', en: 'Receive measurement results' },
       desc: {
-        zh: '接收心率、呼吸率测量结果及对应置信度评分。',
-        en: 'Receive heart-rate and respiratory-rate measurements with their confidence scores.'
+        zh: '接收心率、呼吸率测量结果及对应置信度评分',
+        en: 'Receive heart-rate and respiratory-rate measurements with their confidence scores'
       }
     },
     {
@@ -294,8 +294,8 @@ const vitallensDetail: SkillDetail = {
         en: 'Output one respiratory and heart-rate measurement'
       },
       desc: {
-        zh: '以自然语言输出本次呼吸率与心率测量结果，并附带置信度评分。',
-        en: 'Output the respiratory-rate and heart-rate measurements in natural language with confidence scores.'
+        zh: '以自然语言输出本次呼吸率与心率测量结果，并附带置信度评分',
+        en: 'Output the respiratory-rate and heart-rate measurements in natural language with confidence scores'
       }
     }
   ],
@@ -303,24 +303,24 @@ const vitallensDetail: SkillDetail = {
     {
       name: { zh: 'VitalLens API Key', en: 'VitalLens API Key' },
       desc: {
-        zh: '需要配置 VITALLENS_API_KEY 环境变量。',
-        en: 'Requires the VITALLENS_API_KEY environment variable.'
+        zh: '需要配置 VITALLENS_API_KEY 环境变量',
+        en: 'Requires the VITALLENS_API_KEY environment variable'
       },
       iconType: 'mcp'
     },
     {
       name: { zh: '摄像头访问权限', en: 'Camera access permission' },
       desc: {
-        zh: '需要允许访问摄像头以采集面部视频。',
-        en: 'Requires camera access permission to capture facial video.'
+        zh: '需要允许访问摄像头以采集面部视频',
+        en: 'Requires camera access permission to capture facial video'
       },
       iconType: 'pacs'
     },
     {
       name: { zh: '拍摄环境', en: 'Capture environment' },
       desc: {
-        zh: '稳定光源、正面朝向，并避免大幅移动。',
-        en: 'Stable lighting, front-facing posture, and avoiding large movements.'
+        zh: '稳定光源、正面朝向，并避免大幅移动',
+        en: 'Stable lighting, front-facing posture, and avoiding large movements'
       },
       iconType: 'compliance'
     }
@@ -328,8 +328,8 @@ const vitallensDetail: SkillDetail = {
   triggers: {
     phrases: [],
     note: {
-      zh: '当用户希望通过摄像头了解自己当前的心率或呼吸率时触发，包括主动询问实时体征、运动后想确认心率恢复状态，或想做一次快速健康自测等场景。',
-      en: 'Triggers when the user wants to understand their current heart rate or respiratory rate through a camera, including asking about real-time vitals, checking heart-rate recovery after exercise, or doing a quick wellness self-check.'
+      zh: '当用户希望通过摄像头了解自己当前的心率或呼吸率时触发，包括主动询问实时体征、运动后想确认心率恢复状态，或想做一次快速健康自测等场景',
+      en: 'Triggers when the user wants to understand their current heart rate or respiratory rate through a camera, including asking about real-time vitals, checking heart-rate recovery after exercise, or doing a quick wellness self-check'
     }
   },
   quickStart: {
@@ -392,8 +392,8 @@ export const CAPABILITIES: Capability[] = [
         en: 'AI-assisted ICH screening and triage for emergency'
       },
       description: {
-        zh: '当急诊科医生需要评估患者头颅 CT 是否存在颅内出血时，自动完成 ICH 筛查与量化分析，输出结构化分诊结论，辅助医生快速识别危急病情。',
-        en: "When an ER physician needs to evaluate a patient's head CT for intracranial hemorrhage, this Skill automatically performs ICH screening and quantitative analysis, outputs a structured triage summary, and assists the physician in rapidly identifying critical conditions."
+        zh: '当急诊科医生需要评估患者头颅 CT 是否存在颅内出血时，自动完成 ICH 筛查与量化分析，输出结构化分诊结论，辅助医生快速识别危急病情',
+        en: "When an ER physician needs to evaluate a patient's head CT for intracranial hemorrhage, this Skill automatically performs ICH screening and quantitative analysis, outputs a structured triage summary, and assists the physician in rapidly identifying critical conditions"
       },
       clinicalUse: { ...empty },
       overview: {
@@ -496,8 +496,8 @@ export const CAPABILITIES: Capability[] = [
         en: 'General Wellness · Non-Medical'
       },
       description: {
-        zh: '通过普通摄像头捕捉面部视频，完成心率与呼吸率的无接触检测，输出带置信度评分的测量数值。',
-        en: 'Capture facial video through a standard camera to perform non-contact heart-rate and respiratory-rate detection, returning measurements with confidence scores.'
+        zh: '通过普通摄像头捕捉面部视频，完成心率与呼吸率的无接触检测，输出带置信度评分的测量数值',
+        en: 'Capture facial video through a standard camera to perform non-contact heart-rate and respiratory-rate detection, returning measurements with confidence scores'
       },
       clinicalUse: { ...empty },
       overview: {

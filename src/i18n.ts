@@ -11,12 +11,12 @@ function detect(): 'zh' | 'en' {
     return u;
   }
   const s = localStorage.getItem(KEY);
-  return s === 'en' ? 'en' : 'zh';
+  return s === 'zh' ? 'zh' : 'en';
 }
 export const i18n = createI18n({
   legacy: false,
   locale: detect(),
-  fallbackLocale: 'zh',
+  fallbackLocale: 'en',
   messages: { zh, en }
 });
 export function setLang(l: 'zh' | 'en') {

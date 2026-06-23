@@ -7,7 +7,7 @@ body {
 
 body {
   font-family: var(--font-body);
-  font-size: 14px;
+  font-size: var(--text-md);
   line-height: 1.5;
   color: var(--ink);
   background: var(--white);
@@ -30,7 +30,18 @@ a {
   height: 100vh;
   display: flex;
   flex-direction: column;
+  font-family: var(--font-body);
   overflow: hidden;
+}
+
+.app-shell.is-zh {
+  --font-display: var(--font-zh);
+  --font-body: var(--font-zh);
+}
+
+.app-shell.is-en {
+  --font-display: var(--font-en);
+  --font-body: var(--font-en);
 }
 
 .app-main {
@@ -179,7 +190,7 @@ a {
 .brand-suffix {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 14px;
+  font-size: var(--text-sm);
   color: var(--ink-2);
   padding-left: 12px;
   border-left: 1px solid var(--border-strong);
@@ -258,7 +269,7 @@ a {
   font-family: inherit;
   min-width: 48px;
   text-align: center;
-  font-size: 15px;
+  font-size: var(--text-md);
   line-height: 1.4;
 }
 
@@ -291,7 +302,7 @@ a {
 
   .nav-links {
     gap: clamp(14px, 4vw, 24px);
-    font-size: 13px;
+    font-size: var(--text-sm);
   }
 
   .brand-logo {
@@ -301,7 +312,7 @@ a {
 
   .lang-toggle {
     min-width: 42px;
-    font-size: 13px;
+    font-size: var(--text-sm);
   }
 }
 
@@ -318,7 +329,7 @@ a {
   align-items: center;
   flex-wrap: wrap;
   min-height: 52px;
-  font-size: 12px;
+  font-size: var(--text-sm);
 }
 
 .foot-inner a:hover {
@@ -403,7 +414,7 @@ a {
 }
 
 .cap-icon {
-  font-size: 24px;
+  font-size: var(--text-h2);
 }
 
 .cap-icon-img {
@@ -428,7 +439,7 @@ a {
 }
 
 .badge {
-  font-size: 11px;
+  font-size: var(--text-sm);
   font-weight: 600;
   padding: 3px 9px;
   border-radius: var(--radius-pill);
@@ -451,13 +462,13 @@ a {
 
 .cap-name {
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: var(--text-lg);
   font-weight: 600;
   margin: 0;
 }
 
 .cap-series {
-  font-size: 11px;
+  font-size: var(--text-sm);
   font-weight: 600;
   color: var(--ink-2);
   background: var(--bg-pill);
@@ -466,7 +477,7 @@ a {
 }
 
 .cap-use-label {
-  font-size: 10.5px;
+  font-size: var(--text-sm);
   font-weight: 700;
   letter-spacing: 0.07em;
   color: var(--ink-muted);
@@ -475,7 +486,7 @@ a {
 
 .cap-desc {
   color: var(--ink-3);
-  font-size: 13.5px;
+  font-size: var(--text-md);
   line-height: 1.6;
   margin: 0 0 16px;
   display: -webkit-box;
@@ -490,7 +501,7 @@ a {
   justify-content: space-between;
   align-items: center;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--ink-muted);
 }
 
@@ -498,7 +509,7 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 11.5px;
+  font-size: var(--text-sm);
   font-weight: 700;
   color: #fff;
   background: var(--brand);
@@ -547,7 +558,7 @@ a {
 
 .catalog-head h1 {
   font-family: var(--font-display);
-  font-size: 32px;
+  font-size: var(--text-h1);
   margin: 0;
 }
 
@@ -560,7 +571,7 @@ a {
   color: var(--ink);
   border-radius: var(--radius-pill);
   padding: 0 16px;
-  font-size: 14px;
+  font-size: var(--text-md);
   outline: none;
 }
 
@@ -634,7 +645,7 @@ a {
   border-radius: var(--radius-pill);
   padding: 8px 16px;
   font: inherit;
-  font-size: 13px;
+  font-size: var(--text-md);
   font-weight: 700;
   line-height: 1;
   cursor: pointer;
@@ -656,7 +667,7 @@ a {
 }
 
 .side-label {
-  font-size: 11px;
+  font-size: var(--text-sm);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-muted);
@@ -702,7 +713,7 @@ a {
   color: var(--ink-2);
   border: 1px solid var(--border-strong);
   cursor: pointer;
-  font-size: 12.5px;
+  font-size: var(--text-sm);
   font-weight: 500;
   transition:
     border-color 0.15s,
@@ -723,7 +734,7 @@ a {
 
 .cat-count {
   color: var(--ink-3);
-  font-size: 13px;
+  font-size: var(--text-md);
   margin: 0;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
@@ -789,7 +800,7 @@ a {
 
 .detail-link {
   color: var(--brand);
-  font-size: 13px;
+  font-size: var(--text-sm);
   font-weight: 700;
 }
 
@@ -831,7 +842,7 @@ a {
 }
 
 .sk-product-name {
-  font-size: 26px;
+  font-size: var(--text-h2);
   font-weight: 700;
   color: var(--ink);
   margin: 0 0 4px;
@@ -842,7 +853,7 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-size: 11px;
+  font-size: var(--text-sm);
   font-weight: 600;
   color: var(--key-strong);
   background: var(--key-tint);
@@ -878,7 +889,7 @@ a {
 }
 
 .cap-icon.big {
-  font-size: 40px;
+  font-size: var(--text-h1);
 }
 
 /* detail = MCP server spec page */
@@ -908,7 +919,7 @@ a {
   background: none;
   border: none;
   color: var(--ink-3);
-  font-size: 13px;
+  font-size: var(--text-sm);
   font-weight: 700;
   padding: 0;
   cursor: pointer;
@@ -928,7 +939,7 @@ a {
 
 .detail-id h1 {
   font-family: var(--font-display);
-  font-size: 24px;
+  font-size: var(--text-h2);
   margin: 0;
 }
 
@@ -942,7 +953,7 @@ a {
 }
 
 .tab {
-  font-size: 13.5px;
+  font-size: var(--text-sm);
   font-weight: 600;
   color: var(--ink-3);
   padding: 9px 16px;
@@ -971,7 +982,7 @@ a {
 }
 
 .tab-lead {
-  font-size: 13px;
+  font-size: var(--text-sm);
   font-weight: 700;
   margin-bottom: 10px;
 }
@@ -996,7 +1007,7 @@ a {
   align-items: center;
   justify-content: center;
   color: var(--ink-muted);
-  font-size: 13px;
+  font-size: var(--text-sm);
 }
 
 /* Locale-matched product screenshot preview (click to enlarge) */
@@ -1032,7 +1043,7 @@ a {
   right: 10px;
   bottom: 10px;
   padding: 3px 10px;
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: #fff;
   background: rgb(17 24 39 / 62%);
   border-radius: 999px;
@@ -1066,7 +1077,7 @@ a {
   right: 22px;
   width: 40px;
   height: 40px;
-  font-size: 26px;
+  font-size: var(--text-h2);
   line-height: 1;
   color: #fff;
   background: rgb(255 255 255 / 12%);
@@ -1089,7 +1100,7 @@ a {
 .spec-name {
   display: inline-block;
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: var(--text-sm);
   font-weight: 700;
   color: var(--brand-strong);
   background: var(--brand-tint);
@@ -1099,7 +1110,7 @@ a {
 }
 
 .spec-desc {
-  font-size: 13px;
+  font-size: var(--text-md);
   color: var(--ink-2);
   margin: 9px 0 8px;
   line-height: 1.6;
@@ -1108,7 +1119,7 @@ a {
 .spec-row {
   display: flex;
   gap: 10px;
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--ink-3);
   padding: 3px 0;
 }
@@ -1127,7 +1138,7 @@ a {
 
 .tab-note,
 .cfg-note {
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--ink-muted);
   margin-top: 12px;
 }
@@ -1138,7 +1149,7 @@ a {
   border-radius: var(--radius-md);
   padding: 16px 18px;
   font-family: var(--font-mono);
-  font-size: 12.5px;
+  font-size: var(--text-sm);
   line-height: 1.65;
   overflow: auto;
   margin: 0;
@@ -1166,7 +1177,7 @@ a {
   border: 1px dashed var(--border-strong);
   border-radius: var(--radius-md);
   background: var(--bg-section);
-  font-size: 12.5px;
+  font-size: var(--text-sm);
   color: var(--ink-2);
 }
 
@@ -1194,7 +1205,7 @@ a {
 }
 
 .foot-link {
-  font-size: 13px;
+  font-size: var(--text-sm);
   color: var(--ink-2);
   font-weight: 600;
 }
@@ -1213,7 +1224,7 @@ a {
   font-family: var(--font-display);
   color: var(--ink);
   font-weight: 700;
-  font-size: 13px;
+  font-size: var(--text-md);
   margin-bottom: 12px;
 }
 
@@ -1222,7 +1233,7 @@ a {
   gap: 10px;
   align-items: center;
   margin-bottom: 8px;
-  font-size: 12.5px;
+  font-size: var(--text-sm);
   font-family: var(--font-mono);
 }
 
@@ -1346,25 +1357,9 @@ a {
   text-align: center;
 }
 
-.hero-kicker {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 54px;
-  margin: 0 0 52px;
-  padding: 8px 40px;
-  border: 1px solid rgb(255 255 255 / 38%);
-  border-radius: 999px;
-  color: #fff;
-  background: rgb(255 255 255 / 8%);
-  font-size: clamp(18px, 1.55vw, 28px);
-  font-weight: 500;
-  line-height: 1.2;
-}
-
 .hero-title {
   font-family: var(--font-body);
-  font-size: clamp(44px, 4.8vw, 86px);
+  font-size: var(--text-h1);
   font-weight: 800;
   line-height: 1.14;
   margin: 0 auto;
@@ -1376,7 +1371,7 @@ a {
   max-width: 980px;
   margin: 38px auto 0;
   color: rgb(255 255 255 / 72%);
-  font-size: clamp(20px, 1.65vw, 30px);
+  font-size: var(--text-lg);
   font-weight: 400;
   line-height: 1.72;
 }
@@ -1402,10 +1397,6 @@ a {
   .hero-copy {
     width: min(100%, 600px);
   }
-
-  .hero-kicker {
-    margin-bottom: 32px;
-  }
 }
 
 .home-market {
@@ -1422,7 +1413,7 @@ a {
 
 .section h2 {
   font-family: var(--font-display);
-  font-size: 30px;
+  font-size: var(--text-h2);
   margin: 0 0 28px;
 }
 
@@ -1447,13 +1438,13 @@ a {
 }
 
 .what-card h3 {
-  font-size: 16px;
+  font-size: var(--text-md);
   margin: 0 0 6px;
 }
 
 .what-card p {
   color: var(--ink-3);
-  font-size: 13.5px;
+  font-size: var(--text-md);
   line-height: 1.6;
   margin: 0;
 }
@@ -1502,7 +1493,7 @@ a {
 
 .step p {
   color: var(--ink-3);
-  font-size: 13.5px;
+  font-size: var(--text-md);
   margin: 0;
 }
 
@@ -1523,7 +1514,7 @@ a {
 
 .trust-k {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--ink-2);
   background: var(--bg-pill);
   padding: 4px 9px;
@@ -1532,12 +1523,12 @@ a {
 
 .trust-note {
   color: var(--ink-3);
-  font-size: 13px;
+  font-size: var(--text-md);
 }
 
 .how-lead {
   color: var(--ink-3);
-  font-size: 16px;
+  font-size: var(--text-md);
   max-width: 46em;
   margin: 0 0 32px;
 }
@@ -1559,13 +1550,13 @@ a {
 .flow-step h3 {
   margin: 0 0 8px;
   color: var(--ink);
-  font-size: 15px;
+  font-size: var(--text-md);
 }
 
 .flow-step p {
   margin: 0;
   color: var(--ink-3);
-  font-size: 13.5px;
+  font-size: var(--text-md);
   line-height: 1.6;
 }
 
@@ -1603,7 +1594,7 @@ a {
   background: var(--brand);
   color: #fff;
   font-weight: 700;
-  font-size: 16px;
+  font-size: var(--text-md);
   flex: 0 0 40px;
 }
 
@@ -1621,14 +1612,14 @@ a {
 
 .how-step-body h3 {
   margin: 0 0 6px;
-  font-size: 16px;
+  font-size: var(--text-md);
   color: var(--ink);
 }
 
 .how-step-body p {
   margin: 0;
   color: var(--ink-3);
-  font-size: 14px;
+  font-size: var(--text-md);
   line-height: 1.65;
 }
 
@@ -1638,7 +1629,7 @@ a {
   display: flex;
   align-items: center;
   gap: 9px;
-  font-size: 11px;
+  font-size: var(--text-sm);
   font-weight: 700;
   letter-spacing: 0.09em;
   text-transform: uppercase;
@@ -1656,7 +1647,7 @@ a {
 }
 
 .sk-intro {
-  font-size: 14px;
+  font-size: var(--text-md);
   line-height: 1.75;
   color: var(--ink-2);
   padding: 16px 20px;
@@ -1701,13 +1692,13 @@ a {
 }
 
 .sk-stat-label {
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--ink-muted);
   margin-bottom: 6px;
 }
 
 .sk-stat-value {
-  font-size: 32px;
+  font-size: var(--text-h1);
   font-weight: 700;
   color: var(--on-dark);
   font-variant-numeric: tabular-nums;
@@ -1726,7 +1717,7 @@ a {
   border-radius: 50%;
   background: var(--surface-strong);
   color: var(--ink-3);
-  font-size: 11px;
+  font-size: var(--text-sm);
   font-weight: 700;
   line-height: 1;
   display: flex;
@@ -1753,7 +1744,7 @@ a {
   border-radius: 8px;
   background: var(--near-black);
   color: #fff;
-  font-size: 11.5px;
+  font-size: var(--text-sm);
   font-weight: 500;
   line-height: 1.5;
   text-align: left;
@@ -1790,7 +1781,7 @@ a {
   align-items: flex-start;
   gap: 10px;
   padding: 11px 18px;
-  font-size: 13px;
+  font-size: var(--text-md);
   color: var(--ink-2);
   line-height: 1.5;
   border-bottom: 1px solid var(--border);
@@ -1802,7 +1793,7 @@ a {
 
 .sk-check-icon {
   color: var(--key);
-  font-size: 14px;
+  font-size: var(--text-sm);
   flex-shrink: 0;
   margin-top: 1px;
   font-weight: 700;
@@ -1847,7 +1838,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
+  font-size: var(--text-sm);
   font-weight: 700;
   flex-shrink: 0;
   margin-top: 1px;
@@ -1868,7 +1859,7 @@ a {
   background: var(--key-tint);
   color: var(--key-strong);
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: var(--text-sm);
   letter-spacing: -0.5px;
 }
 
@@ -1887,7 +1878,7 @@ a {
 }
 
 .sk-wf-title {
-  font-size: 13px;
+  font-size: var(--text-md);
   font-weight: 600;
   color: var(--ink);
   display: flex;
@@ -1897,7 +1888,7 @@ a {
 }
 
 .sk-wf-desc {
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--ink-3);
   margin-top: 3px;
   line-height: 1.55;
@@ -1905,7 +1896,7 @@ a {
 
 .sk-tag {
   display: inline-block;
-  font-size: 10px;
+  font-size: var(--text-sm);
   padding: 1px 7px;
   border-radius: 3px;
   font-weight: 600;
@@ -1985,14 +1976,14 @@ a {
 }
 
 .sk-req-name {
-  font-size: 13px;
+  font-size: var(--text-md);
   font-weight: 600;
   color: var(--ink);
   margin-bottom: 4px;
 }
 
 .sk-req-desc {
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--ink-3);
   line-height: 1.55;
 }
@@ -2008,7 +1999,7 @@ a {
 
 .sk-trigger-pill {
   display: inline-block;
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--ink-2);
   background: var(--bg-pill);
   border: 1px solid var(--border);
@@ -2019,7 +2010,7 @@ a {
 
 .sk-trigger-desc {
   margin: 0;
-  font-size: 13px;
+  font-size: var(--text-md);
   color: var(--ink-2);
   line-height: 1.65;
 }
@@ -2048,7 +2039,7 @@ a {
   width: 100%;
   text-align: left;
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: var(--text-sm);
   font-weight: 600;
   color: var(--ink);
   border-bottom: 1px solid var(--border);
@@ -2056,7 +2047,7 @@ a {
 
 .sk-qs-arrow {
   color: var(--brand-on-dark);
-  font-size: 11px;
+  font-size: var(--text-sm);
   transition: transform 0.2s;
 }
 
@@ -2069,7 +2060,7 @@ a {
 }
 
 .sk-qs-hint {
-  font-size: 13px;
+  font-size: var(--text-md);
   color: var(--ink-3);
   margin-bottom: 12px;
 }
@@ -2084,7 +2075,7 @@ a {
 
 .sk-qs-code {
   font-family: var(--font-mono);
-  font-size: 12.5px;
+  font-size: var(--text-sm);
   line-height: 1.85;
   color: var(--ink-2);
   white-space: pre-wrap;
@@ -2096,7 +2087,7 @@ a {
   position: absolute;
   top: 10px;
   right: 10px;
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--ink-2);
   background: var(--bg-pill);
   border: 1px solid var(--border);
@@ -2124,7 +2115,7 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 12px;
+  font-size: var(--text-sm);
   color: var(--ink-2);
   background: var(--bg-pill);
   border: 1px solid var(--border);
@@ -2144,6 +2135,6 @@ a {
   }
 
   .sk-product-name {
-    font-size: 20px;
+    font-size: var(--text-lg);
   }
 }
