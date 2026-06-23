@@ -59,7 +59,7 @@ export interface SkillDetail {
   workflow: FlowStep[];
   prerequisites: Prerequisite[];
   triggers: { phrases: string[]; note: Bi };
-  quickStart: { hint: Bi; code: Bi; links: { label: string; href: string }[] };
+  quickStart: { hint: Bi; code: Bi; links: { label: string | Bi; href: string }[] };
 }
 export interface Capability {
   id: string;

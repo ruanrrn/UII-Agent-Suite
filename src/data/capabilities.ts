@@ -347,7 +347,7 @@ const vitallensDetail: SkillDetail = {
         href: 'https://github.com/ruanrrn/uii-agents-hub/blob/main/vitallens/SKILL.md'
       },
       {
-        label: 'VitalLens API 注册',
+        label: { zh: 'VitalLens API 注册', en: 'VitalLens API sign-up' },
         href: 'https://www.rouast.com/api'
       }
     ]

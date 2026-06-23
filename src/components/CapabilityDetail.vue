@@ -363,7 +363,7 @@ async function copyQS() {
                     stroke-linejoin="round"
                   />
                 </svg>
-                {{ link.label }}
+                {{ bi(link.label) }}
               </a>
             </div>
           </div>
