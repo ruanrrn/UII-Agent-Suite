@@ -40,8 +40,8 @@
         "en": "AI-assisted ICH screening and triage for emergency"
       },
       "description": {
-        "zh": "当急诊科医生需要评估患者头颅 CT 是否存在颅内出血时，自动完成 ICH 筛查与量化分析，输出结构化分诊结论，辅助医生快速识别危急病情。",
-        "en": "When an ER physician needs to evaluate a patient's head CT for intracranial hemorrhage, this Skill automatically performs ICH screening and quantitative analysis, outputs a structured triage summary, and assists the physician in rapidly identifying critical conditions."
+        "zh": "当急诊科医生需要评估患者头颅 CT 是否存在颅内出血时，自动完成 ICH 筛查与量化分析，输出结构化分诊结论，辅助医生快速识别危急病情",
+        "en": "When an ER physician needs to evaluate a patient's head CT for intracranial hemorrhage, this Skill automatically performs ICH screening and quantitative analysis, outputs a structured triage summary, and assists the physician in rapidly identifying critical conditions"
       },
       "fda": {
         "kNumber": "K242292",
@@ -215,8 +215,8 @@
         "en": "General Wellness · Non-Medical"
       },
       "description": {
-        "zh": "通过普通摄像头捕捉面部视频，完成心率与呼吸率的无接触检测，输出带置信度评分的测量数值。",
-        "en": "Capture facial video through a standard camera to perform non-contact heart-rate and respiratory-rate detection, returning measurements with confidence scores."
+        "zh": "通过普通摄像头捕捉面部视频，完成心率与呼吸率的无接触检测，输出带置信度评分的测量数值",
+        "en": "Capture facial video through a standard camera to perform non-contact heart-rate and respiratory-rate detection, returning measurements with confidence scores"
       },
       "fda": null,
       "mcp": {

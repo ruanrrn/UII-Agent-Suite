@@ -6,11 +6,11 @@
 ## Capabilities
 
 - **AI-Assisted Easy Triage System - Rib** [skill/CT] — research (not a device):  MCP: https://hub.uii-ai.example/mcp/easy-triage-rib
-- **Easy Triage System - ICH** [skill/CT] — FDA K242292 (2024-12-20): When an ER physician needs to evaluate a patient's head CT for intracranial hemorrhage, this Skill automatically performs ICH screening and quantitative analysis, outputs a structured triage summary, and assists the physician in rapidly identifying critical conditions. MCP: https://hub.uii-ai.example/mcp/easy-triage-ich
+- **Easy Triage System - ICH** [skill/CT] — FDA K242292 (2024-12-20): When an ER physician needs to evaluate a patient's head CT for intracranial hemorrhage, this Skill automatically performs ICH screening and quantitative analysis, outputs a structured triage summary, and assists the physician in rapidly identifying critical conditions MCP: https://hub.uii-ai.example/mcp/easy-triage-ich
 - **AI-Assisted Analysis System for Bony Thorax Fractures** [skill/CT] — research (not a device):  MCP: https://hub.uii-ai.example/mcp/bony-thorax-fractures
 - **AI-Assisted Analysis System for Aortic Dissection** [skill/CT] — research (not a device):  MCP: https://hub.uii-ai.example/mcp/aortic-dissection
 - **AI-Assisted Analysis System for Cerebral and Carotid Vessels** [skill/CT] — research (not a device):  MCP: https://hub.uii-ai.example/mcp/cerebral-carotid-vessels
 - **AI-Assisted Analysis System for Coronary CTA Imaging** [skill/CT] — research (not a device):  MCP: https://hub.uii-ai.example/mcp/coronary-cta
 - **AI-Assisted Analysis System for Lower Extremity CTA Imaging** [skill/CT] — research (not a device):  MCP: https://hub.uii-ai.example/mcp/lower-extremity-cta
 - **AI-Assisted Analysis System for Intracerebral Hemorrhage** [skill/CT] — research (not a device):  MCP: https://hub.uii-ai.example/mcp/intracerebral-hemorrhage
-- **VitalLens** [skill/Cross] — research (not a device): Capture facial video through a standard camera to perform non-contact heart-rate and respiratory-rate detection, returning measurements with confidence scores. MCP: https://hub.uii-ai.example/mcp/vitallens-rppg
+- **VitalLens** [skill/Cross] — research (not a device): Capture facial video through a standard camera to perform non-contact heart-rate and respiratory-rate detection, returning measurements with confidence scores MCP: https://hub.uii-ai.example/mcp/vitallens-rppg
