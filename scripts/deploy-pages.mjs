@@ -1,5 +1,5 @@
 // scripts/deploy-pages.mjs —— 本地把 Pages 版部署到"公开产物仓库"（阶段 1）
-// 用法：DEPLOY_REPO=git@github.com:<org>/uii-agent-hub-site.git PAGES_BASE=/uii-agent-hub-site/ node scripts/deploy-pages.mjs
+// 用法：DEPLOY_REPO=git@github.com:ruanrrn/UII-Agent-Suite.git PAGES_BASE=/UII-Agent-Suite/ node scripts/deploy-pages.mjs
 import { execSync } from 'node:child_process';
 import { existsSync, writeFileSync } from 'node:fs';
 

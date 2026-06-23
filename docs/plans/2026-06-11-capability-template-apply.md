@@ -378,7 +378,7 @@ test('catalog json v2 stable shape', () => {
 });
 test('llms.txt lists every K-number', () => {
   const txt = buildLlmsTxt(CAPABILITIES);
-  expect(txt).toMatch(/^# 联影智能 · Agent Hub/m);
+  expect(txt).toMatch(/^# 联影智能 · Agent Suite/m);
   CAPABILITIES.filter(c => c.fda).forEach(c => expect(txt).toContain(c.fda!.kNumber));
 });
 ```
@@ -422,7 +422,7 @@ export function capabilityToMarkdown(c: Capability, lang: Lang = 'zh'): string {
 export function buildCatalogJson(caps: Capability[]) {
   return {
     version: 2 as const,
-    name: '联影智能 · Agent Hub',
+    name: '联影智能 · Agent Suite',
     items: caps.map(c => ({
       id: c.id,
       type: c.type,
@@ -443,7 +443,7 @@ export function buildCatalogJson(caps: Capability[]) {
 
 export function buildLlmsTxt(caps: Capability[]): string {
   const out = [
-    '# 联影智能 · Agent Hub / United Imaging Intelligence · Agent Hub',
+    '# 联影智能 · Agent Suite / United Imaging Intelligence · Agent Suite',
     '',
     '> 把院内影像 AI 变成人和智能体都能直接调用的标准服务。本文件为机器可读的能力目录摘要。',
     '> Turn in-house imaging AI into services people and agents can call. Machine-readable catalog summary.',

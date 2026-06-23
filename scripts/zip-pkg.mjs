@@ -5,7 +5,7 @@ if (!existsSync('dist-pkg')) {
   console.error('run build:pkg first');
   process.exit(1);
 }
-const out = 'uii-agent-hub-mock.zip';
+const out = 'uii-agent-suite-mock.zip';
 try {
   execSync(
     `powershell -NoProfile -Command "Compress-Archive -Path dist-pkg/* -DestinationPath ${out} -Force"`,

@@ -52,7 +52,7 @@ jobs:
       - name: Build (mock mode for Pages)
         run: pnpm build:pages
         env:
-          VITE_BASE: /uii-agents-hub/
+          VITE_BASE: /UII-Agent-Suite/
 
       - name: Add .nojekyll
         run: |

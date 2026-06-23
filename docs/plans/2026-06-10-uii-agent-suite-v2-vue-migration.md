@@ -1,4 +1,4 @@
-# UII Agent Hub v2 · Vue 工程化迁移 Implementation Plan
+# UII Agent Suite v2 · Vue 工程化迁移 Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -25,7 +25,7 @@
 ## 文件结构（决策锁定）
 
 ```
-uii-agent-hub/
+uii-agent-suite/
   package.json              # deps/scripts/engines（替换 v0 的 package.json）
   tsconfig.json  tsconfig.node.json
   vite.config.ts           # base 由 env 注入；含机器视图生成插件
@@ -74,7 +74,7 @@ uii-agent-hub/
 把 v0 的 `package.json` 内容用以下替换（注意：保留项目名）：
 ```json
 {
-  "name": "uii-agent-hub",
+  "name": "uii-agent-suite",
   "version": "2.0.0",
   "private": true,
   "type": "module",
@@ -175,7 +175,7 @@ export default defineConfig({
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>联影智能 · Agent Hub</title>
+  <title>联影智能 · Agent Suite</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono&display=swap" />
 </head>
 <body>
@@ -199,7 +199,7 @@ createApp(App).mount('#app')
 ```
 ```vue
 <!-- src/App.vue -->
-<template><div>UII Agent Hub v2 scaffold</div></template>
+<template><div>UII Agent Suite v2 scaffold</div></template>
 ```
 
 - [ ] **Step 8: 安装依赖（含版本兜底）**
@@ -470,7 +470,7 @@ test('catalog json stable shape', () => {
 })
 test('llms.txt lists every K-number', () => {
   const txt = buildLlmsTxt(CAPABILITIES)
-  expect(txt).toMatch(/^# 联影智能 · Agent Hub/m)
+  expect(txt).toMatch(/^# 联影智能 · Agent Suite/m)
   CAPABILITIES.filter(c => c.fda).forEach(c => expect(txt).toContain(c.fda!.kNumber))
 })
 ```
@@ -498,7 +498,7 @@ export function capabilityToMarkdown(c: Capability, lang: Lang = 'zh'): string {
 }
 export function buildCatalogJson(caps: Capability[]) {
   return {
-    version: 1 as const, name: '联影智能 · Agent Hub',
+    version: 1 as const, name: '联影智能 · Agent Suite',
     items: caps.map(c => ({
       id: c.id, type: c.type, modality: c.modality,
       title: c.i18n.title, tagline: c.i18n.tagline, description: c.i18n.description,
@@ -508,7 +508,7 @@ export function buildCatalogJson(caps: Capability[]) {
 }
 export function buildLlmsTxt(caps: Capability[]): string {
   const out = [
-    '# 联影智能 · Agent Hub / United Imaging Intelligence · Agent Hub', '',
+    '# 联影智能 · Agent Suite / United Imaging Intelligence · Agent Suite', '',
     '> 把院内影像 AI 变成人和智能体都能直接调用的标准服务。本文件为机器可读的能力目录摘要。',
     '> Turn in-house imaging AI into services people and agents can call. Machine-readable catalog summary.',
     '', '## Capabilities', ''
@@ -663,7 +663,7 @@ test('core keys present', () => {
   "how.s2.title": "② 获取连接配置", "how.s2.desc": "开通后获得 MCP 端点与 API Key（详情页机器视图可复制）。",
   "how.s3.title": "③ 智能体经 MCP 连接", "how.s3.desc": "院内 AI PACS（LLM+Agent）加载 Skill/MCP，按标准协议连接能力。",
   "how.s4.title": "④ 私域内调用", "how.s4.desc": "能力在医院私域内执行，数据不出院，过程可审计。",
-  "copy.done": "已复制 ✓", "copy.label": "复制", "foot.copy": "© 2026 联影智能 · Agent Hub"
+  "copy.done": "已复制 ✓", "copy.label": "复制", "foot.copy": "© 2026 联影智能 · Agent Suite"
 }
 ```
 `src/locales/en.json`：同样的 key 集，value 取 v0 对应英文（`I18N[k].en`；收编项按 v0 内联 ternary 的英文分支；如 `"nav.market": "Marketplace"`、`"type.clinical-ai": "Clinical AI"`、`"how.title": "How it works: Discover → Activate → Connect"` …）。**两个文件 key 必须逐一对应**（测试会校验）。
@@ -1003,7 +1003,7 @@ function toggle() { setLang(locale.value === 'zh' ? 'en' : 'zh') }
 <template>
   <header id="site-header">
     <div class="container nav-inner">
-      <RouterLink class="brand" to="/"><span class="brand-mark">UII</span><span class="brand-text">联影智能 · Agent Hub</span></RouterLink>
+      <RouterLink class="brand" to="/"><span class="brand-mark">UII</span><span class="brand-text">联影智能 · Agent Suite</span></RouterLink>
       <nav class="nav-links">
         <RouterLink to="/catalog">{{ t('nav.market') }}</RouterLink>
         <RouterLink to="/how-it-works">{{ t('nav.how') }}</RouterLink>
@@ -1033,7 +1033,7 @@ const base = import.meta.env.BASE_URL
       <span>{{ t('foot.copy') }}</span>
       <a :href="base + 'llms.txt'">llms.txt</a>
       <a :href="base + 'catalog.json'">catalog.json</a>
-      <a href="https://github.com/ruanrrn/uii-skills-hub" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/ruanrrn/UII-Agent-Suite" target="_blank" rel="noopener">GitHub</a>
     </div>
   </footer>
 </template>
@@ -1570,8 +1570,8 @@ cd /e/UiiAgentHub && git add -A && git commit -m "feat(v2): console views (dashb
 
 - [ ] **Step 1: 验证 Pages 版构建（带子路径 base）**
 
-Run: `cd /e/UiiAgentHub && VITE_BASE=/uii-agent-hub-site/ pnpm build:pages`
-Expected: `dist/` 生成；`dist/index.html` 内资源引用以 `/uii-agent-hub-site/` 前缀；`dist/llms.txt`、`dist/catalog.json`、`dist/mock/*.json` 存在。
+Run: `cd /e/UiiAgentHub && VITE_BASE=/UII-Agent-Suite/ pnpm build:pages`
+Expected: `dist/` 生成；`dist/index.html` 内资源引用以 `/UII-Agent-Suite/` 前缀；`dist/llms.txt`、`dist/catalog.json`、`dist/mock/*.json` 存在。
 
 - [ ] **Step 2: 验证可移植 Mock 包构建（相对 base）**
 
@@ -1584,7 +1584,7 @@ Expected: `dist-pkg/` 生成；`dist-pkg/index.html` 资源引用为相对路径
 import { execSync } from 'node:child_process'
 import { existsSync } from 'node:fs'
 if (!existsSync('dist-pkg')) { console.error('run build:pkg first'); process.exit(1) }
-const out = 'uii-agent-hub-mock.zip'
+const out = 'uii-agent-suite-mock.zip'
 try {
   // Windows PowerShell Compress-Archive
   execSync(`powershell -NoProfile -Command "Compress-Archive -Path dist-pkg/* -DestinationPath ${out} -Force"`, { stdio: 'inherit' })
@@ -1598,7 +1598,7 @@ Add script to package.json `"pkg:zip": "pnpm build:pkg && node scripts/zip-pkg.m
 - [ ] **Step 4: 验证 zip**
 
 Run: `cd /e/UiiAgentHub && pnpm pkg:zip`
-Expected: 生成 `uii-agent-hub-mock.zip`（解压后任意静态服务器/双击 index.html via 本地服务器即可运行——hash 路由免配置）。
+Expected: 生成 `uii-agent-suite-mock.zip`（解压后任意静态服务器/双击 index.html via 本地服务器即可运行——hash 路由免配置）。
 
 - [ ] **Step 5: gitignore 构建产物 + 提交脚本**
 
@@ -1625,7 +1625,7 @@ cd /e/UiiAgentHub && git add -A && git commit -m "build(v2): dual-product build 
 - [ ] **Step 2: scripts/deploy-pages.mjs（阶段 1 本地部署：构建→推产物仓库）**
 ```js
 // scripts/deploy-pages.mjs —— 本地把 Pages 版部署到“公开产物仓库”
-// 用法：DEPLOY_REPO=git@github.com:<org>/uii-agent-hub-site.git PAGES_BASE=/uii-agent-hub-site/ node scripts/deploy-pages.mjs
+// 用法：DEPLOY_REPO=git@github.com:ruanrrn/UII-Agent-Suite.git PAGES_BASE=/UII-Agent-Suite/ node scripts/deploy-pages.mjs
 import { execSync } from 'node:child_process'
 import { existsSync, writeFileSync } from 'node:fs'
 const repo = process.env.DEPLOY_REPO
@@ -1677,12 +1677,12 @@ jobs:
           publish_branch: gh-pages
           publish_dir: ./dist
       - uses: actions/upload-artifact@v4
-        with: { name: uii-agent-hub-mock, path: dist-pkg }
+        with: { name: uii-agent-suite-mock, path: dist-pkg }
 ```
 
 - [ ] **Step 4: README.md**
 ```markdown
-# 联影智能 · Agent Hub (v2 · Vue + Vite + TS)
+# 联影智能 · Agent Suite (v2 · Vue + Vite + TS)
 
 概念展示门户。MCSF2.0 规范栈。零运行时后端（Mock 数据）。
 
@@ -1700,7 +1700,7 @@ pnpm lint           # oxlint + stylelint
 
 ## 部署（阶段 1 · 本地）
 \`\`\`
-DEPLOY_REPO=git@github.com:<org>/uii-agent-hub-site.git PAGES_BASE=/uii-agent-hub-site/ pnpm deploy:pages
+DEPLOY_REPO=git@github.com:ruanrrn/UII-Agent-Suite.git PAGES_BASE=/UII-Agent-Suite/ pnpm deploy:pages
 \`\`\`
 源码推上私有仓库后，\`.github/workflows/deploy.yml\` 可启用自动部署（需配置 \`DEPLOY_TOKEN\` secret 与 \`PAGES_REPO\`/\`PAGES_BASE\` vars）。
 

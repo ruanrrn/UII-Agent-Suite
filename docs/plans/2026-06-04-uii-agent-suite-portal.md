@@ -1,4 +1,4 @@
-# 联影智能 Agent Hub 门户 Implementation Plan
+# 联影智能 Agent Suite 门户 Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -77,10 +77,10 @@ if (typeof window !== 'undefined') window.CAPABILITIES = CAPABILITIES;
 
 ```json
 {
-  "name": "uii-agent-hub",
+  "name": "uii-agent-suite",
   "version": "0.1.0",
   "private": true,
-  "description": "联影智能 Agent Hub 概念展示门户",
+  "description": "联影智能 Agent Suite 概念展示门户",
   "scripts": {
     "test": "node --test",
     "build:machine": "node scripts/build-machine-views.js",
@@ -241,7 +241,7 @@ const I18N = {
   'status.online':   { zh: '智能体已连接', en: 'Agent connected' },
   'copy.done':       { zh: '已复制 ✓',     en: 'Copied ✓' },
   'copy.label':      { zh: '复制',         en: 'Copy' },
-  'foot.copy':       { zh: '© 2026 联影智能 · Agent Hub', en: '© 2026 United Imaging Intelligence · Agent Hub' }
+  'foot.copy':       { zh: '© 2026 联影智能 · Agent Suite', en: '© 2026 United Imaging Intelligence · Agent Suite' }
 };
 function t(key, lang) {
   const e = I18N[key];
@@ -576,7 +576,7 @@ test('buildCatalogJson returns machine catalog with stable shape', () => {
 });
 test('buildLlmsTxt is markdown listing every capability with K-number', () => {
   const txt = buildLlmsTxt(CAPABILITIES);
-  assert.match(txt, /^# 联影智能 · Agent Hub/m);
+  assert.match(txt, /^# 联影智能 · Agent Suite/m);
   CAPABILITIES.filter(c => c.fda).forEach(c => assert.ok(txt.includes(c.fda.kNumber), `llms.txt missing ${c.fda.kNumber}`));
 });
 ```
@@ -609,7 +609,7 @@ function capabilityToMarkdown(c, lang = 'zh') {
 function buildCatalogJson(caps) {
   return {
     version: 1,
-    name: '联影智能 · Agent Hub',
+    name: '联影智能 · Agent Suite',
     items: caps.map(c => ({
       id: c.id, type: c.type, modality: c.modality,
       title: c.i18n.title, tagline: c.i18n.tagline, description: c.i18n.description,
@@ -619,7 +619,7 @@ function buildCatalogJson(caps) {
 }
 function buildLlmsTxt(caps) {
   const out = [
-    '# 联影智能 · Agent Hub / United Imaging Intelligence · Agent Hub',
+    '# 联影智能 · Agent Suite / United Imaging Intelligence · Agent Suite',
     '',
     '> 把院内影像 AI 变成人和智能体都能直接调用的标准服务。本文件为机器可读的能力目录摘要。',
     '> Turn in-house imaging AI into services people and agents can call. Machine-readable catalog summary.',
@@ -683,7 +683,7 @@ git commit -q -m "feat: machine-view formatters (markdown/catalog.json/llms.txt)
   function header() {
     const other = lang === 'zh' ? 'en' : '中文';
     return `<div class="container nav-inner">
-      <a class="brand" href="${base}/index.html"><span class="brand-mark">UII</span><span class="brand-text">联影智能 · Agent Hub</span></a>
+      <a class="brand" href="${base}/index.html"><span class="brand-mark">UII</span><span class="brand-text">联影智能 · Agent Suite</span></a>
       <nav class="nav-links">
         <a href="${base}/catalog.html">${T('nav.market')}</a>
         <a href="${base}/how-it-works.html">${T('nav.how')}</a>
@@ -695,7 +695,7 @@ git commit -q -m "feat: machine-view formatters (markdown/catalog.json/llms.txt)
     return `<div class="container foot-inner">
       <span>${T('foot.copy')}</span>
       <a href="${base}/llms.txt">llms.txt</a><a href="${base}/data/catalog.json">catalog.json</a>
-      <a href="https://github.com/ruanrrn/uii-skills-hub" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/ruanrrn/UII-Agent-Suite" target="_blank" rel="noopener">GitHub</a>
     </div>`;
   }
   function mount() {
@@ -761,7 +761,7 @@ a{color:inherit;text-decoration:none}
 - [ ] **Step 4: 验证**
 
 Run: 浏览器打开 `http://localhost:5050/_scratch.html`
-Expected: 顶部黑色页头：左侧 `UII` 青绿方块 + "联影智能 · Agent Hub"，右侧「市场 / 如何工作 / 体验控制台(青绿) / 语言按钮(EN)」。点语言按钮 → 整页文案切英文（页头变 Marketplace / How it works / Try the Console / 中文）。底部页脚有 llms.txt / catalog.json / GitHub。滚动时页头出现下边框。
+Expected: 顶部黑色页头：左侧 `UII` 青绿方块 + "联影智能 · Agent Suite"，右侧「市场 / 如何工作 / 体验控制台(青绿) / 语言按钮(EN)」。点语言按钮 → 整页文案切英文（页头变 Marketplace / How it works / Try the Console / 中文）。底部页脚有 llms.txt / catalog.json / GitHub。滚动时页头出现下边框。
 
 - [ ] **Step 5: Commit**
 
@@ -873,7 +873,7 @@ git commit -q -m "feat: capability card/badge components + styles"
 
 ```html
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>能力目录 · 联影智能 Agent Hub</title>
+<title>能力目录 · 联影智能 Agent Suite</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono&display=swap">
 <link rel="stylesheet" href="assets/css/tokens.css"><link rel="stylesheet" href="assets/css/base.css"></head>
 <body>
@@ -1016,7 +1016,7 @@ git commit -q -m "feat: capability catalog page with search + filters"
 
 ```html
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>能力详情 · 联影智能 Agent Hub</title>
+<title>能力详情 · 联影智能 Agent Suite</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono&display=swap">
 <link rel="stylesheet" href="assets/css/tokens.css"><link rel="stylesheet" href="assets/css/base.css"></head>
 <body>
@@ -1098,7 +1098,7 @@ git commit -q -m "feat: capability detail with human/agent dual-rail + copy-as-m
 
 ```html
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>联影智能 · Agent Hub</title>
+<title>联影智能 · Agent Suite</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono&display=swap">
 <link rel="stylesheet" href="assets/css/tokens.css"><link rel="stylesheet" href="assets/css/base.css"></head>
 <body>
@@ -1233,7 +1233,7 @@ git commit -q -m "feat: home page single-scroll narrative"
 
 ```html
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>如何工作 · 联影智能 Agent Hub</title>
+<title>如何工作 · 联影智能 Agent Suite</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono&display=swap">
 <link rel="stylesheet" href="assets/css/tokens.css"><link rel="stylesheet" href="assets/css/base.css"></head>
 <body>
@@ -1346,7 +1346,7 @@ git commit -q -m "feat: how-it-works flow narrative page"
 
 ```html
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>控制台 · 联影智能 Agent Hub</title>
+<title>控制台 · 联影智能 Agent Suite</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono&display=swap">
 <link rel="stylesheet" href="../assets/css/tokens.css"><link rel="stylesheet" href="../assets/css/base.css"><link rel="stylesheet" href="../assets/css/console.css"></head>
 <body>
@@ -1439,7 +1439,7 @@ git commit -q -m "feat: pseudo-console shell + dashboard (sample data)"
 
 ```html
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>我的服务 · 联影智能 Agent Hub</title>
+<title>我的服务 · 联影智能 Agent Suite</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono&display=swap">
 <link rel="stylesheet" href="../assets/css/tokens.css"><link rel="stylesheet" href="../assets/css/base.css"><link rel="stylesheet" href="../assets/css/console.css"></head>
 <body data-console="services">
@@ -1457,7 +1457,7 @@ git commit -q -m "feat: pseudo-console shell + dashboard (sample data)"
 
 ```html
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>连接与凭据 · 联影智能 Agent Hub</title>
+<title>连接与凭据 · 联影智能 Agent Suite</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono&display=swap">
 <link rel="stylesheet" href="../assets/css/tokens.css"><link rel="stylesheet" href="../assets/css/base.css"><link rel="stylesheet" href="../assets/css/console.css"></head>
 <body data-console="connect">
@@ -1475,7 +1475,7 @@ git commit -q -m "feat: pseudo-console shell + dashboard (sample data)"
 
 ```html
 <!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>用量 / 订阅 · 联影智能 Agent Hub</title>
+<title>用量 / 订阅 · 联影智能 Agent Suite</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono&display=swap">
 <link rel="stylesheet" href="../assets/css/tokens.css"><link rel="stylesheet" href="../assets/css/base.css"><link rel="stylesheet" href="../assets/css/console.css"></head>
 <body data-console="usage">
@@ -1527,7 +1527,7 @@ test('build script generates valid catalog.json and llms.txt', () => {
   assert.strictEqual(cat.version, 1);
   assert.ok(cat.items.length >= 10);
   const llms = fs.readFileSync(path.join(root, 'llms.txt'), 'utf8');
-  assert.match(llms, /Agent Hub/);
+  assert.match(llms, /Agent Suite/);
   assert.ok(llms.includes('K242292'));
 });
 ```
