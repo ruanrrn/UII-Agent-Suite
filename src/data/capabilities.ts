@@ -1,5 +1,5 @@
 // src/data/capabilities.ts —— 唯一数据源
-// 当前仅 ICH 已填充完整信息并可见，其余 Skill 留空，后续逐个补充后放出。
+// 当前 ICH / Rib 已填充完整信息并可见，其余 Skill 留空，后续逐个补充后放出。
 import type { Capability, SkillDetail } from '@/types/capability';
 
 const empty = { zh: '', en: '' };
@@ -66,7 +66,7 @@ const ichDetail: SkillDetail = {
       nodeLabel: '①',
       title: { zh: '医生自然语言请求', en: 'Physician natural language request' },
       desc: {
-        zh: '急诊医生向 Agent 描述评估需求，或 PACS 收到新扫描完成事件后自动触发',
+        zh: '急诊医生向 Agent 描述评估需求时，或 PACS 收到新扫描完成事件后自动触发',
         en: 'ER physician describes assessment needs to Agent, or PACS triggers automatically upon new scan completion'
       }
     },
@@ -147,8 +147,8 @@ const ichDetail: SkillDetail = {
     {
       name: { zh: 'UII MCP Server', en: 'UII MCP Server' },
       desc: {
-        zh: '联影智能 ICH 推理服务，提供 submit_inference / poll_status / get_result 三个工具接口',
-        en: 'UII ICH inference service, providing submit_inference / poll_status / get_result tool interfaces'
+        zh: '联影智能 ICH 推理服务',
+        en: 'UII ICH inference service'
       },
       iconType: 'mcp'
     },
@@ -172,7 +172,7 @@ const ichDetail: SkillDetail = {
   triggers: {
     phrases: [],
     note: {
-      zh: '急诊医生向 Agent 描述评估需求，或 PACS 收到新扫描完成事件后自动触发',
+      zh: '急诊医生向 Agent 描述评估需求时，或 PACS 收到新扫描完成事件后自动触发',
       en: 'The ER physician describes the assessment request to the Agent, or PACS triggers automatically when a new scan-complete event is received'
     }
   },
@@ -193,6 +193,175 @@ const ichDetail: SkillDetail = {
       {
         label: 'References',
         href: 'https://github.com/ruanrrn/UII-Agent-Suite/tree/main/skills/ich-emergency-triage/references'
+      }
+    ]
+  }
+};
+
+const ribDetail: SkillDetail = {
+  intro: {
+    zh: '当放射科医生需要评估外伤患者胸部 CT 是否存在多发肋骨骨折时，完成肋骨骨折筛查与定位分析，输出结构化分诊结论及报告草稿，辅助医生快速识别高风险外伤病例',
+    en: "When a radiologist needs to evaluate a trauma patient's chest CT for multiple rib fractures, this Skill performs rib fracture screening and localization analysis, outputs a structured triage conclusion and draft report, and helps the physician quickly identify high-risk trauma cases"
+  },
+  stats: [
+    {
+      label: { zh: 'AI 灵敏度', en: 'AI Sensitivity' },
+      value: '92.7%',
+      sub: { zh: 'FDA 验证集', en: 'FDA validation set' }
+    },
+    {
+      label: { zh: 'AI 特异度', en: 'AI Specificity' },
+      value: '84.7%',
+      sub: { zh: 'FDA 验证集', en: 'FDA validation set' }
+    },
+    {
+      label: { zh: '检测目标', en: 'Detection target' },
+      value: { zh: '多发肋骨骨折', en: 'Multiple rib fractures' },
+      sub: { zh: '同一患者肋骨骨折部位 ≥3 处', en: '≥3 fracture sites in the same patient' }
+    }
+  ],
+  capabilities: [
+    {
+      zh: '检测胸部 CT 中疑似多发性急性肋骨骨折（≥3 处），涵盖移位性、非移位性、嵌插性及陈旧性四种骨折类型',
+      en: 'Detect suspected multiple acute rib fractures (≥3 sites) on chest CT, covering displaced, nondisplaced, buckle, and old fracture types'
+    },
+    {
+      zh: '输出每处骨折的精确位置（肋骨编号 + 左/右侧 + 前/后/腋中线方向）',
+      en: 'Output the precise location of each fracture (rib number + left/right side + anterior/posterior/mid-axillary direction)'
+    },
+    {
+      zh: '草拟结构化影像报告，包含骨折部位列表及影像所见文字描述',
+      en: 'Draft a structured imaging report, including a list of fracture sites and a textual description of findings'
+    },
+    {
+      zh: '生成分诊结论，辅助放射科医生及时识别高风险外伤患者',
+      en: 'Generate a triage conclusion to help radiologists promptly identify high-risk trauma patients'
+    }
+  ],
+  workflow: [
+    {
+      nodeType: 'default',
+      nodeLabel: '①',
+      title: { zh: '医生自然语言请求', en: 'Physician natural language request' },
+      desc: {
+        zh: '放射科医生向 Agent 描述肋骨骨折分诊评估需求时，或 PACS 收到新扫描完成事件后自动触发',
+        en: 'Radiologist describes a rib fracture triage assessment request to the Agent, or PACS triggers automatically upon new scan completion'
+      }
+    },
+    {
+      nodeType: 'default',
+      nodeLabel: '②',
+      title: { zh: '检查类型验证', en: 'Exam type validation' },
+      desc: {
+        zh: '确认模态为 CT、部位为胸部；不符则终止并提示',
+        en: 'Verify modality = CT, region = chest; abort with notice if mismatch'
+      }
+    },
+    {
+      nodeType: 'default',
+      nodeLabel: '③',
+      title: { zh: 'DICOM 调阅', en: 'DICOM retrieval' },
+      desc: {
+        zh: '调用 PACS 基础工具，按患者 ID / 检查号获取目标序列',
+        en: 'Call PACS base tools to retrieve target series by patient ID / accession number'
+      }
+    },
+    {
+      nodeType: 'warn',
+      nodeLabel: '④',
+      title: { zh: '去标识化', en: 'De-identification' },
+      desc: {
+        zh: '影像出院内网前必须完成，调用 PACS 去标识化工具处理 DICOM',
+        en: 'Must be completed before images leave the intranet; call PACS de-identification tool to process DICOM'
+      }
+    },
+    {
+      nodeType: 'mcp',
+      nodeLabel: 'MCP',
+      title: { zh: '提交推理', en: 'Submit inference' },
+      desc: {
+        zh: '传入去标识后 DICOM URI，返回 job_id',
+        en: 'Pass de-identified DICOM URI, returns job_id'
+      }
+    },
+    {
+      nodeType: 'mcp',
+      nodeLabel: 'MCP',
+      title: { zh: '轮询进度', en: 'Poll status' },
+      desc: {
+        zh: '循环查询直至 status = completed；失败则终止返回错误',
+        en: 'Poll until status = completed; abort and return error on failure'
+      }
+    },
+    {
+      nodeType: 'mcp',
+      nodeLabel: 'MCP',
+      title: { zh: '获取结果', en: 'Get result' },
+      desc: {
+        zh: '返回：阳性/阴性 · 骨折各处位置 · 结构化报告字段',
+        en: 'Returns: positive/negative · fracture locations · structured report fields'
+      }
+    },
+    {
+      nodeType: 'end',
+      nodeLabel: '⑧',
+      title: { zh: '输出分诊结论及结构化报告草稿', en: 'Output triage conclusion and structured report draft' },
+      desc: {
+        zh: '返回给 Agent / 医生，含免责声明',
+        en: 'Return to Agent / physician, with disclaimer'
+      }
+    }
+  ],
+  prerequisites: [
+    {
+      name: { zh: 'UII MCP Server', en: 'UII MCP Server' },
+      desc: {
+        zh: '联影智能肋骨骨折推理服务',
+        en: 'UII rib fracture inference service'
+      },
+      iconType: 'mcp'
+    },
+    {
+      name: { zh: 'PACS 基础工具', en: 'PACS Base Tools' },
+      desc: {
+        zh: '需支持 DICOM 调阅 · DICOM 去标识化两项操作；去标识化为合规强制步骤，不可跳过',
+        en: 'Must support DICOM retrieval and DICOM de-identification; de-identification is a mandatory compliance step'
+      },
+      iconType: 'pacs'
+    },
+    {
+      name: { zh: '合规要求', en: 'Compliance requirements' },
+      desc: {
+        zh: '影像出院内网前须完成去标识化，Skill 内已将此步骤设为强制执行，Agent 不可绕过',
+        en: 'Images must be de-identified before leaving the intranet; this step is enforced within the Skill and cannot be bypassed by the Agent'
+      },
+      iconType: 'compliance'
+    }
+  ],
+  triggers: {
+    phrases: [],
+    note: {
+      zh: '放射科医生向 Agent 描述肋骨骨折分诊评估需求时，或 PACS 收到新扫描完成事件后自动触发',
+      en: 'The radiologist describes a rib fracture triage assessment request to the Agent, or PACS triggers automatically when a new scan-complete event is received'
+    }
+  },
+  quickStart: {
+    hint: {
+      zh: '复制下面这段话，粘贴给任一能读懂自然语言、可执行本地脚本的 AI 助手',
+      en: 'Copy the text below and paste it to any AI assistant that can read natural language and execute local scripts'
+    },
+    code: {
+      zh: '安装 rib_emergency_triage：\n\n源码：https://github.com/uii-ai/agents-hub/tree/main/skills/rib-emergency-triage\n\n依赖：\n  • UII MCP Server（联影智能肋骨骨折推理接口）\n  • PACS 基础工具（DICOM 调阅 + 去标识化）',
+      en: 'Install rib_emergency_triage:\n\nSource: https://github.com/uii-ai/agents-hub/tree/main/skills/rib-emergency-triage\n\nDependencies:\n  • UII MCP Server (UII rib fracture inference API)\n  • PACS Base Tools (DICOM retrieval + de-identification)'
+    },
+    links: [
+      {
+        label: 'SKILL.md',
+        href: 'https://github.com/uii-ai/agents-hub/tree/main/skills/rib-emergency-triage/SKILL.md'
+      },
+      {
+        label: 'References',
+        href: 'https://github.com/uii-ai/agents-hub/tree/main/skills/rib-emergency-triage/references'
       }
     ]
   }
@@ -361,12 +530,34 @@ export const CAPABILITIES: Capability[] = [
     modality: 'CT',
     icon: '/assets/Easy-Triage-System(RiB).png',
     visible: true,
-    fda: null,
+    fda: {
+      kNumber: 'K193271',
+      decisionDate: '2021-01-15',
+      productCode: 'QFM',
+      productCodeName: 'Radiological Computer-Aided Prioritization Software for Lesions',
+      applicant: 'Shanghai United Imaging Intelligence Co., Ltd.'
+    },
     mcp: blankMcp('easy-triage-rib'),
-    i18n: blankI18n({
-      zh: '智能危急预警系统 - 肋骨骨折检测',
-      en: 'AI-Assisted Easy Triage System - Rib'
-    })
+    i18n: {
+      title: {
+        zh: '智能危急预警系统 - 肋骨骨折检测',
+        en: 'Easy Triage System - Rib'
+      },
+      tagline: {
+        zh: '外伤胸部肋骨骨折 AI 辅助筛查与分诊',
+        en: 'AI-assisted rib fracture screening and triage for trauma'
+      },
+      description: {
+        zh: '当放射科医生需要评估外伤患者胸部 CT 是否存在多发肋骨骨折时，完成肋骨骨折筛查与定位分析，输出结构化分诊结论及报告草稿，辅助医生快速识别高风险外伤病例',
+        en: "When a radiologist needs to evaluate a trauma patient's chest CT for multiple rib fractures, this Skill performs rib fracture screening and localization analysis, outputs a structured triage conclusion and draft report, and helps the physician quickly identify high-risk trauma cases"
+      },
+      clinicalUse: { ...empty },
+      overview: {
+        zh: '外伤胸部肋骨骨折 AI 辅助筛查与分诊',
+        en: 'AI-assisted rib fracture screening and triage for trauma'
+      }
+    },
+    detail: ribDetail
   },
   {
     id: 'easy-triage-ich',
