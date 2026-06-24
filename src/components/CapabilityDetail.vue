@@ -40,7 +40,6 @@ const tab = ref<Tab>('overview');
 
 const d = props.cap.detail;
 
-const qsOpen = ref(false);
 const copyLabel = ref('');
 async function copyQS() {
   if (!d?.quickStart) return;
@@ -310,11 +309,7 @@ async function copyQS() {
         <div v-if="d.quickStart">
           <div class="sk-section-label">{{ t('detail.section.quickstart') }}</div>
           <div class="sk-qs">
-            <button class="sk-qs-toggle" :class="{ open: qsOpen }" @click="qsOpen = !qsOpen">
-              <span class="sk-qs-arrow">&#9654;</span>
-              Quick Start
-            </button>
-            <div v-if="qsOpen" class="sk-qs-body">
+            <div class="sk-qs-body">
               <div class="sk-qs-hint">{{ bi(d.quickStart.hint) }}</div>
               <div class="sk-qs-code-wrap">
                 <pre class="sk-qs-code">{{ bi(d.quickStart.code) }}</pre>

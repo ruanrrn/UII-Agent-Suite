@@ -13,10 +13,22 @@ function appVersion() {
 }
 
 function machineViews() {
+  let generated = false;
+  function generate() {
+    if (generated) return;
+    execSync('pnpm gen:machine', { stdio: 'inherit' });
+    generated = true;
+  }
   return {
     name: 'machine-views',
+    // 在 Vite 初始化 public 静态中间件之前生成机器视图 / mock 数据。
+    // 若放在 buildStart，dev 下会在中间件装载后重写 public 文件，
+    // 导致这些静态文件无法被服务（fallback 成 index.html）。
+    config() {
+      generate();
+    },
     buildStart() {
-      execSync('pnpm gen:machine', { stdio: 'inherit' });
+      generate();
     }
   };
 }
