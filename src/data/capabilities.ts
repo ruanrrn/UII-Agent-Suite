@@ -52,8 +52,8 @@ const ichDetail: SkillDetail = {
       en: 'Detect edema and quantify midline shift distance and direction'
     },
     {
-      zh: '按固化规则自动判定危急值（ICH 阳性 / 中线位移 > 5mm）',
-      en: 'Automatically determine critical values by fixed rules (ICH positive / midline shift > 5mm)'
+      zh: '按预设固化规则自动判定危急值，具体阈值可按医院实际应用情况调整',
+      en: 'Automatically determine critical values by preset fixed rules, with specific thresholds adjustable per hospital settings'
     },
     {
       zh: '生成结构化分诊摘要',
