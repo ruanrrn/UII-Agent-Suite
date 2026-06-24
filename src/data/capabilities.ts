@@ -76,7 +76,7 @@ const ichDetail: SkillDetail = {
       title: { zh: '检查类型验证', en: 'Exam type validation' },
       desc: {
         zh: '确认模态为 CT、序列为非增强、部位为头颅；不符则终止并提示',
-        en: 'Verify: modality = CT · series = non-contrast · region = head; abort with notice if mismatch'
+        en: 'Confirm the modality is CT, the series is non-contrast, and the region is head; abort with notice if mismatch'
       }
     },
     {
@@ -254,7 +254,7 @@ const ribDetail: SkillDetail = {
       title: { zh: '检查类型验证', en: 'Exam type validation' },
       desc: {
         zh: '确认模态为 CT、部位为胸部；不符则终止并提示',
-        en: 'Verify modality = CT, region = chest; abort with notice if mismatch'
+        en: 'Confirm the modality is CT and the region is chest; abort with notice if mismatch'
       }
     },
     {
