@@ -75,7 +75,7 @@ const ichDetail: SkillDetail = {
       nodeLabel: '②',
       title: { zh: '检查类型验证', en: 'Exam type validation' },
       desc: {
-        zh: '确认：模态 = CT · 序列 = 非增强 · 部位 = 头颅；不符则终止并提示',
+        zh: '确认模态为 CT、序列为非增强、部位为头颅；不符则终止并提示',
         en: 'Verify: modality = CT · series = non-contrast · region = head; abort with notice if mismatch'
       }
     },
@@ -155,8 +155,8 @@ const ichDetail: SkillDetail = {
     {
       name: { zh: 'PACS 基础工具', en: 'PACS Base Tools' },
       desc: {
-        zh: '需支持 DICOM 调阅 · DICOM 去标识化两项操作；去标识化为合规强制步骤，不可跳过',
-        en: 'Must support DICOM retrieval and DICOM de-identification; de-identification is a mandatory compliance step'
+        zh: '需支持 DICOM 调阅 · DICOM 去标识化两项操作',
+        en: 'Must support DICOM retrieval and DICOM de-identification'
       },
       iconType: 'pacs'
     },
@@ -327,8 +327,8 @@ const ribDetail: SkillDetail = {
     {
       name: { zh: 'PACS 基础工具', en: 'PACS Base Tools' },
       desc: {
-        zh: '需支持 DICOM 调阅 · DICOM 去标识化两项操作；去标识化为合规强制步骤，不可跳过',
-        en: 'Must support DICOM retrieval and DICOM de-identification; de-identification is a mandatory compliance step'
+        zh: '需支持 DICOM 调阅 · DICOM 去标识化两项操作',
+        en: 'Must support DICOM retrieval and DICOM de-identification'
       },
       iconType: 'pacs'
     },
