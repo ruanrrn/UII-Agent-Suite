@@ -305,7 +305,10 @@ const ribDetail: SkillDetail = {
     {
       nodeType: 'end',
       nodeLabel: '⑧',
-      title: { zh: '输出分诊结论及结构化报告草稿', en: 'Output triage conclusion and structured report draft' },
+      title: {
+        zh: '输出分诊结论及结构化报告草稿',
+        en: 'Output triage conclusion and structured report draft'
+      },
       desc: {
         zh: '返回给 Agent / 医生，含免责声明',
         en: 'Return to Agent / physician, with disclaimer'
