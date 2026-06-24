@@ -1845,29 +1845,15 @@ a {
   flex-shrink: 0;
   margin-top: 1px;
   z-index: 1;
+  background: var(--border-strong);
+  color: var(--ink);
 }
 
-.sk-wf-node--default {
-  background: var(--brand-tint);
-  color: var(--brand-on-dark);
-}
-
-.sk-wf-node--warn {
-  background: rgb(214 173 114 / 14%);
-  color: var(--gold);
-}
-
+/* All workflow node types share a single neutral gray badge */
 .sk-wf-node--mcp {
-  background: var(--key-tint);
-  color: var(--key-strong);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   letter-spacing: -0.5px;
-}
-
-.sk-wf-node--end {
-  background: #0c3f6e;
-  color: #fff;
 }
 
 .sk-wf-content {
