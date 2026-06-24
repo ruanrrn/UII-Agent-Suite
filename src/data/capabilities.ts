@@ -120,8 +120,8 @@ const ichDetail: SkillDetail = {
       nodeLabel: 'MCP',
       title: { zh: '获取结果', en: 'Get result' },
       desc: {
-        zh: '返回：出血阳性/阴性 · 总体积 · 5 种亚型体积 · 水肿 · 中线位移 · 危急值标记',
-        en: 'Returns: hemorrhage pos/neg · total volume · 5 subtype volumes · edema · midline shift · critical flag'
+        zh: '获取推理结果，包括出血阳性/阴性判断、出血体积、各亚型分量、中线位移等内容',
+        en: 'Returns structured inference results, including hemorrhage positive/negative determination, total volume, subtype volumes, midline shift, and more'
       }
     },
     {
@@ -129,8 +129,8 @@ const ichDetail: SkillDetail = {
       nodeLabel: '⑧',
       title: { zh: '危急值判定', en: 'Critical value determination' },
       desc: {
-        zh: '规则固化，不由 LLM 推断：ICH 阳性 → 危急（T/CHAS 10-4-9-2019）；中线位移 > 5mm → 危急（产品参考值）',
-        en: 'Rules are hardcoded, not inferred by LLM: ICH positive → critical (T/CHAS 10-4-9-2019); midline shift > 5mm → critical (product reference)'
+        zh: '依据预设危急值规则进行判定，规则固化于 Skill 中不经 LLM 推断，具体阈值可按医院实际应用情况调整',
+        en: 'Critical value rules are hardcoded in the Skill and not inferred by LLM; specific thresholds may be adjusted based on hospital settings'
       }
     },
     {
@@ -298,8 +298,8 @@ const ribDetail: SkillDetail = {
       nodeLabel: 'MCP',
       title: { zh: '获取结果', en: 'Get result' },
       desc: {
-        zh: '返回：阳性/阴性 · 骨折各处位置 · 结构化报告字段',
-        en: 'Returns: positive/negative · fracture locations · structured report fields'
+        zh: '获取推理结果，包括阳性/阴性判断、各处骨折位置及结构化报告字段等内容',
+        en: 'Returns structured inference results, including positive/negative determination, fracture locations, structured report fields, and more'
       }
     },
     {
