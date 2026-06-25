@@ -161,7 +161,7 @@ const ichDetail: SkillDetail = {
       iconType: 'pacs'
     },
     {
-      name: { zh: '合规要求', en: 'Compliance requirements' },
+      name: { zh: '合规要求', en: 'Compliance Requirements' },
       desc: {
         zh: '影像出院内网前须完成去标识化，Skill 内已将此步骤设为强制执行，Agent 不可绕过',
         en: 'Images must be de-identified before leaving the intranet; this step is enforced within the Skill and cannot be bypassed by the Agent'
@@ -333,7 +333,7 @@ const ribDetail: SkillDetail = {
       iconType: 'pacs'
     },
     {
-      name: { zh: '合规要求', en: 'Compliance requirements' },
+      name: { zh: '合规要求', en: 'Compliance Requirements' },
       desc: {
         zh: '影像出院内网前须完成去标识化，Skill 内已将此步骤设为强制执行，Agent 不可绕过',
         en: 'Images must be de-identified before leaving the intranet; this step is enforced within the Skill and cannot be bypassed by the Agent'
