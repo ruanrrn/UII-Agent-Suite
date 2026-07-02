@@ -1,6 +1,6 @@
 ---
 name: imaging-detection-skill
-description: Perform imaging detection through imaging-detection-mcp. Use when the user asks to set up imaging detection, verify first-use dependencies, or analyze DICOM imaging data / DICOM 7z URLs for ICH/stroke/brain hemorrhage or RIB/rib fracture analysis. Supports direct remote 7z URLs and local .7z archives that must be validated, temporarily served over HTTP, then analyzed with detect_imaging. Default to stdio MCP access; optionally guide HTTP MCP access when the user provides an HTTP endpoint and bearer API key.
+description: Perform imaging detection through imaging-detection-mcp from https://github.com/ruanrrn/UII-Agent-Suite/tree/main/imaging-detection-mcp. Use when the user asks to install or verify imaging detection dependencies, run first-use guidance, or analyze DICOM imaging data / DICOM 7z URLs for ICH/stroke/brain hemorrhage or RIB/rib fracture analysis. Supports direct remote 7z URLs and local .7z archives that must be validated, temporarily served over HTTP, then analyzed with detect_imaging. Default to stdio MCP access; optionally guide HTTP MCP access when the user provides an HTTP endpoint and bearer API key. Use the bundled public 张三 ICH 7z URL only as an optional user-confirmed test sample.
 ---
 
 # Imaging Detection Skill
@@ -16,6 +16,39 @@ Normalize user-provided imaging inputs into:
 
 Then call the `detect_imaging` tool exposed by `imaging-detection-mcp`.
 
+## Known Dependencies And Test Data
+
+Use this MCP source when the user needs to install or locate the prerequisite MCP server:
+
+```text
+https://github.com/ruanrrn/UII-Agent-Suite/tree/main/imaging-detection-mcp
+```
+
+If the user wants to install from source, guide them to clone the repository and use the `imaging-detection-mcp` subdirectory:
+
+```bash
+git clone https://github.com/ruanrrn/UII-Agent-Suite.git
+cd UII-Agent-Suite/imaging-detection-mcp
+npm install
+```
+
+Use this public DICOM 7z URL only for optional smoke/end-to-end testing after the MCP dependency is configured and the user confirms they want to submit a real test task:
+
+```text
+https://github.com/ruanrrn/UII-Agent-Suite/raw/refs/heads/main/stroke-imaging-analysis/imaging-data/ich/%E5%BC%A0%E4%B8%89.7z
+```
+
+The test input is:
+
+```json
+{
+  "type": "ich",
+  "storageUrl": "https://github.com/ruanrrn/UII-Agent-Suite/raw/refs/heads/main/stroke-imaging-analysis/imaging-data/ich/%E5%BC%A0%E4%B8%89.7z"
+}
+```
+
+Do not run this test automatically during setup; it invokes the AI Task API.
+
 ## First Install / First Use
 
 When this skill is installed, invoked for setup, or used while `detect_imaging` is not available, perform prerequisite guidance before analysis.
@@ -23,7 +56,7 @@ When this skill is installed, invoked for setup, or used while `detect_imaging` 
 Check or guide these items:
 
 1. Node.js is available and is version 18 or later.
-2. `imaging-detection-mcp` is installed or available from a local absolute path.
+2. `imaging-detection-mcp` is installed or available from a local absolute path. If not, guide installation from `https://github.com/ruanrrn/UII-Agent-Suite/tree/main/imaging-detection-mcp`.
 3. The MCP client is configured using one of the supported access modes below.
 4. `detect_imaging` is visible in the active MCP tool list after the MCP client reloads.
 5. The AI software API base URL is known for stdio mode. Default: `http://10.9.54.49:30979/api/common`.
@@ -70,6 +103,7 @@ Rules for stdio:
 - Use the user's AI software API base URL, or the default above when accepted.
 - If the MCP client uses a different config format, preserve the same intent: run `imaging-detection-mcp` with `stdio` and set `AI_TASK_API_BASE`.
 - After configuration, ask the user to reload/restart the MCP client, then verify `detect_imaging` is available.
+- After `detect_imaging` is available, offer the public 张三 ICH 7z URL as an optional test. Run it only after explicit user confirmation.
 
 ### Optional: HTTP
 
@@ -103,15 +137,16 @@ Rules for HTTP:
 - Do not store, echo, log, or write the bearer key into files unless the user explicitly asks to update their MCP config.
 - If HTTP auth fails with `401`, stop and ask the user to verify the bearer key.
 - After configuration, ask the user to reload/restart the MCP client, then verify `detect_imaging` is available.
+- After `detect_imaging` is available, offer the public 张三 ICH 7z URL as an optional test. Run it only after explicit user confirmation.
 
 ## Analysis Types
 
 Normalize user intent to MCP `type`:
 
-| User wording | MCP type |
-| --- | --- |
-| `ICH`, `ich`, `脑卒中`, `卒中`, `脑出血`, `颅内出血` | `ich` |
-| `RIB`, `rib`, `肋骨`, `肋骨骨折` | `rib` |
+| User wording                                         | MCP type |
+| ---------------------------------------------------- | -------- |
+| `ICH`, `ich`, `脑卒中`, `卒中`, `脑出血`, `颅内出血` | `ich`    |
+| `RIB`, `rib`, `肋骨`, `肋骨骨折`                     | `rib`    |
 
 If the analysis type is missing or ambiguous, ask the user to choose `ICH` or `RIB`.
 
@@ -191,6 +226,19 @@ If `--public-host` is unknown, ask the user for the intranet IP that the AI Task
 7. Attempt to open the viewer URL with an available browser/open-url capability.
 8. If automatic opening fails, provide the viewer URL clearly.
 
+## Optional End-To-End Test
+
+Use this only when the user asks to verify the full analysis path or accepts a proposed test:
+
+```json
+{
+  "type": "ich",
+  "storageUrl": "https://github.com/ruanrrn/UII-Agent-Suite/raw/refs/heads/main/stroke-imaging-analysis/imaging-data/ich/%E5%BC%A0%E4%B8%89.7z"
+}
+```
+
+Before running it, state that it submits a real AI Task API job. After it finishes, present the same report fields as a normal analysis and attempt to open the viewer URL.
+
 ## Error Guidance
 
 Give the smallest missing correction:
@@ -202,6 +250,7 @@ Give the smallest missing correction:
 - Local file is not `.7z`: ask for a DICOM `.7z` archive.
 - Local file fails 7z magic check: ask for a valid 7z archive.
 - File server URL is not reachable: ask for a reachable intranet IP, open port, or remote storage URL.
+- MCP server missing: guide installation from `https://github.com/ruanrrn/UII-Agent-Suite/tree/main/imaging-detection-mcp`.
 - MCP tool missing: guide first-use setup, using stdio by default.
 - stdio setup missing AI software API URL: ask for it and offer `http://10.9.54.49:30979/api/common` as the default.
 - HTTP requested but URL/key missing: ask the user for both HTTP endpoint and bearer API key.
