@@ -1,6 +1,11 @@
 # Imaging Detection MCP Server
 
-An MCP server for imaging detection. It exposes one tool, `detect_imaging`, which submits a DICOM 7z URL to an AI Task API, polls until the task is complete, and returns a structured diagnostic report plus a viewer URL.
+An MCP server for imaging detection. It exposes two tools:
+
+- `create_imaging_task` — submits a DICOM 7z URL to an AI Task API and returns a `taskId` immediately, without waiting for the AI computation.
+- `get_imaging_task` — checks a task's state (`running` / `completed` / `failed`); when complete it returns a structured diagnostic report plus a viewer URL. Supports an optional server-side bounded long-poll via `waitSeconds`.
+
+The AI computation can take minutes. Splitting create from get lets the client poll on its own cadence instead of holding a single tool call open, which avoids client-side request timeouts. To cut down on the number of round trips, `get_imaging_task` also accepts `waitSeconds`: the call blocks server-side for up to that long (capped by `AI_TASK_MAX_WAIT_MS`), returning early as soon as the task finishes. A handful of `waitSeconds=30~60` calls then replaces dozens of tight polls, while keeping the `taskId` as a durable, resumable handle.
 
 This package supports both MCP transports:
 
@@ -15,19 +20,31 @@ This package supports both MCP transports:
 
 ## Installation
 
+Install globally for stdio MCP clients:
+
+```bash
+npm install -g @rayruan/imaging-detection-mcp
+```
+
+Then configure your MCP client to run the global `imaging-detection-mcp` command.
+
+For local development from source:
+
 ```bash
 npm install
 ```
 
-For GitHub/npm-style usage:
+One-off npm-style usage is also supported:
 
 ```bash
-npx imaging-detection-mcp
+npx @rayruan/imaging-detection-mcp
 ```
 
-## Tool
+## Tools
 
-### `detect_imaging`
+### `create_imaging_task`
+
+Submit a task. Returns immediately with a `taskId`; does not wait for the AI computation.
 
 Input:
 
@@ -40,10 +57,10 @@ Input:
 
 Fields:
 
-| Field | Required | Description |
-| --- | --- | --- |
-| `type` | Yes | Detection type. Supported values: `ich`, `rib`. |
-| `storageUrl` | Yes | Full downloadable DICOM 7z URL. The AI Task API must be able to access it. Do not use `localhost` or `127.0.0.1`. |
+| Field        | Required | Description                                                                                                       |
+| ------------ | -------- | ----------------------------------------------------------------------------------------------------------------- |
+| `type`       | Yes      | Detection type. Supported values: `ich`, `rib`.                                                                   |
+| `storageUrl` | Yes      | Full downloadable DICOM 7z URL. The AI Task API must be able to access it. Do not use `localhost` or `127.0.0.1`. |
 
 Structured output:
 
@@ -52,21 +69,69 @@ Structured output:
   "type": "ich",
   "label": "CT_BRAIN",
   "taskId": "a1b2c3d4",
-  "report": {
-    "findings": ["..."],
-    "conclusions": ["..."],
-    "emergencies": ["..."]
-  },
-  "viewUrl": "http://10.9.54.100:30979/index?StudyUID=..."
+  "status": "submitted"
 }
 ```
 
+### `get_imaging_task`
+
+Query a task by its `taskId`. The `taskId` is globally unique, so `type` is not required — the detection type and algorithm label are recovered from the result.
+
+Input:
+
+```json
+{
+  "taskId": "a1b2c3d4",
+  "waitSeconds": 60
+}
+```
+
+Fields:
+
+| Field         | Required | Description                                                                                                                                                                                                                                                                          |
+| ------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `taskId`      | Yes      | The `taskId` returned by `create_imaging_task`.                                                                                                                                                                                                                                      |
+| `waitSeconds` | No       | Server-side bounded long-poll budget. `0` or omitted = a single check (omitted uses `AI_TASK_DEFAULT_WAIT_MS`); `> 0` blocks server-side up to that many seconds, returning early when the task finishes. Clamped to `AI_TASK_MAX_WAIT_MS` (default `120` s). Recommended `30`–`60`. |
+
+Structured output depends on `status`:
+
+- `running` — still computing (long-poll budget elapsed before it finished); call again with the same `taskId`.
+
+  ```json
+  { "taskId": "a1b2c3d4", "status": "running", "message": "..." }
+  ```
+
+- `failed` — computation failed.
+
+  ```json
+  { "taskId": "a1b2c3d4", "status": "failed", "message": "..." }
+  ```
+
+- `completed` — report ready (`type`/`label` identified from the result).
+
+  ```json
+  {
+    "taskId": "a1b2c3d4",
+    "type": "ich",
+    "label": "CT_BRAIN",
+    "status": "completed",
+    "report": {
+      "findings": ["..."],
+      "conclusions": ["..."],
+      "emergencies": ["..."]
+    },
+    "viewUrl": "http://10.9.54.100:30979/index?StudyUID=..."
+  }
+  ```
+
+Typical flow: call `create_imaging_task` once, then call `get_imaging_task` with the returned `taskId` and `waitSeconds` (e.g. `60`), repeating while `status` is `running` until it is `completed` or `failed`.
+
 ## Detection Type Mapping
 
-| `type` | AI Task API label | Description |
-| --- | --- | --- |
-| `ich` | `CT_BRAIN` | Stroke / ICH imaging analysis |
-| `rib` | `CT_RIB` | Rib fracture analysis |
+| `type` | AI Task API label | Description                   |
+| ------ | ----------------- | ----------------------------- |
+| `ich`  | `CT_BRAIN`        | Stroke / ICH imaging analysis |
+| `rib`  | `CT_RIB`          | Rib fracture analysis         |
 
 To add a new detection type, update `TYPE_MAP` in `src/config.mjs`.
 
@@ -75,12 +140,14 @@ To add a new detection type, update `TYPE_MAP` in `src/config.mjs`.
 Start stdio transport:
 
 ```bash
-npm run start:stdio
+imaging-detection-mcp
 ```
 
 Equivalent:
 
 ```bash
+imaging-detection-mcp stdio
+npm run start:stdio
 node bin/imaging-detection-mcp.mjs
 node bin/imaging-detection-mcp.mjs stdio
 ```
@@ -91,11 +158,8 @@ MCP client configuration example:
 {
   "mcpServers": {
     "imaging-detection": {
-      "command": "node",
-      "args": [
-        "/absolute/path/to/imaging-detection-mcp/bin/imaging-detection-mcp.mjs",
-        "stdio"
-      ],
+      "command": "imaging-detection-mcp",
+      "args": ["stdio"],
       "env": {
         "AI_TASK_API_BASE": "http://10.9.54.49:30979/api/common"
       }
@@ -104,19 +168,21 @@ MCP client configuration example:
 }
 ```
 
-stdio does not use `MCP_API_KEY`, because the MCP client launches the process locally. Use normal OS/file permissions to control who can run it.
+stdio does not use `MCP_API_KEY`, because the MCP client launches the process locally. Use normal OS/file permissions to control who can run it. For VS Code/Copilot MCP, add this server to the user-level/global MCP configuration when you want it available across workspaces.
 
 ## Streamable HTTP Usage
 
 Start HTTP transport:
 
 ```bash
-npm run start:http
+imaging-detection-mcp http
 ```
 
 Equivalent:
 
 ```bash
+imaging-detection-mcp-http
+npm run start:http
 node bin/imaging-detection-mcp.mjs http
 node bin/imaging-detection-mcp-http.mjs
 node server.mjs
@@ -173,22 +239,26 @@ imaging-detection-mcp-http            # Streamable HTTP transport
 
 ## Environment Variables
 
-| Variable | Default | Applies to | Description |
-| --- | --- | --- | --- |
-| `AI_TASK_API_BASE` | `http://10.9.54.49:30979/api/common` | both | AI Task API base URL. |
-| `AI_TASK_POLL_INTERVAL_MS` | `5000` | both | AI task polling interval. |
-| `AI_TASK_TIMEOUT_MS` | `600000` | both | Total AI task timeout. |
-| `AI_TASK_REQUEST_TIMEOUT_MS` | `30000` | both | Per-request AI Task API timeout. |
-| `HOST` | `0.0.0.0` | HTTP | HTTP bind host. |
-| `PORT` | `8970` | HTTP | HTTP bind port. |
-| `MCP_PATH` | `/mcp` | HTTP | MCP endpoint path. |
-| `MCP_API_KEY` | empty | HTTP | Enables bearer/API-key authentication when set. |
-| `MCP_SESSION_MODE` | `stateful` | HTTP | `stateful` uses `Mcp-Session-Id`; `stateless` creates a temporary instance per request. |
-| `MCP_ENABLE_JSON_RESPONSE` | `false` | HTTP | Return JSON responses instead of SSE streams. |
-| `MCP_BODY_LIMIT_BYTES` | `1048576` | HTTP | MCP request body size limit. |
-| `MCP_ALLOWED_HOSTS` | empty | HTTP | Optional comma-separated allowed Host values. |
-| `MCP_ALLOWED_ORIGINS` | empty | HTTP | Optional comma-separated allowed Origin values. |
-| `MCP_CORS_ALLOW_ORIGIN` | empty | HTTP | Optional browser CORS allow-list. |
+| Variable                     | Default                              | Applies to | Description                                                                                   |
+| ---------------------------- | ------------------------------------ | ---------- | --------------------------------------------------------------------------------------------- |
+| `AI_TASK_API_BASE`           | `http://10.9.54.49:30979/api/common` | both       | AI Task API base URL.                                                                         |
+| `AI_TASK_POLL_INTERVAL_MS`   | `5000`                               | both       | AI task polling interval (also used as the server-side long-poll interval).                   |
+| `AI_TASK_TIMEOUT_MS`         | `600000`                             | both       | Total AI task timeout.                                                                        |
+| `AI_TASK_REQUEST_TIMEOUT_MS` | `30000`                              | both       | Per-request AI Task API timeout.                                                              |
+| `AI_TASK_MAX_WAIT_MS`        | `120000`                             | both       | Upper bound on `get_imaging_task`'s server-side long-poll (`waitSeconds` is clamped to this). |
+| `AI_TASK_DEFAULT_WAIT_MS`    | `0`                                  | both       | Server-side long-poll used when the caller omits `waitSeconds` (`0` = single check).          |
+| `HOST`                       | `0.0.0.0`                            | HTTP       | HTTP bind host.                                                                               |
+| `PORT`                       | `8970`                               | HTTP       | HTTP bind port.                                                                               |
+| `MCP_PATH`                   | `/mcp`                               | HTTP       | MCP endpoint path.                                                                            |
+| `MCP_API_KEY`                | empty                                | HTTP       | Enables bearer/API-key authentication when set.                                               |
+| `MCP_SESSION_MODE`           | `stateful`                           | HTTP       | `stateful` uses `Mcp-Session-Id`; `stateless` creates a temporary instance per request.       |
+| `MCP_ENABLE_JSON_RESPONSE`   | `false`                              | HTTP       | Return JSON responses instead of SSE streams.                                                 |
+| `MCP_BODY_LIMIT_BYTES`       | `1048576`                            | HTTP       | MCP request body size limit.                                                                  |
+| `MCP_SESSION_IDLE_MS`        | `1800000`                            | HTTP       | Idle timeout for stateful sessions; idle sessions are evicted. `0` disables reaping.          |
+| `MCP_SESSION_SWEEP_MS`       | `60000`                              | HTTP       | How often the idle-session reaper runs.                                                       |
+| `MCP_ALLOWED_HOSTS`          | empty                                | HTTP       | Optional comma-separated allowed Host values.                                                 |
+| `MCP_ALLOWED_ORIGINS`        | empty                                | HTTP       | Optional comma-separated allowed Origin values.                                               |
+| `MCP_CORS_ALLOW_ORIGIN`      | empty                                | HTTP       | Optional browser CORS allow-list.                                                             |
 
 ## Validation
 
@@ -217,7 +287,13 @@ $env:MCP_SERVER_URL="http://127.0.0.1:8971/mcp"
 npm run smoke:http
 ```
 
-`smoke` tests only initialize MCP and list tools. They do not call `detect_imaging`, so they do not submit an AI task.
+Unit tests (offline, no AI Task API needed):
+
+```bash
+npm test
+```
+
+`smoke` tests only initialize MCP and list tools. They do not call `create_imaging_task`, so they do not submit an AI task.
 
 ## Security Notes
 

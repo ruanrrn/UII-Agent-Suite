@@ -1,6 +1,6 @@
 ---
 name: imaging-detection-skill
-description: Perform imaging detection through imaging-detection-mcp from https://github.com/ruanrrn/UII-Agent-Suite/tree/main/imaging-detection-mcp. Use when the user asks to install or verify imaging detection dependencies, run first-use guidance, or analyze DICOM imaging data / DICOM 7z URLs for ICH/stroke/brain hemorrhage or RIB/rib fracture analysis. Supports direct remote 7z URLs and local .7z archives that must be validated, temporarily served over HTTP, then analyzed with detect_imaging. Default to stdio MCP access; optionally guide HTTP MCP access when the user provides an HTTP endpoint and bearer API key. Use the bundled public 张三 ICH 7z URL only as an optional user-confirmed test sample.
+description: Perform imaging detection through user-level stdio MCP access powered by @rayruan/imaging-detection-mcp from npm, or from https://github.com/ruanrrn/UII-Agent-Suite/tree/main/imaging-detection-mcp when source fallback is needed. Use when the user asks to install or verify imaging detection dependencies, run first-use guidance, or analyze DICOM imaging data / DICOM 7z URLs for ICH/stroke/brain hemorrhage or RIB/rib fracture analysis. Supports direct remote 7z URLs and local .7z archives that must be validated, temporarily served over HTTP, then analyzed with detect_imaging. Default to stdio MCP access through a global/user-level MCP configuration; optionally guide HTTP MCP access when the user provides an HTTP endpoint and bearer API key. Use the bundled public 张三 ICH 7z URL only as an optional user-confirmed test sample.
 ---
 
 # Imaging Detection Skill
@@ -18,19 +18,54 @@ Then call the `detect_imaging` tool exposed by `imaging-detection-mcp`.
 
 ## Known Dependencies And Test Data
 
-Use this MCP source when the user needs to install or locate the prerequisite MCP server:
+Use this npm package when the user needs to install the prerequisite MCP server:
+
+```text
+@rayruan/imaging-detection-mcp
+```
+
+Use this MCP source only when the user needs to inspect the source or install from source:
 
 ```text
 https://github.com/ruanrrn/UII-Agent-Suite/tree/main/imaging-detection-mcp
 ```
 
-If the user wants to install from source, guide them to clone the repository and use the `imaging-detection-mcp` subdirectory:
+Install/configure this MCP at global/user MCP scope, not as a project-local MCP inside the current workspace.
+
+Default stdio MCP installation mode: configure the MCP client to run the npm package through `npx`, so no separate global npm package installation is required.
+
+```json
+{
+  "mcpServers": {
+    "imaging-detection": {
+      "command": "npx",
+      "args": ["-y", "@rayruan/imaging-detection-mcp", "stdio"],
+      "env": {
+        "AI_TASK_API_BASE": "http://10.9.54.49:30979/api/common"
+      }
+    }
+  }
+}
+```
+
+If the MCP client cannot run `npx`, use global npm installation as fallback:
+
+```bash
+npm install -g @rayruan/imaging-detection-mcp
+```
+
+Then configure stdio with `command: "imaging-detection-mcp"` and `args: ["stdio"]`.
+
+If the npm package is unavailable or the user wants to install from source, guide them to clone the repository and globally install the package from its subdirectory:
 
 ```bash
 git clone https://github.com/ruanrrn/UII-Agent-Suite.git
 cd UII-Agent-Suite/imaging-detection-mcp
 npm install
+npm install -g .
 ```
+
+Do not add this MCP only to a project-local config such as `.vscode/mcp.json` unless the user explicitly asks for project scope.
 
 Use this public DICOM 7z URL only for optional smoke/end-to-end testing after the MCP dependency is configured and the user confirms they want to submit a real test task:
 
@@ -56,8 +91,8 @@ When this skill is installed, invoked for setup, or used while `detect_imaging` 
 Check or guide these items:
 
 1. Node.js is available and is version 18 or later.
-2. `imaging-detection-mcp` is installed or available from a local absolute path. If not, guide installation from `https://github.com/ruanrrn/UII-Agent-Suite/tree/main/imaging-detection-mcp`.
-3. The MCP client is configured using one of the supported access modes below.
+2. The MCP client can run `npx -y @rayruan/imaging-detection-mcp stdio` from a global/user-level MCP configuration. If `npx` is unavailable or blocked, guide `npm install -g @rayruan/imaging-detection-mcp` and use the global `imaging-detection-mcp` command as fallback; use source installation from `https://github.com/ruanrrn/UII-Agent-Suite/tree/main/imaging-detection-mcp` only as last fallback.
+3. The MCP client is configured globally/user-level using one of the supported access modes below.
 4. `detect_imaging` is visible in the active MCP tool list after the MCP client reloads.
 5. The AI software API base URL is known for stdio mode. Default: `http://10.9.54.49:30979/api/common`.
 6. For HTTP mode, the user has provided both the MCP HTTP URL and bearer API key.
@@ -74,9 +109,9 @@ Use stdio when the MCP server can run locally in the user's environment.
 
 Before producing stdio configuration:
 
-- Ask for the absolute path to `imaging-detection-mcp` if it is unknown.
 - Ask for the AI software API base URL if it is unknown.
 - Offer this default AI software API base URL: `http://10.9.54.49:30979/api/common`.
+- Confirm the configuration will be added to the MCP client's global/user-level settings, not the current workspace/project MCP file.
 
 MCP client configuration example:
 
@@ -84,11 +119,8 @@ MCP client configuration example:
 {
   "mcpServers": {
     "imaging-detection": {
-      "command": "node",
-      "args": [
-        "/absolute/path/to/imaging-detection-mcp/bin/imaging-detection-mcp.mjs",
-        "stdio"
-      ],
+      "command": "npx",
+      "args": ["-y", "@rayruan/imaging-detection-mcp", "stdio"],
       "env": {
         "AI_TASK_API_BASE": "http://10.9.54.49:30979/api/common"
       }
@@ -101,7 +133,9 @@ Rules for stdio:
 
 - Do not ask for an HTTP address or API key.
 - Use the user's AI software API base URL, or the default above when accepted.
-- If the MCP client uses a different config format, preserve the same intent: run `imaging-detection-mcp` with `stdio` and set `AI_TASK_API_BASE`.
+- Configure the MCP client at global/user scope. For VS Code/Copilot MCP, add the server to user-level MCP settings; do not create or update `.vscode/mcp.json` unless the user explicitly requests project scope.
+- Prefer `npx -y @rayruan/imaging-detection-mcp stdio` for stdio setup. If the client cannot run `npx`, fall back to global `npm install -g @rayruan/imaging-detection-mcp`, then run `imaging-detection-mcp stdio`.
+- If the MCP client uses a different config format, preserve the same intent: run the npm package in stdio mode from global/user MCP configuration and set `AI_TASK_API_BASE`.
 - After configuration, ask the user to reload/restart the MCP client, then verify `detect_imaging` is available.
 - After `detect_imaging` is available, offer the public 张三 ICH 7z URL as an optional test. Run it only after explicit user confirmation.
 
@@ -134,6 +168,7 @@ Rules for HTTP:
 
 - Replace the example `url` with the user-provided MCP HTTP endpoint when different.
 - Replace `replace-with-a-long-random-key` with the user-provided key in the actual client config.
+- Configure the HTTP MCP connection at global/user scope. For VS Code/Copilot MCP, add it to user-level MCP settings; do not create or update `.vscode/mcp.json` unless the user explicitly requests project scope.
 - Do not store, echo, log, or write the bearer key into files unless the user explicitly asks to update their MCP config.
 - If HTTP auth fails with `401`, stop and ask the user to verify the bearer key.
 - After configuration, ask the user to reload/restart the MCP client, then verify `detect_imaging` is available.
@@ -250,7 +285,7 @@ Give the smallest missing correction:
 - Local file is not `.7z`: ask for a DICOM `.7z` archive.
 - Local file fails 7z magic check: ask for a valid 7z archive.
 - File server URL is not reachable: ask for a reachable intranet IP, open port, or remote storage URL.
-- MCP server missing: guide installation from `https://github.com/ruanrrn/UII-Agent-Suite/tree/main/imaging-detection-mcp`.
+- MCP server missing: guide global/user-level stdio MCP configuration with `npx -y @rayruan/imaging-detection-mcp stdio`. If `npx` is unavailable or blocked, guide `npm install -g @rayruan/imaging-detection-mcp`, then configure `imaging-detection-mcp stdio`. Use source installation from `https://github.com/ruanrrn/UII-Agent-Suite/tree/main/imaging-detection-mcp` only as last fallback.
 - MCP tool missing: guide first-use setup, using stdio by default.
 - stdio setup missing AI software API URL: ask for it and offer `http://10.9.54.49:30979/api/common` as the default.
 - HTTP requested but URL/key missing: ask the user for both HTTP endpoint and bearer API key.

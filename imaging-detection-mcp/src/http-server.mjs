@@ -162,7 +162,12 @@ function createMcpSession(config) {
     ...buildTransportOptions(config, { stateful: true }),
     onsessioninitialized: (id) => {
       sessionId = id;
-      sessions.set(id, { server, transport, createdAt: new Date() });
+      sessions.set(id, {
+        server,
+        transport,
+        createdAt: Date.now(),
+        lastActivityAt: Date.now(),
+      });
     },
     onsessionclosed: (id) => {
       sessions.delete(id);
@@ -209,6 +214,7 @@ async function handleStatefulMcp(req, res, body, config) {
       sendMcpError(res, 404, -32001, "Session not found");
       return;
     }
+    session.lastActivityAt = Date.now();
   } else if (req.method === "POST" && isInitializeBody(body)) {
     session = createMcpSession(config);
     await session.server.connect(session.transport);
@@ -260,6 +266,43 @@ async function handleMcp(req, res, config) {
   }
 }
 
+async function closeSession(sessionId, session) {
+  sessions.delete(sessionId);
+  try {
+    await session.transport.close();
+  } catch {
+    // ignore
+  }
+  try {
+    await session.server.close();
+  } catch {
+    // ignore
+  }
+}
+
+// Periodically evict sessions that have been idle longer than sessionIdleMs so a
+// client that connects and disappears does not leak server/transport instances.
+function startSessionReaper(config) {
+  if (!config.sessionIdleMs || config.sessionIdleMs <= 0) return null;
+
+  const sweepMs = Math.max(
+    1000,
+    Math.min(config.sessionSweepMs || 60_000, config.sessionIdleMs),
+  );
+
+  const timer = setInterval(() => {
+    const now = Date.now();
+    for (const [sessionId, session] of sessions) {
+      if (now - session.lastActivityAt > config.sessionIdleMs) {
+        void closeSession(sessionId, session);
+      }
+    }
+  }, sweepMs);
+
+  timer.unref?.();
+  return timer;
+}
+
 export function createHttpServer(config = getHttpConfig()) {
   return http.createServer(async (req, res) => {
     applyCors(req, res, config);
@@ -288,14 +331,14 @@ export function createHttpServer(config = getHttpConfig()) {
 
 export function startHttpServer(config = getHttpConfig()) {
   const httpServer = createHttpServer(config);
+  const sessionReaper = startSessionReaper(config);
 
   async function shutdown(signal) {
     process.stderr.write(`Received ${signal}, shutting down...\n`);
+    if (sessionReaper) clearInterval(sessionReaper);
     httpServer.close();
     for (const [sessionId, session] of sessions) {
-      sessions.delete(sessionId);
-      await session.transport.close();
-      await session.server.close();
+      await closeSession(sessionId, session);
     }
     process.exit(0);
   }
